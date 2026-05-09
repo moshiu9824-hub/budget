@@ -684,8 +684,6 @@ function renderBilling(){
     const checkedCount=allItems.filter(e=>checks[e.id]).length;
     const limit=s.limit||0;
     const future=getFutureCommitted(card);const afterRange=getAfterRangeCommitted(card,range?range.to:'');const realRemaining=limit-uncheckedTotal-future-afterRange;const pct=limit>0?Math.min(100,Math.round((uncheckedTotal+future+afterRange)/limit*100)):0;
-    const realRemaining=limit-uncheckedTotal-future;
-    const pct=limit>0?Math.min(100,Math.round((uncheckedTotal+future)/limit*100)):0;
     const bc=pct>=90?'danger':pct>=70?'warn':'safe';
     const tc=pct>=90?'danger':pct>=70?'warn':'';
     const bar=limit>0?`<div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div><div class="limit-meta"><span>已用 ${pct}%（含未來分期）</span><span>額度 ${fmt(limit)}</span></div>`:'';
