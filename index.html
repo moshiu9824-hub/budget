@@ -348,8 +348,8 @@ function getExpensesInRange(from,to){
 }
 
 // ★ 未來分期佔用額度
-function getFutureCommitted(card){const instMap={};for(let i=-36;i<=36;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);getExpenses(d).filter(e=>e.card===card&&e.installment&&e.instCur&&e.instTotal).forEach(e=>{const key=e.originId||e.sourceId||e.id;if(!instMap[key]||e.instCur>instMap[key].instCur){instMap[key]=e;}});}let committed=0;Object.values(instMap).forEach(e=>{const remaining=e.instTotal-e.instCur;if(remaining>0)committed+=e.amount*remaining;});return committed;}
-function getAfterRangeCommitted(card,rangeTo){if(!rangeTo)return 0;const today=fmtSlash(new Date());if(today<=rangeTo)return 0;const checks=getBillingChecks(card);const results=[];const fromDate=new Date(rangeTo.replace(/\//g,'-'));const toDate=new Date(today.replace(/\//g,'-'));const cur=new Date(fromDate.getFullYear(),fromDate.getMonth(),1);const endMonth=new Date(toDate.getFullYear(),toDate.getMonth(),1);while(cur<=endMonth){getExpenses(new Date(cur)).filter(e=>e.card===card&&e.date>rangeTo&&e.date<=today&&!checks[e.id]).forEach(e=>results.push(e));cur.setMonth(cur.getMonth()+1);}return results.reduce((s,e)=>s+e.amount,0);}
+function getFutureCommitted(card){const checks=getBillingChecks(card);const seen=new Set();let committed=0;for(let i=-36;i<=36;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);getExpenses(d).filter(e=>e.card===card&&!checks[e.id]).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);committed+=e.amount;}});}return committed;}
+function getAfterRangeCommitted(card,rangeTo){return 0;}
 function getBillingChecks(card){return S.get(`billing_checks_${card}`,{});}
 function saveBillingChecks(card,data){S.set(`billing_checks_${card}`,data);}
 function toggleBillingCheck(card,expenseId){
@@ -683,7 +683,7 @@ function renderBilling(){
     const uncheckedTotal=total-checkedTotal;
     const checkedCount=allItems.filter(e=>checks[e.id]).length;
     const limit=s.limit||0;
-    const future=getFutureCommitted(card);const afterRange=getAfterRangeCommitted(card,range?range.to:'');const realRemaining=limit-uncheckedTotal-future-afterRange;const pct=limit>0?Math.min(100,Math.round((uncheckedTotal+future+afterRange)/limit*100)):0;
+    const future=getFutureCommitted(card);const afterRange=0;
     const bc=pct>=90?'danger':pct>=70?'warn':'safe';
     const tc=pct>=90?'danger':pct>=70?'warn':'';
     const bar=limit>0?`<div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div><div class="limit-meta"><span>已用 ${pct}%（含未來分期）</span><span>額度 ${fmt(limit)}</span></div>`:'';
