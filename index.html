@@ -15,11 +15,11 @@
   --danger:#EF6F5D;--danger-light:#FEF3EE;--warning:#F9B384;--warning-light:#FEF6EE;
   --radius:14px;--radius-lg:20px;--shadow:0 1px 4px rgba(45,45,45,.06);--shadow-md:0 2px 12px rgba(45,45,45,.09);
 }
-html,body{height:100%;margin:0;padding:0;}
+html,body{height:100%;margin:0;padding:0;overflow:hidden;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{color-scheme:light;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;min-height:100vh;}
-.app{display:flex;flex-direction:column;min-height:100vh;max-width:860px;margin:0 auto;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;}
+.app{display:flex;flex-direction:column;max-width:860px;margin:0 auto;}
 header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between;}
 .logo{font-family:'DM Mono',monospace;font-size:16px;color:var(--text);font-weight:700;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px;}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--blossom);display:inline-block;}
@@ -176,12 +176,12 @@ select option{background:#fff;color:var(--text);}
 .empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:13px;}
 #syncStatus{font-size:11px;color:var(--muted);font-weight:600;}
 @media(max-width:640px){
-  .app {height:100vh;display:flex;flex-direction:column;}
+  .app{width:100%;height:100vh;display:flex;flex-direction:column;}
   .tabs{display:none;}.bottom-nav{display:block;}
   .summary-bar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 24px;}
   .stat-val{font-size:13px;}.stat-card{padding:10px 11px;}
   .g3,.g2{grid-template-columns:1fr;gap: 12px;}
-  .main{padding:20px 24px calc(env(safe-area-inset-bottom,0px)+140px);overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;height:0;}
+  .main{padding:20px 24px calc(env(safe-area-inset-bottom,0px)+120px);overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;height:0;min-height:0;}
   header{padding:16px 24px 0;}.add-form{padding:18px 24px;}
   .expense-card,.owed-card,.billing-card {padding: 16px 24px;}
   .group-header {padding: 8px 24px;}
