@@ -343,7 +343,7 @@ function fmt(n){return'NT$'+Math.round(n).toLocaleString();}
 function getBillingRange(card,refMonth){
   const s=getCardSettings()[card];if(!s||!s.billingDay)return null;
   const day=s.billingDay,y=refMonth.getFullYear(),m=refMonth.getMonth();
-  return{from:fmtSlash(new Date(y,m-1,day+1)),to:fmtSlash(new Date(y,m,day))};
+  return{from:fmtSlash(new Date(y,m-2,day+1)),to:fmtSlash(new Date(y,m-1,day))};
 }
 function initBillingRanges(){
   getCards().filter(c=>c!=='現金').forEach(c=>{
