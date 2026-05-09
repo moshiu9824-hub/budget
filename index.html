@@ -40,7 +40,6 @@ html{color-scheme:light;}
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;min-height:100vh;}
 .app{display:flex;flex-direction:column;min-height:100vh;max-width:860px;margin:0 auto;}
 
-/* Header */
 header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between;}
 .logo{font-family:'DM Mono',monospace;font-size:16px;color:var(--text);font-weight:700;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px;}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--blossom);display:inline-block;}
@@ -49,7 +48,6 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 .month-nav button:hover{background:var(--blossom);color:#fff;border-color:var(--blossom);}
 .month-label{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);min-width:68px;text-align:center;font-weight:600;}
 
-/* Summary */
 .summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 20px;}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 14px 12px;box-shadow:var(--shadow);}
 .stat-card:nth-child(1){border-top:2.5px solid var(--bubbles);}
@@ -61,13 +59,11 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 .stat-val.green{color:#5a9a30;}.stat-val.red{color:var(--blossom);}.stat-val.orange{color:#c87030;}
 .stat-sub{font-size:10px;color:var(--muted);margin-top:3px;}
 
-/* Tabs */
 .tabs{display:flex;gap:4px;padding:0 20px 14px;border-bottom:1px solid var(--border);}
 .tab{padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .15s;font-weight:600;font-family:'Noto Sans TC',sans-serif;}
 .tab:hover:not(.active){background:var(--surface2);color:var(--text);}
 .tab.active{background:var(--text);color:#fff;}
 
-/* Bottom nav */
 .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(252,252,243,.96);backdrop-filter:blur(16px);border-top:1px solid var(--border);z-index:50;padding:0 0 calc(env(safe-area-inset-bottom,0px)+6px);}
 .bottom-nav-inner{display:grid;grid-template-columns:repeat(6,1fr);max-width:860px;margin:0 auto;}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 2px 6px;cursor:pointer;color:var(--muted);transition:all .15s;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;}
@@ -83,7 +79,6 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 
 .main{padding:20px 20px 80px;flex:1;}
 
-/* Form */
 .add-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:16px;box-shadow:var(--shadow);}
 .add-form-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
@@ -105,7 +100,6 @@ select option{background:#fff;color:var(--text);}
 .checkbox-label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:600;}
 .checkbox-label input[type=checkbox]{width:15px;height:15px;accent-color:var(--blossom);-webkit-appearance:auto;appearance:auto;}
 
-/* Pills */
 .pill,.card-pill{display:inline-block;font-size:11px;padding:3px 9px;border-radius:6px;font-weight:700;white-space:nowrap;line-height:1.4;vertical-align:middle;}
 [data-pi="0"]{background:var(--blossom-light);color:#c84a38;border:1px solid #F9C4B4;}
 [data-pi="1"]{background:var(--bubbles-light);color:#3a9ec0;border:1px solid #93D6ED;}
@@ -124,7 +118,6 @@ select option{background:#fff;color:var(--text);}
 .btn-sm.done{border-color:#A6D785;color:#5a9a30;background:var(--buttercup-light);}
 .btn-sm:hover:not(.done){border-color:#F9B384;color:#c87030;background:var(--warning-light);}
 
-/* Expense cards */
 .expense-list{display:flex;flex-direction:column;gap:6px;}
 .expense-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:var(--shadow);transition:background .1s;}
 .expense-card:active{background:var(--surface2);}
@@ -139,7 +132,6 @@ select option{background:#fff;color:var(--text);}
 .btn-icon.edit:hover{background:var(--bubbles-light);color:#3a9ec0;}
 .btn-icon.del:hover{background:var(--danger-light);color:var(--danger);}
 
-/* Groups */
 .group-section{margin-bottom:20px;}
 .group-header{display:flex;align-items:center;gap:8px;padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
 .group-total{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--blossom);margin-left:auto;}
@@ -147,21 +139,19 @@ select option{background:#fff;color:var(--text);}
 .section-header{font-size:10px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
 .section-header::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* Owed */
 .owed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:18px;}
 .owed-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:13px;box-shadow:var(--shadow);}
 .owed-name{font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:600;}
 .owed-amt{font-family:'DM Mono',monospace;font-size:18px;color:#c87030;font-weight:700;}
 .owed-count{font-size:11px;color:var(--muted);margin-top:2px;}
 
-/* Filter */
 .filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
 .filter-select{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 11px;font-size:12px;font-family:'Noto Sans TC',sans-serif;outline:none;cursor:pointer;font-weight:600;box-shadow:var(--shadow);color-scheme:light;}
 
-/* Billing */
-.billing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
-.billing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow);}
-.billing-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+/* ── 帳單對帳：單欄 + 打勾 ── */
+.billing-list{display:flex;flex-direction:column;gap:16px;}
+.billing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow);}
+.billing-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
 .billing-card-info{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;}
 .billing-total{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--blossom);text-align:right;}
 .billing-total.warn{color:#c87030;}.billing-total.danger{color:var(--blossom);}
@@ -172,21 +162,65 @@ select option{background:#fff;color:var(--text);}
 .limit-bar-fill.warn{background:var(--warning);}
 .limit-bar-fill.danger{background:var(--blossom);}
 .limit-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:12px;font-weight:600;}
-.date-range-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.date-range-row{display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
 .date-range-row label{margin-bottom:0;white-space:nowrap;}
 .date-range-row input{flex:1;min-width:110px;width:auto;padding:6px 9px;font-size:12px;}
 .btn-apply{background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 11px;font-size:12px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-weight:600;}
 .btn-apply:hover{border-color:var(--text);color:var(--text);}
-.billing-items{border-top:1px solid var(--border);padding-top:10px;max-height:220px;overflow-y:auto;}
-.billing-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;gap:6px;}
-.billing-item:last-child{border-bottom:none;}
-.billing-item-left{flex:1;min-width:0;}
-.billing-item-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;}
-.billing-item-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
-.billing-item-amt{font-family:'DM Mono',monospace;color:var(--blossom);flex-shrink:0;font-weight:700;}
-.billing-no-items{font-size:12px;color:var(--muted);text-align:center;padding:16px 0;}
 
-/* Modal */
+/* 帳單明細列 — 打勾版 */
+.billing-items{border-top:1px solid var(--border);padding-top:4px;}
+.billing-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 4px;
+  border-bottom:1px solid var(--border);
+  transition:background .1s;
+  border-radius:8px;
+}
+.billing-item:last-child{border-bottom:none;}
+.billing-item.checked{opacity:.5;}
+.billing-item.checked .billing-item-name{text-decoration:line-through;color:var(--muted);}
+.billing-item.checked .billing-item-amt{color:var(--muted);}
+
+/* 打勾按鈕 */
+.check-btn{
+  flex-shrink:0;
+  width:26px;height:26px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  background:var(--surface2);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+  transition:all .15s;
+  color:transparent;
+}
+.check-btn:hover{border-color:var(--buttercup);background:var(--buttercup-light);}
+.billing-item.checked .check-btn{
+  background:var(--buttercup);
+  border-color:var(--buttercup);
+  color:#fff;
+}
+.billing-item-left{flex:1;min-width:0;}
+.billing-item-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.billing-item-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
+.billing-item-amt{font-family:'DM Mono',monospace;font-size:13px;color:var(--blossom);flex-shrink:0;font-weight:700;white-space:nowrap;}
+.billing-no-items{font-size:12px;color:var(--muted);text-align:center;padding:20px 0;}
+
+/* 帳單統計列 */
+.billing-stat-row{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;color:var(--muted);
+  padding:6px 4px 10px;
+  font-weight:600;
+}
+.billing-checked-total{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:#5a9a30;
+  font-weight:700;
+}
+
 .modal-overlay{position:fixed;inset:0;background:rgba(45,45,45,.25);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;z-index:100;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;box-shadow:0 -6px 28px rgba(45,45,45,.1);}
 .modal-handle{width:36px;height:4px;background:var(--border);border-radius:3px;margin:0 auto 18px;}
@@ -194,7 +228,6 @@ select option{background:#fff;color:var(--text);}
 .modal-actions{display:flex;gap:8px;margin-top:16px;}
 .modal-actions .btn{flex:1;padding:12px;}
 
-/* Settings */
 .settings-section{margin-bottom:24px;}
 .settings-title{font-size:10px;color:var(--muted);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
 .tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
@@ -218,7 +251,6 @@ select option{background:#fff;color:var(--text);}
   .summary-bar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 16px;}
   .stat-val{font-size:13px;}.stat-card{padding:10px 11px;}
   .g3{grid-template-columns:1fr 1fr;}
-  .billing-grid{grid-template-columns:1fr;}
   .main{padding:16px 16px calc(env(safe-area-inset-bottom,0px)+90px);}
   header{padding:16px 16px 0;}
   .add-form{padding:14px;}
@@ -256,14 +288,12 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
       <button onclick="changeMonth(1)">›</button>
     </div>
   </header>
-
   <div class="summary-bar">
     <div class="stat-card"><div class="stat-label">本月薪資</div><div class="stat-val green" id="sumSalary">—</div></div>
     <div class="stat-card"><div class="stat-label">上月卡費</div><div class="stat-val red" id="sumLastCard">—</div><div class="stat-sub" id="sumLastCardSub"></div></div>
     <div class="stat-card"><div class="stat-label">代墊未收</div><div class="stat-val orange" id="sumOwed">—</div></div>
     <div class="stat-card"><div class="stat-label">薪資剩餘</div><div class="stat-val green" id="sumLeft">—</div></div>
   </div>
-
   <div class="tabs">
     <button class="tab active" onclick="switchTab('list')">明細</button>
     <button class="tab" onclick="switchTab('card')">依信用卡</button>
@@ -272,7 +302,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     <button class="tab" onclick="switchTab('billing')">帳單對帳</button>
     <button class="tab" onclick="switchTab('settings')">設定</button>
   </div>
-
   <div class="bottom-nav">
     <div class="bottom-nav-inner">
       <button class="nav-item active" id="nav-list" onclick="switchTab('list')"><span class="nav-icon">📋</span><span class="nav-label">明細</span></button>
@@ -283,7 +312,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
       <button class="nav-item" id="nav-settings" onclick="switchTab('settings')"><span class="nav-icon">⚙️</span><span class="nav-label">設定</span></button>
     </div>
   </div>
-
   <div class="main" id="mainContent"></div>
 </div>
 
@@ -356,7 +384,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
 </div>
 
 <script>
-// ── Storage ──────────────────────────────────────────────────
 const S={
   get(k,def){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):def;}catch{return def;}},
   set(k,v){localStorage.setItem(k,JSON.stringify(v));if(window.FB)window.FB.set(k,JSON.stringify(v));},
@@ -364,18 +391,15 @@ const S={
 };
 function showSyncStatus(msg,ok=false,warn=false){
   const el=document.getElementById('syncStatus');if(!el)return;
-  el.textContent=msg;
-  el.style.color=warn?'var(--warning)':ok?'var(--buttercup)':'var(--muted)';
+  el.textContent=msg;el.style.color=warn?'var(--warning)':ok?'var(--buttercup)':'var(--muted)';
   if(ok)setTimeout(()=>{if(el)el.textContent='';},3000);
 }
 
-// ── State ────────────────────────────────────────────────────
 let currentTab='list';
 let currentMonth=new Date();currentMonth.setDate(1);
 let billingRanges={};
 let editingId=null;
 
-// ── People & Cards ───────────────────────────────────────────
 const DEFAULT_PEOPLE=['我自己','懶人爸','阿肥媽','豬頭弟','小八貓'];
 const DEFAULT_CARDS=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];
 const CARD_DEFAULTS={
@@ -391,7 +415,6 @@ function saveCards(c){S.set('cards',c);}
 function personPill(p){const i=Math.abs(getPeople().indexOf(p))%10;return`<span class="pill" data-pi="${i}">${p}</span>`;}
 function cardPill(c){const i=(Math.abs(getCards().indexOf(c))+3)%10;return`<span class="card-pill" data-pi="${i}">${c}</span>`;}
 
-// ── Data helpers ─────────────────────────────────────────────
 function monthKey(d){return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;}
 function getExpenses(d){return S.get(monthKey(d||currentMonth),[]);}
 function saveExpenses(data,d){S.set(monthKey(d||currentMonth),data);}
@@ -404,14 +427,12 @@ function getCardSettings(){
 }
 function saveCardSettings(d){S.set('card_settings',d);}
 
-// ── Date helpers ─────────────────────────────────────────────
 function toSlash(s){return s?s.replace(/-/g,'/'):'';} 
 function toInput(s){return s?s.replace(/\//g,'-'):'';} 
 function fmtSlash(d){return`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;}
 function todayInput(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fmt(n){return'NT$'+Math.round(n).toLocaleString();}
 
-// ── Billing range ────────────────────────────────────────────
 function getBillingRange(card,refMonth){
   const s=getCardSettings()[card];if(!s||!s.billingDay)return null;
   const day=s.billingDay,y=refMonth.getFullYear(),m=refMonth.getMonth();
@@ -423,7 +444,7 @@ function initBillingRanges(){
   });
 }
 
-// ── ★ 修正：跨月撈帳單資料 ──────────────────────────────────
+// ★ 跨月撈資料
 function getExpensesInRange(from,to){
   if(!from||!to)return[];
   const fromDate=new Date(from.replace(/\//g,'-'));
@@ -441,7 +462,17 @@ function getExpensesInRange(from,to){
   return results;
 }
 
-// ── Summary ──────────────────────────────────────────────────
+// ★ 帳單對帳勾選狀態（存 localStorage，key = billing_checks_卡名）
+function getBillingChecks(card){return S.get(`billing_checks_${card}`,{});}
+function saveBillingChecks(card,data){S.set(`billing_checks_${card}`,data);}
+function toggleBillingCheck(card,expenseId){
+  const checks=getBillingChecks(card);
+  checks[expenseId]=!checks[expenseId];
+  saveBillingChecks(card,checks);
+  // 只重繪帳單區，不重新 render 整頁
+  document.getElementById('mainContent').innerHTML=renderBilling();
+}
+
 function updateSummary(){
   const salary=getSalary();
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
@@ -460,7 +491,6 @@ function updateSummary(){
   document.getElementById('sumLeft').className='stat-val '+(left<0?'red':'green');
 }
 
-// ── Navigation ───────────────────────────────────────────────
 function changeMonth(dir){
   currentMonth.setMonth(currentMonth.getMonth()+dir);
   billingRanges={};
@@ -500,7 +530,6 @@ function switchTab(tab){
   render();
 }
 
-// ── Add expense ──────────────────────────────────────────────
 function addExpense(){
   const name=document.getElementById('f-name').value.trim();
   const amount=parseInt(document.getElementById('f-amount').value);
@@ -517,24 +546,19 @@ function addExpense(){
   const ex=getExpenses();
   ex.unshift({id:Date.now(),name,amount,card,person,date,billingMonth,fixed,installment:isInst,instCur,instTotal,paid:false});
   saveExpenses(ex);
-  document.getElementById('f-name').value='';
-  document.getElementById('f-amount').value='';
-  document.getElementById('f-fixed').checked=false;
-  document.getElementById('f-inst').checked=false;
+  document.getElementById('f-name').value='';document.getElementById('f-amount').value='';
+  document.getElementById('f-fixed').checked=false;document.getElementById('f-inst').checked=false;
   document.getElementById('f-inst-fields').style.display='none';
   render();
 }
-function toggleAddInst(){
-  document.getElementById('f-inst-fields').style.display=document.getElementById('f-inst').checked?'grid':'none';
-}
+function toggleAddInst(){document.getElementById('f-inst-fields').style.display=document.getElementById('f-inst').checked?'grid':'none';}
 
 function importFixed(){
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
   const lastEx=getExpenses(lastMonth);
   const toCarry=lastEx.filter(e=>e.fixed||(e.installment&&e.instCur&&e.instTotal&&e.instCur<e.instTotal));
   if(!toCarry.length){alert('上個月沒有固定支出或未完成分期可以匯入');return;}
-  const ex=getExpenses();
-  const today=toSlash(todayInput());
+  const ex=getExpenses();const today=toSlash(todayInput());
   const existingSources=new Set(ex.filter(e=>e.sourceId).map(e=>e.sourceId));
   let imported=0;
   toCarry.forEach(e=>{
@@ -547,7 +571,6 @@ function importFixed(){
   alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');
 }
 
-// ── Delete ───────────────────────────────────────────────────
 let pendingDeleteId=null;
 function deleteExpense(id){
   pendingDeleteId=id;
@@ -562,9 +585,7 @@ function confirmDelete(){
   }else if(pendingDeleteId){
     saveExpenses(getExpenses().filter(e=>e.id!==pendingDeleteId));
   }
-  pendingDeleteId=null;
-  document.getElementById('confirmModal').style.display='none';
-  render();
+  pendingDeleteId=null;document.getElementById('confirmModal').style.display='none';render();
 }
 function cancelDelete(){pendingDeleteId=null;document.getElementById('confirmModal').style.display='none';}
 function togglePaid(id){
@@ -572,7 +593,6 @@ function togglePaid(id){
   if(e)e.paid=!e.paid;saveExpenses(d);render();
 }
 
-// ── Edit modal ───────────────────────────────────────────────
 function openEdit(id){
   let e=getExpenses().find(x=>x.id===id);
   if(!e){for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);const found=getExpenses(d).find(x=>x.id===id);if(found){e=found;break;}}}
@@ -588,9 +608,8 @@ function openEdit(id){
   document.getElementById('e-inst-cur').value=e.instCur||'';
   document.getElementById('e-inst-total').value=e.instTotal||'';
   document.getElementById('e-inst-fields').style.display=e.installment?'grid':'none';
-  const people=getPeople(),cards=getCards();
-  document.getElementById('e-card').innerHTML=cards.map(c=>`<option ${c===e.card?'selected':''}>${c}</option>`).join('');
-  document.getElementById('e-person').innerHTML=people.map(p=>`<option ${p===e.person?'selected':''}>${p}</option>`).join('');
+  document.getElementById('e-card').innerHTML=getCards().map(c=>`<option ${c===e.card?'selected':''}>${c}</option>`).join('');
+  document.getElementById('e-person').innerHTML=getPeople().map(p=>`<option ${p===e.person?'selected':''}>${p}</option>`).join('');
   document.getElementById('editModal').style.display='flex';
 }
 function closeModal(){document.getElementById('editModal').style.display='none';editingId=null;}
@@ -631,7 +650,6 @@ function saveEdit(){
   closeModal();render();
 }
 
-// ── Render helpers ───────────────────────────────────────────
 function badgeStr(e){
   let s='';
   if(e.fixed)s+=`<span class="fixed-badge">固定</span>`;
@@ -670,7 +688,6 @@ function renderAddForm(){
   </div>`;
 }
 
-// ── List view ────────────────────────────────────────────────
 function renderList(fp='全部',fc='全部',ff='全部'){
   const people=getPeople(),cards=getCards();
   let ex=getExpenses();
@@ -711,7 +728,6 @@ function renderList(fp='全部',fc='全部',ff='全部'){
 }
 function renderListF(p,c,f){document.getElementById('mainContent').innerHTML=renderAddForm()+renderList(p,c,f);updateSummary();}
 
-// ── Card view ────────────────────────────────────────────────
 function renderCardView(){
   const ex=getExpenses();
   const sections=getCards().map(card=>{
@@ -740,7 +756,6 @@ function renderCardView(){
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
 
-// ── Person view ──────────────────────────────────────────────
 function renderPersonView(){
   const ex=getExpenses();
   const sections=getPeople().map(person=>{
@@ -766,8 +781,7 @@ function renderPersonView(){
       </div>`).join('');
     return`<div class="group-section">
       <div class="group-header">
-        <span>${personPill(person)}</span>
-        <span class="group-total">${fmt(total)}</span>
+        <span>${personPill(person)}</span><span class="group-total">${fmt(total)}</span>
         ${unpaid>0?`<span class="group-owed">未收 ${fmt(unpaid)}</span>`:''}
       </div>
       <div class="expense-list">${html}</div>
@@ -776,7 +790,6 @@ function renderPersonView(){
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
 
-// ── Owed view ────────────────────────────────────────────────
 function renderOwed(){
   const ex=getExpenses();
   const unpaid=ex.filter(e=>e.person!=='我自己'&&!e.paid);
@@ -806,7 +819,7 @@ function renderOwed(){
   </div>`;
 }
 
-// ── Billing view（★ 修正跨月撈資料）────────────────────────
+// ── 帳單對帳（單欄 + 打勾）────────────────────────────────────
 function applyBillingRange(card){
   const f=document.getElementById(`br-from-${card}`);
   const t=document.getElementById(`br-to-${card}`);
@@ -822,13 +835,14 @@ function renderBilling(){
     const range=billingRanges[card];
     const fi=range?toInput(range.from):'';
     const ti=range?toInput(range.to):'';
-
-    // ★ 修正：用跨月函式撈資料，不再只看當月
     const items=(range&&range.from&&range.to)
       ?getExpensesInRange(range.from,range.to).filter(e=>e.card===card)
       :[];
-
+    const checks=getBillingChecks(card);
     const total=items.reduce((s,e)=>s+e.amount,0);
+    const checkedTotal=items.filter(e=>checks[e.id]).reduce((s,e)=>s+e.amount,0);
+    const uncheckedTotal=total-checkedTotal;
+    const checkedCount=items.filter(e=>checks[e.id]).length;
     const limit=s.limit||0;
     const pct=limit>0?Math.min(100,Math.round(total/limit*100)):0;
     const bc=pct>=90?'danger':pct>=70?'warn':'safe';
@@ -836,15 +850,25 @@ function renderBilling(){
     const bar=limit>0?`
       <div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div>
       <div class="limit-meta"><span>已用 ${pct}%</span><span>額度 ${fmt(limit)}</span></div>`:'';
+
     const itemRows=items.length
-      ?items.map(e=>`<div class="billing-item">
-          <div class="billing-item-left">
-            <div class="billing-item-name">${e.name}${badgeStr(e)}</div>
-            <div class="billing-item-date">${e.date} · ${personPill(e.person)}</div>
-          </div>
-          <span class="billing-item-amt">${fmt(e.amount)}</span>
-        </div>`).join('')
+      ?`<div class="billing-stat-row">
+          <span>${items.length} 筆 · 已對帳 ${checkedCount} 筆 <span class="billing-checked-total">✓ ${fmt(checkedTotal)}</span></span>
+          <span>未對帳 <strong style="color:var(--blossom);font-family:'DM Mono',monospace;">${fmt(uncheckedTotal)}</strong></span>
+        </div>`
+       +items.map(e=>{
+          const isChecked=!!checks[e.id];
+          return`<div class="billing-item ${isChecked?'checked':''}">
+            <button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})" title="${isChecked?'取消對帳':'標記已對帳'}">✓</button>
+            <div class="billing-item-left">
+              <div class="billing-item-name">${e.name}${badgeStr(e)}</div>
+              <div class="billing-item-date">${e.date} · ${personPill(e.person)}</div>
+            </div>
+            <span class="billing-item-amt">${fmt(e.amount)}</span>
+          </div>`;
+        }).join('')
       :`<div class="billing-no-items">${(fi&&ti)?'這段期間沒有消費':'請設定日期範圍後按套用'}</div>`;
+
     return`<div class="billing-card">
       <div class="billing-card-header">
         <div>${cardPill(card)}<div class="billing-card-info">結帳日：每月 ${s.billingDay||'—'} 號</div></div>
@@ -869,7 +893,7 @@ function renderBilling(){
     <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
       <button class="btn btn-primary" style="font-size:13px;padding:9px 18px;" onclick="openPaymentModal()">+ 記錄繳款</button>
     </div>
-    <div class="billing-grid">${cols}</div>
+    <div class="billing-list">${cols}</div>
     <div style="margin-top:22px;">
       <div class="section-header">繳款紀錄</div>
       ${renderPaymentHistory()}
@@ -877,7 +901,6 @@ function renderBilling(){
   </div>`;
 }
 
-// ── Card Payments ────────────────────────────────────────────
 function getPayments(){return S.get('card_payments',[]);}
 function savePayments(d){S.set('card_payments',d);}
 function openPaymentModal(){
@@ -886,8 +909,7 @@ function openPaymentModal(){
   const lm=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
   document.getElementById('pm-month').value=`${lm.getFullYear()}-${String(lm.getMonth()+1).padStart(2,'0')}`;
   document.getElementById('pm-date').value=todayInput();
-  document.getElementById('pm-amount').value='';
-  document.getElementById('pm-note').value='';
+  document.getElementById('pm-amount').value='';document.getElementById('pm-note').value='';
   document.getElementById('paymentModal').style.display='flex';
 }
 function closePaymentModal(){document.getElementById('paymentModal').style.display='none';}
@@ -899,8 +921,7 @@ function savePayment(){
   const date=toSlash(document.getElementById('pm-date').value);
   const note=document.getElementById('pm-note').value.trim();
   if(!card||!month||!amount||!date){alert('請填寫所有必填欄位');return;}
-  const payments=getPayments();
-  payments.unshift({id:Date.now(),card,month,amount,date,note});
+  const payments=getPayments();payments.unshift({id:Date.now(),card,month,amount,date,note});
   savePayments(payments);closePaymentModal();
   if(currentTab==='billing')render();
   alert(`✅ 已記錄 ${card} ${month} 繳款 NT$${amount.toLocaleString()}`);
@@ -931,19 +952,15 @@ function deletePayment(id){
   document.getElementById('confirmModal').style.display='flex';
 }
 
-// ── Settings ─────────────────────────────────────────────────
 function renderSettings(){
   const people=getPeople(),cards=getCards(),cs=getCardSettings(),sal=getSalary();
   const peopleList=people.map((p,i)=>`<div class="tag-item">${personPill(p)}${i===0?'':`<button onclick="removePerson(${i})">×</button>`}</div>`).join('');
   const cardsList=cards.map((c,i)=>`<div class="tag-item">${cardPill(c)}<button onclick="removeCard(${i})">×</button></div>`).join('');
-  const cardRows=cards.map(c=>{
-    const s=cs[c]||{};
-    return`<tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:7px 8px;">${cardPill(c)}</td>
-      <td style="padding:7px 8px;"><input id="cs-limit-${c}" type="number" value="${s.limit||0}" style="max-width:100px;padding:5px 8px;font-size:12px;"/></td>
-      <td style="padding:7px 8px;">${c==='現金'?'—':`<input id="cs-day-${c}" type="number" value="${s.billingDay||0}" min="1" max="31" style="max-width:60px;padding:5px 8px;font-size:12px;"/>`}</td>
-    </tr>`;
-  }).join('');
+  const cardRows=cards.map(c=>{const s=cs[c]||{};return`<tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:7px 8px;">${cardPill(c)}</td>
+    <td style="padding:7px 8px;"><input id="cs-limit-${c}" type="number" value="${s.limit||0}" style="max-width:100px;padding:5px 8px;font-size:12px;"/></td>
+    <td style="padding:7px 8px;">${c==='現金'?'—':`<input id="cs-day-${c}" type="number" value="${s.billingDay||0}" min="1" max="31" style="max-width:60px;padding:5px 8px;font-size:12px;"/>`}</td>
+  </tr>`;}).join('');
   return`<div style="max-width:560px;display:flex;flex-direction:column;gap:20px;">
     <div class="settings-section">
       <div class="settings-title">薪資設定</div>
@@ -975,8 +992,7 @@ function renderSettings(){
           <th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">卡別</th>
           <th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">額度（NT$）</th>
           <th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">結帳日</th>
-        </tr></thead>
-        <tbody>${cardRows}</tbody>
+        </tr></thead><tbody>${cardRows}</tbody>
       </table></div>
       <div style="margin-top:10px;"><button class="btn btn-primary" onclick="saveCardSettingsForm()">儲存卡片設定</button></div>
     </div>
@@ -986,16 +1002,13 @@ function renderSettings(){
     </div>
   </div>`;
 }
-
 function updateSalaryDetail(){
   const sal=parseInt(document.getElementById('s-sal')?.value||0);
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
   const lastCard=getExpenses(lastMonth).filter(e=>e.card!=='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
   const cash=getExpenses().filter(e=>e.card==='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
-  const sdSal=document.getElementById('sd-sal');
-  const sdCard=document.getElementById('sd-card');
-  const sdCash=document.getElementById('sd-cash');
-  const sdLeft=document.getElementById('sd-left');
+  const sdSal=document.getElementById('sd-sal');const sdCard=document.getElementById('sd-card');
+  const sdCash=document.getElementById('sd-cash');const sdLeft=document.getElementById('sd-left');
   if(sdSal)sdSal.textContent=fmt(sal);
   if(sdCard)sdCard.textContent=`-${fmt(lastCard)}`;
   if(sdCash)sdCash.textContent=`-${fmt(cash)}`;
@@ -1030,8 +1043,7 @@ function removeCard(i){
 function saveCardSettingsForm(){
   const cards=getCards(),existing=S.get('card_settings',{});
   cards.forEach(c=>{
-    const lEl=document.getElementById(`cs-limit-${c}`);
-    const dEl=document.getElementById(`cs-day-${c}`);
+    const lEl=document.getElementById(`cs-limit-${c}`);const dEl=document.getElementById(`cs-day-${c}`);
     existing[c]={limit:lEl?parseInt(lEl.value||0):existing[c]?.limit||0,billingDay:dEl?parseInt(dEl.value||0):existing[c]?.billingDay||0};
   });
   saveCardSettings(existing);billingRanges={};alert('已儲存！');
@@ -1041,7 +1053,6 @@ function clearMonth(){
   S.del(monthKey(currentMonth));render();
 }
 
-// ── Main render ──────────────────────────────────────────────
 function render(){
   updateSummary();
   const el=document.getElementById('mainContent');
@@ -1067,25 +1078,13 @@ async function syncFromFirebase(){
   try{
     const keys=['people','cards','card_settings','salary','card_payments',
       ...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
-    await Promise.all(keys.map(async k=>{
-      const val=await window.FB.get(k);
-      if(val!==null)localStorage.setItem(k,val);
-    }));
-    reorderCards();
-    showSyncStatus('已同步 ✓',true);
-    autoCarryInstallments();
-    render();updateSummary();
-  }catch(e){
-    showSyncStatus('離線模式',false,true);
-    console.warn('Firebase sync failed:',e);
-  }
+    await Promise.all(keys.map(async k=>{const val=await window.FB.get(k);if(val!==null)localStorage.setItem(k,val);}));
+    reorderCards();showSyncStatus('已同步 ✓',true);autoCarryInstallments();render();updateSummary();
+  }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
 }
 
-// ── Init ─────────────────────────────────────────────────────
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
-initBillingRanges();
-autoCarryInstallments();
-render();
+initBillingRanges();autoCarryInstallments();render();
 
 (window._firebaseLoader||Promise.resolve()).then(()=>{
   const firebaseConfig={
@@ -1099,18 +1098,14 @@ render();
   try{
     if(typeof firebase==='undefined')throw new Error('firebase not loaded');
     firebase.initializeApp(firebaseConfig);
-    const db=firebase.firestore();
-    const USER='default';
+    const db=firebase.firestore();const USER='default';
     window.FB={
       async get(key){try{const s=await db.collection(USER).doc(key).get();return s.exists?s.data().value:null;}catch(e){console.warn('FB.get',e);return null;}},
       async set(key,value){try{await db.collection(USER).doc(key).set({value});return true;}catch(e){console.warn('FB.set',e);return false;}},
       async del(key){try{await db.collection(USER).doc(key).delete();return true;}catch(e){console.warn('FB.del',e);return false;}}
     };
     syncFromFirebase();
-  }catch(e){
-    console.warn('Firebase init failed:',e);
-    showSyncStatus('離線模式',false,true);
-  }
+  }catch(e){console.warn('Firebase init failed:',e);showSyncStatus('離線模式',false,true);}
 });
 </script>
 </body>
