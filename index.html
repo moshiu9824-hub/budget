@@ -372,7 +372,14 @@ function getFutureCommitted(card){
   }
   return committed;
 }
-function getBillingChecks(card){return S.get(`billing_checks_${card}`,{});}
+function getBillingRange(card, refMonth) {
+  const s = getCardSettings()[card];
+  if (!s || !s.billingDay) return null;
+  const day = s.billingDay;
+  const y = refMonth.getFullYear();
+  const m = refMonth.getMonth();
+  const today = new Date();
+  const isCurrentMonth = (y === today.getFullYear() && m === today.getMonth());if (isCurrentMonth && today.getDate() >= day) {return { from: fmtSlash(new Date(y, m-1, day+1)), to: fmtSlash(new Date(y, m, day)) };}else{return { from: fmtSlash(new Date(y, m-2, day+1)), to: fmtSlash(new Date(y, m-1, day)) };}}
 function saveBillingChecks(card,data){S.set(`billing_checks_${card}`,data);}
 function toggleBillingCheck(card,expenseId){
   const checks=getBillingChecks(card);
