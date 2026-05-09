@@ -7,13 +7,13 @@
 <title>錢去哪了</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
+:root{
   --bg:#FCFCF3;--surface:#ffffff;--surface2:#F7F7EC;--border:#EDE8D8;--text:#2D2D2D;--muted:#A89880;
-  --blossom:#EF6F5D;--blossom-soft:#F9B384;--blossom-light:#FEF3EE;--blossom-skin:#FEEFE0;
+  --blossom:#EF6F5D;--blossom-light:#FEF3EE;--blossom-skin:#FEEFE0;
   --bubbles:#93D6ED;--bubbles-light:#EEF9FD;--buttercup:#A6D785;--buttercup-light:#F0F9E8;
   --deco-pink:#F7A8CA;--deco-pink-light:#FEF0F7;--deco-yellow:#FFF263;--deco-yellow-light:#FFFDE8;
   --danger:#EF6F5D;--danger-light:#FEF3EE;--warning:#F9B384;--warning-light:#FEF6EE;
-  --radius:14px;--radius-lg:20px;--shadow:0 1px 4px rgba(45,45,45,.06);--shadow-md:0 2px 12px rgba(45,45,45,.09);
+  --radius:14px;--radius-lg:20px;--shadow:0 1px 4px rgba(45,45,45,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{color-scheme:light;}
@@ -44,7 +44,7 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 .bottom-nav-inner{display:grid;grid-template-columns:repeat(6,1fr);max-width:860px;margin:0 auto;}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 2px 6px;cursor:pointer;color:var(--muted);transition:all .15s;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;}
 .nav-icon{font-size:18px;line-height:1;transition:transform .15s;}
-.nav-label{font-size:9px;font-weight:700;letter-spacing:.2px;}
+.nav-label{font-size:9px;font-weight:700;}
 .nav-item.active .nav-icon{transform:scale(1.15);}
 .nav-item:nth-child(1).active{color:var(--blossom);}
 .nav-item:nth-child(2).active{color:#3a9ec0;}
@@ -114,8 +114,7 @@ select option{background:#fff;color:var(--text);}
 .owed-count{font-size:11px;color:var(--muted);margin-top:2px;}
 .filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
 .filter-select{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 11px;font-size:12px;font-family:'Noto Sans TC',sans-serif;outline:none;cursor:pointer;font-weight:600;box-shadow:var(--shadow);color-scheme:light;}
-
-/* ── 帳單對帳 ── */
+/* 帳單對帳 */
 .billing-list{display:flex;flex-direction:column;gap:16px;}
 .billing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;box-shadow:var(--shadow);}
 .billing-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
@@ -129,17 +128,17 @@ select option{background:#fff;color:var(--text);}
 .limit-bar-fill.warn{background:var(--warning);}
 .limit-bar-fill.danger{background:var(--blossom);}
 .limit-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:14px;font-weight:600;}
-/* 日期選擇器區塊 */
+/* ★ 日期選擇器：兩格並排，套用獨立一行 */
 .billing-date-block{margin-bottom:14px;}
-.billing-date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.billing-date-grid label{font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:4px;}
-.btn-apply-full{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:9px;font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-weight:700;transition:all .15s;}
+.billing-date-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
+.billing-date-grid label{font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;}
+.btn-apply-full{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:9px;font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-weight:700;transition:all .15s;text-align:center;}
 .btn-apply-full:hover{border-color:var(--text);color:var(--text);background:var(--surface);}
-/* 帳單明細 */
+/* 帳單明細打勾 */
 .billing-items{border-top:1px solid var(--border);padding-top:4px;}
 .billing-stat-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);padding:8px 4px 10px;font-weight:600;}
 .billing-checked-total{font-family:'DM Mono',monospace;font-size:12px;color:#5a9a30;font-weight:700;}
-.billing-item{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);transition:background .1s;border-radius:8px;}
+.billing-item{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);border-radius:8px;}
 .billing-item:last-child{border-bottom:none;}
 .billing-item.checked{opacity:.45;}
 .billing-item.checked .billing-item-name{text-decoration:line-through;color:var(--muted);}
@@ -152,21 +151,21 @@ select option{background:#fff;color:var(--text);}
 .billing-item-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
 .billing-item-amt{font-family:'DM Mono',monospace;font-size:13px;color:var(--blossom);flex-shrink:0;font-weight:700;white-space:nowrap;}
 .billing-no-items{font-size:12px;color:var(--muted);text-align:center;padding:20px 0;}
-
+/* Modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(45,45,45,.25);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;z-index:100;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;box-shadow:0 -6px 28px rgba(45,45,45,.1);}
 .modal-handle{width:36px;height:4px;background:var(--border);border-radius:3px;margin:0 auto 18px;}
 .modal-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
 .modal-actions{display:flex;gap:8px;margin-top:16px;}
 .modal-actions .btn{flex:1;padding:12px;}
+/* Settings */
 .settings-section{margin-bottom:24px;}
 .settings-title{font-size:10px;color:var(--muted);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
 .tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
 .tag-item{display:flex;align-items:center;gap:4px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;}
 .tag-item button{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 2px;line-height:1;}
 .tag-item button:hover{color:var(--blossom);}
-.tag-add-row{display:flex;gap:8px;}
-.tag-add-row input{flex:1;}
+.tag-add-row{display:flex;gap:8px;}.tag-add-row input{flex:1;}
 .salary-detail{background:var(--surface2);border-radius:var(--radius);padding:14px;margin-top:10px;font-size:13px;border:1px solid var(--border);}
 .salary-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;}
 .salary-row.total{border-top:1px solid var(--border);margin-top:6px;padding-top:10px;font-weight:700;font-size:15px;}
@@ -233,7 +232,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
   </div>
   <div class="main" id="mainContent"></div>
 </div>
-
 <!-- Edit Modal -->
 <div class="modal-overlay" id="editModal" style="display:none;" onclick="closeModalOutside(event)">
   <div class="modal">
@@ -266,7 +264,7 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </div>
 </div>
-<!-- Confirm Delete Modal -->
+<!-- Confirm Delete -->
 <div class="modal-overlay" id="confirmModal" style="display:none;">
   <div class="modal" style="max-width:340px;border-radius:24px;padding:24px 20px 20px;">
     <div class="modal-handle"></div>
@@ -299,7 +297,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </div>
 </div>
-
 <script>
 const S={
   get(k,def){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):def;}catch{return def;}},
@@ -311,10 +308,8 @@ function showSyncStatus(msg,ok=false,warn=false){
   el.textContent=msg;el.style.color=warn?'var(--warning)':ok?'var(--buttercup)':'var(--muted)';
   if(ok)setTimeout(()=>{if(el)el.textContent='';},3000);
 }
-let currentTab='list';
-let currentMonth=new Date();currentMonth.setDate(1);
-let billingRanges={};
-let editingId=null;
+let currentTab='list',currentMonth=new Date(),billingRanges={},editingId=null;
+currentMonth.setDate(1);
 const DEFAULT_PEOPLE=['我自己','懶人爸','阿肥媽','豬頭弟','小八貓'];
 const DEFAULT_CARDS=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];
 const CARD_DEFAULTS={
@@ -357,11 +352,9 @@ function initBillingRanges(){
 }
 function getExpensesInRange(from,to){
   if(!from||!to)return[];
-  const fromDate=new Date(from.replace(/\//g,'-'));
-  const toDate=new Date(to.replace(/\//g,'-'));
+  const fromDate=new Date(from.replace(/\//g,'-')),toDate=new Date(to.replace(/\//g,'-'));
   if(isNaN(fromDate)||isNaN(toDate))return[];
-  const results=[];
-  const cur=new Date(fromDate.getFullYear(),fromDate.getMonth(),1);
+  const results=[],cur=new Date(fromDate.getFullYear(),fromDate.getMonth(),1);
   const endMonth=new Date(toDate.getFullYear(),toDate.getMonth(),1);
   while(cur<=endMonth){
     getExpenses(new Date(cur)).forEach(e=>{if(e.date&&e.date>=from&&e.date<=to)results.push(e);});
@@ -705,8 +698,6 @@ function renderOwed(){
     <div class="section-header">明細</div><div class="expense-list">${html}</div>
   </div>`;
 }
-
-// ── 帳單對帳（單欄 + 日期分開 + 打勾）────────────────────────
 function applyBillingRange(card){
   const f=document.getElementById(`br-from-${card}`);
   const t=document.getElementById(`br-to-${card}`);
@@ -721,9 +712,7 @@ function renderBilling(){
     const range=billingRanges[card];
     const fi=range?toInput(range.from):'';
     const ti=range?toInput(range.to):'';
-    const items=(range&&range.from&&range.to)
-      ?getExpensesInRange(range.from,range.to).filter(e=>e.card===card)
-      :[];
+    const items=(range&&range.from&&range.to)?getExpensesInRange(range.from,range.to).filter(e=>e.card===card):[];
     const checks=getBillingChecks(card);
     const total=items.reduce((s,e)=>s+e.amount,0);
     const checkedTotal=items.filter(e=>checks[e.id]).reduce((s,e)=>s+e.amount,0);
@@ -744,7 +733,7 @@ function renderBilling(){
        +items.map(e=>{
           const isChecked=!!checks[e.id];
           return`<div class="billing-item ${isChecked?'checked':''}">
-            <button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})"title="${isChecked?'取消':'已對帳'}">✓</button>
+            <button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})" title="${isChecked?'取消':'標記已對帳'}">✓</button>
             <div class="billing-item-left">
               <div class="billing-item-name">${e.name}${badgeStr(e)}</div>
               <div class="billing-item-date">${e.date} · ${personPill(e.person)}</div>
@@ -753,7 +742,6 @@ function renderBilling(){
           </div>`;
         }).join('')
       :`<div class="billing-no-items">${(fi&&ti)?'這段期間沒有消費':'請設定日期範圍後按套用'}</div>`;
-
     return`<div class="billing-card">
       <div class="billing-card-header">
         <div>${cardPill(card)}<div class="billing-card-info">結帳日：每月 ${s.billingDay||'—'} 號</div></div>
@@ -779,7 +767,6 @@ function renderBilling(){
       <div class="billing-items">${itemRows}</div>
     </div>`;
   }).join('');
-
   return`<div>
     <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
       <button class="btn btn-primary" style="font-size:13px;padding:9px 18px;" onclick="openPaymentModal()">+ 記錄繳款</button>
@@ -896,8 +883,8 @@ function updateSalaryDetail(){
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
   const lastCard=getExpenses(lastMonth).filter(e=>e.card!=='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
   const cash=getExpenses().filter(e=>e.card==='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
-  const sdSal=document.getElementById('sd-sal');const sdCard=document.getElementById('sd-card');
-  const sdCash=document.getElementById('sd-cash');const sdLeft=document.getElementById('sd-left');
+  const sdSal=document.getElementById('sd-sal'),sdCard=document.getElementById('sd-card');
+  const sdCash=document.getElementById('sd-cash'),sdLeft=document.getElementById('sd-left');
   if(sdSal)sdSal.textContent=fmt(sal);
   if(sdCard)sdCard.textContent=`-${fmt(lastCard)}`;
   if(sdCash)sdCash.textContent=`-${fmt(cash)}`;
@@ -932,7 +919,7 @@ function removeCard(i){
 function saveCardSettingsForm(){
   const cards=getCards(),existing=S.get('card_settings',{});
   cards.forEach(c=>{
-    const lEl=document.getElementById(`cs-limit-${c}`);const dEl=document.getElementById(`cs-day-${c}`);
+    const lEl=document.getElementById(`cs-limit-${c}`),dEl=document.getElementById(`cs-day-${c}`);
     existing[c]={limit:lEl?parseInt(lEl.value||0):existing[c]?.limit||0,billingDay:dEl?parseInt(dEl.value||0):existing[c]?.billingDay||0};
   });
   saveCardSettings(existing);billingRanges={};alert('已儲存！');
