@@ -176,7 +176,7 @@ select option{background:#fff;color:var(--text);}
 .empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:13px;}
 #syncStatus{font-size:11px;color:var(--muted);font-weight:600;}
 @media(max-width:640px){
-  .app{width:100%;height:100vh;display:flex;flex-direction:column;}
+  .app{width:100%;height:calc(100vh-env(keyboard-inset-height,0px));min-height:calc(100%-60px);display:flex;flex-direction:column;}
   .tabs{display:flex;}.bottom-nav{display:none;}
   .tab{padding:7px 12px;font-size:11px;border-radius:8px;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .15s; font-weight:600;font-family:'Noto Sans TC',sans-serif;white-space: nowrap}
   .summary-bar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 24px;}
