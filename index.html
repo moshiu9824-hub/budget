@@ -8,38 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#FCFCF3;
-  --surface:#ffffff;
-  --surface2:#F7F7EC;
-  --border:#EDE8D8;
-  --text:#2D2D2D;
-  --muted:#A89880;
-  --blossom:#EF6F5D;
-  --blossom-soft:#F9B384;
-  --blossom-light:#FEF3EE;
-  --blossom-skin:#FEEFE0;
-  --bubbles:#93D6ED;
-  --bubbles-light:#EEF9FD;
-  --buttercup:#A6D785;
-  --buttercup-light:#F0F9E8;
-  --deco-pink:#F7A8CA;
-  --deco-pink-light:#FEF0F7;
-  --deco-yellow:#FFF263;
-  --deco-yellow-light:#FFFDE8;
-  --danger:#EF6F5D;
-  --danger-light:#FEF3EE;
-  --warning:#F9B384;
-  --warning-light:#FEF6EE;
-  --radius:14px;
-  --radius-lg:20px;
-  --shadow:0 1px 4px rgba(45,45,45,.06);
-  --shadow-md:0 2px 12px rgba(45,45,45,.09);
+  --bg:#FCFCF3;--surface:#ffffff;--surface2:#F7F7EC;--border:#EDE8D8;--text:#2D2D2D;--muted:#A89880;
+  --blossom:#EF6F5D;--blossom-soft:#F9B384;--blossom-light:#FEF3EE;--blossom-skin:#FEEFE0;
+  --bubbles:#93D6ED;--bubbles-light:#EEF9FD;--buttercup:#A6D785;--buttercup-light:#F0F9E8;
+  --deco-pink:#F7A8CA;--deco-pink-light:#FEF0F7;--deco-yellow:#FFF263;--deco-yellow-light:#FFFDE8;
+  --danger:#EF6F5D;--danger-light:#FEF3EE;--warning:#F9B384;--warning-light:#FEF6EE;
+  --radius:14px;--radius-lg:20px;--shadow:0 1px 4px rgba(45,45,45,.06);--shadow-md:0 2px 12px rgba(45,45,45,.09);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{color-scheme:light;}
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;min-height:100vh;}
 .app{display:flex;flex-direction:column;min-height:100vh;max-width:860px;margin:0 auto;}
-
 header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between;}
 .logo{font-family:'DM Mono',monospace;font-size:16px;color:var(--text);font-weight:700;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px;}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--blossom);display:inline-block;}
@@ -47,7 +26,6 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 .month-nav button{background:var(--surface);border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .month-nav button:hover{background:var(--blossom);color:#fff;border-color:var(--blossom);}
 .month-label{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);min-width:68px;text-align:center;font-weight:600;}
-
 .summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 20px;}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 14px 12px;box-shadow:var(--shadow);}
 .stat-card:nth-child(1){border-top:2.5px solid var(--bubbles);}
@@ -58,12 +36,10 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 .stat-val{font-family:'DM Mono',monospace;font-size:16px;font-weight:700;}
 .stat-val.green{color:#5a9a30;}.stat-val.red{color:var(--blossom);}.stat-val.orange{color:#c87030;}
 .stat-sub{font-size:10px;color:var(--muted);margin-top:3px;}
-
 .tabs{display:flex;gap:4px;padding:0 20px 14px;border-bottom:1px solid var(--border);}
 .tab{padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .15s;font-weight:600;font-family:'Noto Sans TC',sans-serif;}
 .tab:hover:not(.active){background:var(--surface2);color:var(--text);}
 .tab.active{background:var(--text);color:#fff;}
-
 .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(252,252,243,.96);backdrop-filter:blur(16px);border-top:1px solid var(--border);z-index:50;padding:0 0 calc(env(safe-area-inset-bottom,0px)+6px);}
 .bottom-nav-inner{display:grid;grid-template-columns:repeat(6,1fr);max-width:860px;margin:0 auto;}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 2px 6px;cursor:pointer;color:var(--muted);transition:all .15s;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;}
@@ -76,9 +52,7 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 .nav-item:nth-child(4).active{color:#c87030;}
 .nav-item:nth-child(5).active{color:#c0609a;}
 .nav-item:nth-child(6).active{color:#b8a010;}
-
 .main{padding:20px 20px 80px;flex:1;}
-
 .add-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:16px;box-shadow:var(--shadow);}
 .add-form-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
@@ -89,17 +63,14 @@ input[type="date"],input[type="month"]{background:#fff!important;color:var(--tex
 input[type="date"]::-webkit-calendar-picker-indicator,input[type="month"]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.5;}
 input:focus,select:focus{border-color:var(--bubbles);background:#fff;box-shadow:0 0 0 3px var(--bubbles-light);}
 select option{background:#fff;color:var(--text);}
-
 .btn{border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap;transition:all .15s;}
 .btn-primary{background:var(--text);color:#fff;}
 .btn-primary:hover{background:#444;transform:translateY(-1px);}
 .btn-secondary{background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
 .btn-secondary:hover{border-color:var(--text);color:var(--text);}
 .btn-danger-soft{background:var(--danger-light);border:1px solid #f5c0b0;color:var(--danger);}
-
 .checkbox-label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:600;}
 .checkbox-label input[type=checkbox]{width:15px;height:15px;accent-color:var(--blossom);-webkit-appearance:auto;appearance:auto;}
-
 .pill,.card-pill{display:inline-block;font-size:11px;padding:3px 9px;border-radius:6px;font-weight:700;white-space:nowrap;line-height:1.4;vertical-align:middle;}
 [data-pi="0"]{background:var(--blossom-light);color:#c84a38;border:1px solid #F9C4B4;}
 [data-pi="1"]{background:var(--bubbles-light);color:#3a9ec0;border:1px solid #93D6ED;}
@@ -117,7 +88,6 @@ select option{background:#fff;color:var(--text);}
 .btn-sm{background:var(--surface2);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:11px;padding:3px 9px;border-radius:7px;transition:all .15s;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-weight:600;line-height:1.4;vertical-align:middle;}
 .btn-sm.done{border-color:#A6D785;color:#5a9a30;background:var(--buttercup-light);}
 .btn-sm:hover:not(.done){border-color:#F9B384;color:#c87030;background:var(--warning-light);}
-
 .expense-list{display:flex;flex-direction:column;gap:6px;}
 .expense-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:var(--shadow);transition:background .1s;}
 .expense-card:active{background:var(--surface2);}
@@ -131,26 +101,23 @@ select option{background:#fff;color:var(--text);}
 .btn-icon{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px 6px;border-radius:7px;transition:all .15s;}
 .btn-icon.edit:hover{background:var(--bubbles-light);color:#3a9ec0;}
 .btn-icon.del:hover{background:var(--danger-light);color:var(--danger);}
-
 .group-section{margin-bottom:20px;}
 .group-header{display:flex;align-items:center;gap:8px;padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
 .group-total{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--blossom);margin-left:auto;}
 .group-owed{font-size:11px;color:#c87030;background:var(--warning-light);border:1px solid #F9B384;border-radius:6px;padding:2px 7px;font-weight:700;}
 .section-header{font-size:10px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
 .section-header::after{content:'';flex:1;height:1px;background:var(--border);}
-
 .owed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:18px;}
 .owed-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:13px;box-shadow:var(--shadow);}
 .owed-name{font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:600;}
 .owed-amt{font-family:'DM Mono',monospace;font-size:18px;color:#c87030;font-weight:700;}
 .owed-count{font-size:11px;color:var(--muted);margin-top:2px;}
-
 .filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
 .filter-select{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 11px;font-size:12px;font-family:'Noto Sans TC',sans-serif;outline:none;cursor:pointer;font-weight:600;box-shadow:var(--shadow);color-scheme:light;}
 
-/* ── 帳單對帳：單欄 + 打勾 ── */
+/* ── 帳單對帳 ── */
 .billing-list{display:flex;flex-direction:column;gap:16px;}
-.billing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow);}
+.billing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;box-shadow:var(--shadow);}
 .billing-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
 .billing-card-info{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;}
 .billing-total{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--blossom);text-align:right;}
@@ -161,65 +128,30 @@ select option{background:#fff;color:var(--text);}
 .limit-bar-fill.safe{background:var(--buttercup);}
 .limit-bar-fill.warn{background:var(--warning);}
 .limit-bar-fill.danger{background:var(--blossom);}
-.limit-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:12px;font-weight:600;}
-.date-range-row{display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
-.date-range-row label{margin-bottom:0;white-space:nowrap;}
-.date-range-row input{flex:1;min-width:110px;width:auto;padding:6px 9px;font-size:12px;}
-.btn-apply{background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 11px;font-size:12px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-weight:600;}
-.btn-apply:hover{border-color:var(--text);color:var(--text);}
-
-/* 帳單明細列 — 打勾版 */
+.limit-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:14px;font-weight:600;}
+/* 日期選擇器區塊 */
+.billing-date-block{margin-bottom:14px;}
+.billing-date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.billing-date-grid label{font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:4px;}
+.btn-apply-full{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:9px;font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-weight:700;transition:all .15s;}
+.btn-apply-full:hover{border-color:var(--text);color:var(--text);background:var(--surface);}
+/* 帳單明細 */
 .billing-items{border-top:1px solid var(--border);padding-top:4px;}
-.billing-item{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 4px;
-  border-bottom:1px solid var(--border);
-  transition:background .1s;
-  border-radius:8px;
-}
+.billing-stat-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);padding:8px 4px 10px;font-weight:600;}
+.billing-checked-total{font-family:'DM Mono',monospace;font-size:12px;color:#5a9a30;font-weight:700;}
+.billing-item{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);transition:background .1s;border-radius:8px;}
 .billing-item:last-child{border-bottom:none;}
-.billing-item.checked{opacity:.5;}
+.billing-item.checked{opacity:.45;}
 .billing-item.checked .billing-item-name{text-decoration:line-through;color:var(--muted);}
 .billing-item.checked .billing-item-amt{color:var(--muted);}
-
-/* 打勾按鈕 */
-.check-btn{
-  flex-shrink:0;
-  width:26px;height:26px;
-  border-radius:50%;
-  border:2px solid var(--border);
-  background:var(--surface2);
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;
-  transition:all .15s;
-  color:transparent;
-}
+.check-btn{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:2px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .15s;color:transparent;}
 .check-btn:hover{border-color:var(--buttercup);background:var(--buttercup-light);}
-.billing-item.checked .check-btn{
-  background:var(--buttercup);
-  border-color:var(--buttercup);
-  color:#fff;
-}
+.billing-item.checked .check-btn{background:var(--buttercup);border-color:var(--buttercup);color:#fff;}
 .billing-item-left{flex:1;min-width:0;}
 .billing-item-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .billing-item-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
 .billing-item-amt{font-family:'DM Mono',monospace;font-size:13px;color:var(--blossom);flex-shrink:0;font-weight:700;white-space:nowrap;}
 .billing-no-items{font-size:12px;color:var(--muted);text-align:center;padding:20px 0;}
-
-/* 帳單統計列 */
-.billing-stat-row{
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:11px;color:var(--muted);
-  padding:6px 4px 10px;
-  font-weight:600;
-}
-.billing-checked-total{
-  font-family:'DM Mono',monospace;
-  font-size:12px;
-  color:#5a9a30;
-  font-weight:700;
-}
 
 .modal-overlay{position:fixed;inset:0;background:rgba(45,45,45,.25);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;z-index:100;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;box-shadow:0 -6px 28px rgba(45,45,45,.1);}
@@ -227,7 +159,6 @@ select option{background:#fff;color:var(--text);}
 .modal-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
 .modal-actions{display:flex;gap:8px;margin-top:16px;}
 .modal-actions .btn{flex:1;padding:12px;}
-
 .settings-section{margin-bottom:24px;}
 .settings-title{font-size:10px;color:var(--muted);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
 .tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
@@ -241,35 +172,23 @@ select option{background:#fff;color:var(--text);}
 .salary-row.total{border-top:1px solid var(--border);margin-top:6px;padding-top:10px;font-weight:700;font-size:15px;}
 .salary-val{font-family:'DM Mono',monospace;font-weight:700;}
 .salary-val.red{color:var(--blossom);}.salary-val.green{color:#5a9a30;}
-
 .empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:13px;}
 #syncStatus{font-size:11px;color:var(--muted);font-weight:600;}
-
 @media(max-width:640px){
-  .tabs{display:none;}
-  .bottom-nav{display:block;}
+  .tabs{display:none;}.bottom-nav{display:block;}
   .summary-bar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 16px;}
   .stat-val{font-size:13px;}.stat-card{padding:10px 11px;}
   .g3{grid-template-columns:1fr 1fr;}
   .main{padding:16px 16px calc(env(safe-area-inset-bottom,0px)+90px);}
-  header{padding:16px 16px 0;}
-  .add-form{padding:14px;}
+  header{padding:16px 16px 0;}.add-form{padding:14px;}
 }
 @media(min-width:641px){
-  .main{padding:20px 24px 60px;}
-  header{padding:22px 24px 0;}
-  .summary-bar{padding:14px 24px;}
-  .tabs{padding:0 24px 14px;}
+  .main{padding:20px 24px 60px;}header{padding:22px 24px 0;}
+  .summary-bar{padding:14px 24px;}.tabs{padding:0 24px 14px;}
 }
 </style>
 <script>
-function loadScript(src){
-  return new Promise((resolve,reject)=>{
-    const s=document.createElement('script');
-    s.src=src;s.onload=resolve;s.onerror=reject;
-    document.head.appendChild(s);
-  });
-}
+function loadScript(src){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}
 window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js')
   .then(()=>loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js'))
   .catch(e=>console.warn('Firebase CDN load failed:',e));
@@ -347,7 +266,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </div>
 </div>
-
 <!-- Confirm Delete Modal -->
 <div class="modal-overlay" id="confirmModal" style="display:none;">
   <div class="modal" style="max-width:340px;border-radius:24px;padding:24px 20px 20px;">
@@ -363,7 +281,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </div>
 </div>
-
 <!-- Payment Modal -->
 <div class="modal-overlay" id="paymentModal" style="display:none;" onclick="closePaymentModalOutside(event)">
   <div class="modal" style="max-width:480px;">
@@ -394,12 +311,10 @@ function showSyncStatus(msg,ok=false,warn=false){
   el.textContent=msg;el.style.color=warn?'var(--warning)':ok?'var(--buttercup)':'var(--muted)';
   if(ok)setTimeout(()=>{if(el)el.textContent='';},3000);
 }
-
 let currentTab='list';
 let currentMonth=new Date();currentMonth.setDate(1);
 let billingRanges={};
 let editingId=null;
-
 const DEFAULT_PEOPLE=['我自己','懶人爸','阿肥媽','豬頭弟','小八貓'];
 const DEFAULT_CARDS=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];
 const CARD_DEFAULTS={
@@ -414,7 +329,6 @@ function savePeople(p){S.set('people',p);}
 function saveCards(c){S.set('cards',c);}
 function personPill(p){const i=Math.abs(getPeople().indexOf(p))%10;return`<span class="pill" data-pi="${i}">${p}</span>`;}
 function cardPill(c){const i=(Math.abs(getCards().indexOf(c))+3)%10;return`<span class="card-pill" data-pi="${i}">${c}</span>`;}
-
 function monthKey(d){return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;}
 function getExpenses(d){return S.get(monthKey(d||currentMonth),[]);}
 function saveExpenses(data,d){S.set(monthKey(d||currentMonth),data);}
@@ -426,13 +340,11 @@ function getCardSettings(){
   return m;
 }
 function saveCardSettings(d){S.set('card_settings',d);}
-
 function toSlash(s){return s?s.replace(/-/g,'/'):'';} 
 function toInput(s){return s?s.replace(/\//g,'-'):'';} 
 function fmtSlash(d){return`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;}
 function todayInput(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fmt(n){return'NT$'+Math.round(n).toLocaleString();}
-
 function getBillingRange(card,refMonth){
   const s=getCardSettings()[card];if(!s||!s.billingDay)return null;
   const day=s.billingDay,y=refMonth.getFullYear(),m=refMonth.getMonth();
@@ -443,8 +355,6 @@ function initBillingRanges(){
     if(!billingRanges[c]){const r=getBillingRange(c,currentMonth);if(r)billingRanges[c]=r;}
   });
 }
-
-// ★ 跨月撈資料
 function getExpensesInRange(from,to){
   if(!from||!to)return[];
   const fromDate=new Date(from.replace(/\//g,'-'));
@@ -454,25 +364,19 @@ function getExpensesInRange(from,to){
   const cur=new Date(fromDate.getFullYear(),fromDate.getMonth(),1);
   const endMonth=new Date(toDate.getFullYear(),toDate.getMonth(),1);
   while(cur<=endMonth){
-    getExpenses(new Date(cur)).forEach(e=>{
-      if(e.date&&e.date>=from&&e.date<=to)results.push(e);
-    });
+    getExpenses(new Date(cur)).forEach(e=>{if(e.date&&e.date>=from&&e.date<=to)results.push(e);});
     cur.setMonth(cur.getMonth()+1);
   }
   return results;
 }
-
-// ★ 帳單對帳勾選狀態（存 localStorage，key = billing_checks_卡名）
 function getBillingChecks(card){return S.get(`billing_checks_${card}`,{});}
 function saveBillingChecks(card,data){S.set(`billing_checks_${card}`,data);}
 function toggleBillingCheck(card,expenseId){
   const checks=getBillingChecks(card);
   checks[expenseId]=!checks[expenseId];
   saveBillingChecks(card,checks);
-  // 只重繪帳單區，不重新 render 整頁
   document.getElementById('mainContent').innerHTML=renderBilling();
 }
-
 function updateSummary(){
   const salary=getSalary();
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
@@ -490,14 +394,11 @@ function updateSummary(){
   document.getElementById('sumLeft').textContent=fmt(left);
   document.getElementById('sumLeft').className='stat-val '+(left<0?'red':'green');
 }
-
 function changeMonth(dir){
-  currentMonth.setMonth(currentMonth.getMonth()+dir);
-  billingRanges={};
+  currentMonth.setMonth(currentMonth.getMonth()+dir);billingRanges={};
   document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
   autoCarryInstallments();render();
 }
-
 function autoCarryInstallments(){
   const ex=getExpenses();
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
@@ -520,7 +421,6 @@ function autoCarryInstallments(){
   });
   if(added>0)saveExpenses(ex);
 }
-
 function switchTab(tab){
   currentTab=tab;
   const tabs=['list','card','person','owed','billing','settings'];
@@ -529,7 +429,6 @@ function switchTab(tab){
   if(tab==='billing')initBillingRanges();
   render();
 }
-
 function addExpense(){
   const name=document.getElementById('f-name').value.trim();
   const amount=parseInt(document.getElementById('f-amount').value);
@@ -552,7 +451,6 @@ function addExpense(){
   render();
 }
 function toggleAddInst(){document.getElementById('f-inst-fields').style.display=document.getElementById('f-inst').checked?'grid':'none';}
-
 function importFixed(){
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
   const lastEx=getExpenses(lastMonth);
@@ -570,7 +468,6 @@ function importFixed(){
   saveExpenses(ex);render();
   alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');
 }
-
 let pendingDeleteId=null;
 function deleteExpense(id){
   pendingDeleteId=id;
@@ -592,21 +489,17 @@ function togglePaid(id){
   const d=getExpenses();const e=d.find(x=>x.id===id);
   if(e)e.paid=!e.paid;saveExpenses(d);render();
 }
-
 function openEdit(id){
   let e=getExpenses().find(x=>x.id===id);
   if(!e){for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);const found=getExpenses(d).find(x=>x.id===id);if(found){e=found;break;}}}
   if(!e)return;
   editingId=id;
-  document.getElementById('e-name').value=e.name;
-  document.getElementById('e-amount').value=e.amount;
-  document.getElementById('e-date').value=toInput(e.date);
-  document.getElementById('e-fixed').checked=!!e.fixed;
+  document.getElementById('e-name').value=e.name;document.getElementById('e-amount').value=e.amount;
+  document.getElementById('e-date').value=toInput(e.date);document.getElementById('e-fixed').checked=!!e.fixed;
   const bm=e.billingMonth||e.date.substring(0,7).replace('/','-');
   document.getElementById('e-billing-month').value=bm.replace('/','-');
   document.getElementById('e-inst').checked=!!e.installment;
-  document.getElementById('e-inst-cur').value=e.instCur||'';
-  document.getElementById('e-inst-total').value=e.instTotal||'';
+  document.getElementById('e-inst-cur').value=e.instCur||'';document.getElementById('e-inst-total').value=e.instTotal||'';
   document.getElementById('e-inst-fields').style.display=e.installment?'grid':'none';
   document.getElementById('e-card').innerHTML=getCards().map(c=>`<option ${c===e.card?'selected':''}>${c}</option>`).join('');
   document.getElementById('e-person').innerHTML=getPeople().map(p=>`<option ${p===e.person?'selected':''}>${p}</option>`).join('');
@@ -649,7 +542,6 @@ function saveEdit(){
   }
   closeModal();render();
 }
-
 function badgeStr(e){
   let s='';
   if(e.fixed)s+=`<span class="fixed-badge">固定</span>`;
@@ -687,7 +579,6 @@ function renderAddForm(){
     </div>
   </div>`;
 }
-
 function renderList(fp='全部',fc='全部',ff='全部'){
   const people=getPeople(),cards=getCards();
   let ex=getExpenses();
@@ -727,7 +618,6 @@ function renderList(fp='全部',fc='全部',ff='全部'){
   return filters+`<div class="expense-list">${html}</div>`;
 }
 function renderListF(p,c,f){document.getElementById('mainContent').innerHTML=renderAddForm()+renderList(p,c,f);updateSummary();}
-
 function renderCardView(){
   const ex=getExpenses();
   const sections=getCards().map(card=>{
@@ -755,7 +645,6 @@ function renderCardView(){
   }).join('');
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
-
 function renderPersonView(){
   const ex=getExpenses();
   const sections=getPeople().map(person=>{
@@ -789,7 +678,6 @@ function renderPersonView(){
   }).join('');
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
-
 function renderOwed(){
   const ex=getExpenses();
   const unpaid=ex.filter(e=>e.person!=='我自己'&&!e.paid);
@@ -814,12 +702,11 @@ function renderOwed(){
     </div>`).join('');
   return`<div>
     <div class="section-header">待收金額</div><div class="owed-grid">${sc}</div>
-    <div class="section-header">明細</div>
-    <div class="expense-list">${html}</div>
+    <div class="section-header">明細</div><div class="expense-list">${html}</div>
   </div>`;
 }
 
-// ── 帳單對帳（單欄 + 打勾）────────────────────────────────────
+// ── 帳單對帳（單欄 + 日期分開 + 打勾）────────────────────────
 function applyBillingRange(card){
   const f=document.getElementById(`br-from-${card}`);
   const t=document.getElementById(`br-to-${card}`);
@@ -827,7 +714,6 @@ function applyBillingRange(card){
   billingRanges[card]={from:toSlash(f.value),to:toSlash(t.value)};
   document.getElementById('mainContent').innerHTML=renderBilling();
 }
-
 function renderBilling(){
   const settings=getCardSettings();
   const cols=getCards().filter(c=>c!=='現金').map(card=>{
@@ -850,7 +736,6 @@ function renderBilling(){
     const bar=limit>0?`
       <div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div>
       <div class="limit-meta"><span>已用 ${pct}%</span><span>額度 ${fmt(limit)}</span></div>`:'';
-
     const itemRows=items.length
       ?`<div class="billing-stat-row">
           <span>${items.length} 筆 · 已對帳 ${checkedCount} 筆 <span class="billing-checked-total">✓ ${fmt(checkedTotal)}</span></span>
@@ -859,7 +744,7 @@ function renderBilling(){
        +items.map(e=>{
           const isChecked=!!checks[e.id];
           return`<div class="billing-item ${isChecked?'checked':''}">
-            <button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})" title="${isChecked?'取消對帳':'標記已對帳'}">✓</button>
+            <button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})"title="${isChecked?'取消':'已對帳'}">✓</button>
             <div class="billing-item-left">
               <div class="billing-item-name">${e.name}${badgeStr(e)}</div>
               <div class="billing-item-date">${e.date} · ${personPill(e.person)}</div>
@@ -878,12 +763,18 @@ function renderBilling(){
         </div>
       </div>
       ${bar}
-      <div class="date-range-row">
-        <label>從</label>
-        <input type="date" id="br-from-${card}" value="${fi}" style="background:#fff;color:var(--text);color-scheme:light;"/>
-        <label>到</label>
-        <input type="date" id="br-to-${card}" value="${ti}" style="background:#fff;color:var(--text);color-scheme:light;"/>
-        <button class="btn-apply" onclick="applyBillingRange('${card}')">套用</button>
+      <div class="billing-date-block">
+        <div class="billing-date-grid">
+          <div>
+            <label>從</label>
+            <input type="date" id="br-from-${card}" value="${fi}" style="background:#fff;color:var(--text);color-scheme:light;"/>
+          </div>
+          <div>
+            <label>到</label>
+            <input type="date" id="br-to-${card}" value="${ti}" style="background:#fff;color:var(--text);color-scheme:light;"/>
+          </div>
+        </div>
+        <button class="btn-apply-full" onclick="applyBillingRange('${card}')">套用日期範圍</button>
       </div>
       <div class="billing-items">${itemRows}</div>
     </div>`;
@@ -900,7 +791,6 @@ function renderBilling(){
     </div>
   </div>`;
 }
-
 function getPayments(){return S.get('card_payments',[]);}
 function savePayments(d){S.set('card_payments',d);}
 function openPaymentModal(){
@@ -951,7 +841,6 @@ function deletePayment(id){
   document.getElementById('confirmMsg').textContent='確定刪除此繳款紀錄？';
   document.getElementById('confirmModal').style.display='flex';
 }
-
 function renderSettings(){
   const people=getPeople(),cards=getCards(),cs=getCardSettings(),sal=getSalary();
   const peopleList=people.map((p,i)=>`<div class="tag-item">${personPill(p)}${i===0?'':`<button onclick="removePerson(${i})">×</button>`}</div>`).join('');
@@ -1052,7 +941,6 @@ function clearMonth(){
   if(!confirm('確定要清除本月所有記帳資料？'))return;
   S.del(monthKey(currentMonth));render();
 }
-
 function render(){
   updateSummary();
   const el=document.getElementById('mainContent');
@@ -1063,7 +951,6 @@ function render(){
   else if(currentTab==='billing')el.innerHTML=renderBilling();
   else if(currentTab==='settings'){el.innerHTML=renderSettings();updateSalaryDetail();}
 }
-
 function reorderCards(){
   const preferred=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];
   const current=S.get('cards',null);if(!current)return;
@@ -1071,10 +958,8 @@ function reorderCards(){
   localStorage.setItem('cards',JSON.stringify(reordered));
   if(window.FB)window.FB.set('cards',JSON.stringify(reordered));
 }
-
 async function syncFromFirebase(){
-  if(!window.FB)return;
-  showSyncStatus('同步中…');
+  if(!window.FB)return;showSyncStatus('同步中…');
   try{
     const keys=['people','cards','card_settings','salary','card_payments',
       ...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
@@ -1082,10 +967,8 @@ async function syncFromFirebase(){
     reorderCards();showSyncStatus('已同步 ✓',true);autoCarryInstallments();render();updateSummary();
   }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
 }
-
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
 initBillingRanges();autoCarryInstallments();render();
-
 (window._firebaseLoader||Promise.resolve()).then(()=>{
   const firebaseConfig={
     apiKey:"AIzaSyAMr1lm850UVU5NB0a0aCzHJFSJCnQ3CQ4",
