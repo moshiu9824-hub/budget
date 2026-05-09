@@ -42,10 +42,10 @@ header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space
 .tab.active{background:var(--text);color:#fff;}
 .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(252,252,243,.96);backdrop-filter:blur(16px);border-top:1px solid var(--border);z-index:50;padding:0 0 calc(env(safe-area-inset-bottom,0px)+6px);}
 .bottom-nav-inner{display:grid;grid-template-columns:repeat(6,1fr);max-width:860px;margin:0 auto;}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 2px 6px;cursor:pointer;color:var(--muted);transition:all .15s;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;}
-.nav-icon{font-size:18px;line-height:1;transition:transform .15s;}
-.nav-label{font-size:9px;font-weight:700;letter-spacing:.2px;}
-.nav-item.active .nav-icon{transform:scale(1.15);}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:0px;padding:12px 2px 8px;cursor:pointer;color:var(--muted);transition:all .15s;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;}
+.nav-icon{display:none;}
+.nav-label{font-size:13px;font-weight:700;letter-spacing:.2px;}
+.nav-item.active .nav-icon{}
 .nav-item:nth-child(1).active{color:var(--blossom);}
 .nav-item:nth-child(2).active{color:#3a9ec0;}
 .nav-item:nth-child(3).active{color:#5a9a30;}
@@ -178,9 +178,11 @@ select option{background:#fff;color:var(--text);}
   .tabs{display:none;}.bottom-nav{display:block;}
   .summary-bar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 16px;}
   .stat-val{font-size:13px;}.stat-card{padding:10px 11px;}
-  .g3{grid-template-columns:1fr 1fr;}
-  .main{padding:16px 16px calc(env(safe-area-inset-bottom,0px)+90px);}
-  header{padding:16px 16px 0;}.add-form{padding:14px;}
+  .g3,.g2{grid-template-columns:1fr;gap: 12px;}
+  .main{padding:20px 20px calc(env(safe-area-inset-bottom,0px)+90px);overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;}
+  header{padding:16px 16px 0;}.add-form{padding:18px 16px;}
+  .expense-card,.owed-card,.billing-card {padding: 12px 16px;}
+  .group-header {padding: 8px 16px;}
 }
 @media(min-width:641px){
   .main{padding:20px 24px 60px;}header{padding:22px 24px 0;}
