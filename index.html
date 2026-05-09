@@ -7,14 +7,7 @@
 <title>錢去哪了</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#FCFCF3;--surface:#ffffff;--surface2:#F7F7EC;--border:#EDE8D8;--text:#2D2D2D;--muted:#A89880;
-  --blossom:#EF6F5D;--blossom-soft:#F9B384;--blossom-light:#FEF3EE;--blossom-skin:#FEEFE0;
-  --bubbles:#93D6ED;--bubbles-light:#EEF9FD;--buttercup:#A6D785;--buttercup-light:#F0F9E8;
-  --deco-pink:#F7A8CA;--deco-pink-light:#FEF0F7;--deco-yellow:#FFF263;--deco-yellow-light:#FFFDE8;
-  --danger:#EF6F5D;--danger-light:#FEF3EE;--warning:#F9B384;--warning-light:#FEF6EE;
-  --radius:14px;--radius-lg:20px;--shadow:0 1px 4px rgba(45,45,45,.06);--shadow-md:0 2px 12px rgba(45,45,45,.09);
-}
+:root{--bg:#FCFCF3;--surface:#ffffff;--surface2:#F7F7EC;--border:#EDE8D8;--text:#2D2D2D;--muted:#A89880;--blossom:#EF6F5D;--blossom-soft:#F9B384;--blossom-light:#FEF3EE;--blossom-skin:#FEEFE0;--bubbles:#93D6ED;--bubbles-light:#EEF9FD;--buttercup:#A6D785;--buttercup-light:#F0F9E8;--deco-pink:#F7A8CA;--deco-pink-light:#FEF0F7;--deco-yellow:#FFF263;--deco-yellow-light:#FFFDE8;--danger:#EF6F5D;--danger-light:#FEF3EE;--warning:#F9B384;--warning-light:#FEF6EE;--radius:14px;--radius-lg:20px;--shadow:0 1px 4px rgba(45,45,45,.06);--shadow-md:0 2px 12px rgba(45,45,45,.09);}
 html,body{height:100%;margin:0;padding:0;overflow-x:hidden;overflow-y:auto;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{color-scheme:light;}
@@ -116,7 +109,7 @@ select option{background:#fff;color:var(--text);}
 .filter-select{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 11px;font-size:12px;font-family:'Noto Sans TC',sans-serif;outline:none;cursor:pointer;font-weight:600;box-shadow:var(--shadow);color-scheme:light;}
 .billing-list{display:flex;flex-direction:column;gap:16px;}
 .billing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;box-shadow:var(--shadow);}
-.billing-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.billing-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
 .billing-card-info{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;}
 .billing-total{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--blossom);text-align:right;}
 .billing-total.warn{color:#c87030;}.billing-total.danger{color:var(--blossom);}
@@ -127,11 +120,6 @@ select option{background:#fff;color:var(--text);}
 .limit-bar-fill.warn{background:var(--warning);}
 .limit-bar-fill.danger{background:var(--blossom);}
 .limit-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:14px;font-weight:600;}
-.billing-date-block{margin-bottom:14px;}
-.billing-date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.billing-date-grid label{font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:4px;}
-.btn-apply-full{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:9px;font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-weight:700;transition:all .15s;}
-.btn-apply-full:hover{border-color:var(--text);color:var(--text);background:var(--surface);}
 .billing-items{border-top:1px solid var(--border);padding-top:4px;}
 .billing-stat-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);padding:8px 4px 10px;font-weight:600;}
 .billing-checked-total{font-family:'DM Mono',monospace;font-size:12px;color:#5a9a30;font-weight:700;}
@@ -148,6 +136,11 @@ select option{background:#fff;color:var(--text);}
 .billing-item-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
 .billing-item-amt{font-family:'DM Mono',monospace;font-size:13px;color:var(--blossom);flex-shrink:0;font-weight:700;white-space:nowrap;}
 .billing-no-items{font-size:12px;color:var(--muted);text-align:center;padding:20px 0;}
+/* 帳單月份切換 */
+.billing-month-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;box-shadow:var(--shadow);}
+.billing-month-nav button{background:var(--surface2);border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.billing-month-nav button:hover{background:var(--blossom);color:#fff;border-color:var(--blossom);}
+.billing-month-label{font-family:'DM Mono',monospace;font-size:14px;color:var(--text);font-weight:700;min-width:80px;text-align:center;}
 .modal-overlay{position:fixed;inset:0;background:rgba(45,45,45,.25);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;z-index:100;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;box-shadow:0 -6px 28px rgba(45,45,45,.1);}
 .modal-handle{width:36px;height:4px;background:var(--border);border-radius:3px;margin:0 auto 18px;}
@@ -188,9 +181,7 @@ select option{background:#fff;color:var(--text);}
 </style>
 <script>
 function loadScript(src){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}
-window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js')
-  .then(()=>loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js'))
-  .catch(e=>console.warn('Firebase CDN load failed:',e));
+window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js').then(()=>loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js')).catch(e=>console.warn('Firebase CDN load failed:',e));
 </script>
 </head>
 <body>
@@ -298,26 +289,13 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
   </div>
 </div>
 <script>
-const S={
-  get(k,def){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):def;}catch{return def;}},
-  set(k,v){localStorage.setItem(k,JSON.stringify(v));if(window.FB)window.FB.set(k,JSON.stringify(v));},
-  del(k){localStorage.removeItem(k);if(window.FB)window.FB.del(k);}
-};
-function showSyncStatus(msg,ok=false,warn=false){
-  const el=document.getElementById('syncStatus');if(!el)return;
-  el.textContent=msg;el.style.color=warn?'var(--warning)':ok?'var(--buttercup)':'var(--muted)';
-  if(ok)setTimeout(()=>{if(el)el.textContent='';},3000);
-}
-let currentTab='list',currentMonth=new Date(),billingRanges={},editingId=null;
-currentMonth.setDate(1);
+const S={get(k,def){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):def;}catch{return def;}},set(k,v){localStorage.setItem(k,JSON.stringify(v));if(window.FB)window.FB.set(k,JSON.stringify(v));},del(k){localStorage.removeItem(k);if(window.FB)window.FB.del(k);}};
+function showSyncStatus(msg,ok=false,warn=false){const el=document.getElementById('syncStatus');if(!el)return;el.textContent=msg;el.style.color=warn?'var(--warning)':ok?'var(--buttercup)':'var(--muted)';if(ok)setTimeout(()=>{if(el)el.textContent='';},3000);}
+let currentTab='list',currentMonth=new Date(),billingMonth=new Date(),editingId=null;
+currentMonth.setDate(1);billingMonth.setDate(1);
 const DEFAULT_PEOPLE=['我自己','懶人爸','阿肥媽','豬頭弟','小八貓'];
 const DEFAULT_CARDS=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];
-const CARD_DEFAULTS={
-  '玉山':{limit:70000,billingDay:27},'台新':{limit:30000,billingDay:2},
-  '國泰':{limit:60000,billingDay:10},'中信':{limit:60000,billingDay:5},
-  '聯邦':{limit:60000,billingDay:12},'富邦':{limit:100000,billingDay:8},
-  '華南':{limit:60000,billingDay:23},'現金':{limit:0,billingDay:0}
-};
+const CARD_DEFAULTS={'玉山':{limit:70000,billingDay:27},'台新':{limit:30000,billingDay:2},'國泰':{limit:60000,billingDay:10},'中信':{limit:60000,billingDay:5},'聯邦':{limit:60000,billingDay:12},'富邦':{limit:100000,billingDay:8},'華南':{limit:60000,billingDay:23},'現金':{limit:0,billingDay:0}};
 function getPeople(){return S.get('people',DEFAULT_PEOPLE);}
 function getCards(){return S.get('cards',DEFAULT_CARDS);}
 function savePeople(p){S.set('people',p);}
@@ -326,60 +304,42 @@ function personPill(p){const i=Math.abs(getPeople().indexOf(p))%10;return`<span 
 function cardPill(c){const i=(Math.abs(getCards().indexOf(c))+3)%10;return`<span class="card-pill" data-pi="${i}">${c}</span>`;}
 function monthKey(d){return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;}
 function getExpenses(d){return S.get(monthKey(d||currentMonth),[]);}
-function saveExpenses(data,d) {S.set(monthKey(d||currentMonth),data);}
+function saveExpenses(data,d){S.set(monthKey(d||currentMonth),data);}
 function getSalary(){return S.get('salary',36884);}
 function saveSalary(v){S.set('salary',v);}
-function getCardSettings(){
-  const saved=S.get('card_settings',{});const m={};
-  getCards().forEach(c=>{m[c]=Object.assign({},CARD_DEFAULTS[c]||{limit:0,billingDay:0},saved[c]||{});});
-  return m;
-}
+function getCardSettings(){const saved=S.get('card_settings',{});const m={};getCards().forEach(c=>{m[c]=Object.assign({},CARD_DEFAULTS[c]||{limit:0,billingDay:0},saved[c]||{});});return m;}
 function saveCardSettings(d){S.set('card_settings',d);}
 function toSlash(s){return s?s.replace(/-/g,'/'):'';} 
 function toInput(s){return s?s.replace(/\//g,'-'):'';} 
 function fmtSlash(d){return`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;}
 function todayInput(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fmt(n){return'NT$'+Math.round(n).toLocaleString();}
-function getBillingRange(card,refMonth){
-  const s=getCardSettings()[card];if(!s||!s.billingDay)return null;
-  const day=s.billingDay,y=refMonth.getFullYear(),m=refMonth.getMonth();
-  return{from:fmtSlash(new Date(y,m-2,day+1)),to:fmtSlash(new Date(y,m-1,day))};
-}
-function initBillingRanges(){
-  getCards().filter(c=>c!=='現金').forEach(c=>{
-    const r=getBillingRange(c,currentMonth);
-    if(r)billingRanges[c]=r;
-  });
-}
-function getExpensesInRange(from,to){
-  if(!from||!to)return[];
-  const fromDate=new Date(from.replace(/\//g,'-')),toDate=new Date(to.replace(/\//g,'-'));
-  if(isNaN(fromDate)||isNaN(toDate))return[];
-  const results=[],cur=new Date(fromDate.getFullYear(),fromDate.getMonth(),1);
-  const endMonth=new Date(toDate.getFullYear(),toDate.getMonth(),1);
-  while(cur<=endMonth){
-    getExpenses(new Date(cur)).forEach(e=>{if(e.date&&e.date>=from&&e.date<=to)results.push(e);});
-    cur.setMonth(cur.getMonth()+1);
+function billingMonthStr(){return`${billingMonth.getFullYear()}/${String(billingMonth.getMonth()+1).padStart(2,'0')}`;}
+
+// ★ 跨月撈某個 billingMonth 的所有消費
+function getExpensesByBillingMonth(bm){
+  // bm 格式: "2025/05"
+  const results=[];
+  for(let i=-2;i<=2;i++){
+    const d=new Date(billingMonth.getFullYear(),billingMonth.getMonth()+i,1);
+    getExpenses(d).forEach(e=>{if(e.billingMonth===bm)results.push(e);});
   }
-  return results;
+  // 去重
+  const seen=new Set();
+  return results.filter(e=>{if(seen.has(e.id))return false;seen.add(e.id);return true;});
 }
+
 function getFutureCommitted(card){
   let committed=0;
   for(let i=1;i<=12;i++){
     const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);
-    getExpenses(d).filter(e=>e.card===card&&e.installment&&e.instCur&&e.instTotal&&e.instCur<=e.instTotal)
-      .forEach(e=>committed+=e.amount);
+    getExpenses(d).filter(e=>e.card===card&&e.installment&&e.instCur&&e.instTotal&&e.instCur<=e.instTotal).forEach(e=>committed+=e.amount);
   }
   return committed;
 }
-function getBillingRange(card,refMonth){const s=getCardSettings()[card];if(!s||!s.billingDay)return null;const day=s.billingDay,y=refMonth.getFullYear(),m=refMonth.getMonth();const today=new Date();const isCur=(y===today.getFullYear()&&m===today.getMonth());if(isCur&&today.getDate()>=day){return{from:fmtSlash(new Date(y,m-1,day+1)),to:fmtSlash(new Date(y,m,day))};}else{return{from:fmtSlash(new Date(y,m-2,day+1)),to:fmtSlash(new Date(y,m-1,day));}}
+function getBillingChecks(card){return S.get(`billing_checks_${card}`,{});}
 function saveBillingChecks(card,data){S.set(`billing_checks_${card}`,data);}
-function toggleBillingCheck(card,expenseId){
-  const checks=getBillingChecks(card);
-  checks[expenseId]=!checks[expenseId];
-  saveBillingChecks(card,checks);
-  document.getElementById('mainContent').innerHTML=renderBilling();
-}
+function toggleBillingCheck(card,expenseId){const checks=getBillingChecks(card);checks[expenseId]=!checks[expenseId];saveBillingChecks(card,checks);document.getElementById('mainContent').innerHTML=renderBilling();}
 function updateSummary(){
   const salary=getSalary();
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
@@ -397,12 +357,8 @@ function updateSummary(){
   document.getElementById('sumLeft').textContent=fmt(left);
   document.getElementById('sumLeft').className='stat-val '+(left<0?'red':'green');
 }
-function changeMonth(dir){
-  currentMonth.setMonth(currentMonth.getMonth()+dir);
-  billingRanges={};initBillingRanges();
-  document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
-  autoCarryInstallments();render();
-}
+function changeMonth(dir){currentMonth.setMonth(currentMonth.getMonth()+dir);document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;autoCarryInstallments();render();}
+function changeBillingMonth(dir){billingMonth.setMonth(billingMonth.getMonth()+dir);document.getElementById('mainContent').innerHTML=renderBilling();}
 function autoCarryInstallments(){
   const ex=getExpenses();
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
@@ -430,7 +386,6 @@ function switchTab(tab){
   const tabs=['list','card','person','owed','billing','settings'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
   tabs.forEach(t=>{const el=document.getElementById('nav-'+t);if(el)el.classList.toggle('active',t===tab);});
-  if(tab==='billing'){billingRanges={};initBillingRanges();}
   render();
 }
 function addExpense(){
@@ -445,9 +400,9 @@ function addExpense(){
   const instTotal=isInst?parseInt(document.getElementById('f-inst-total').value||1):null;
   if(!name||!amount||!card||!person||!date)return;
   const dateObj=date.split('/');
-  const billingMonth=`${dateObj[0]}/${dateObj[1]}`;
+  const bm=`${dateObj[0]}/${dateObj[1]}`;
   const ex=getExpenses();
-  ex.unshift({id:Date.now(),name,amount,card,person,date,billingMonth,fixed,installment:isInst,instCur,instTotal,paid:false});
+  ex.unshift({id:Date.now(),name,amount,card,person,date,billingMonth:bm,fixed,installment:isInst,instCur,instTotal,paid:false});
   saveExpenses(ex);
   document.getElementById('f-name').value='';document.getElementById('f-amount').value='';
   document.getElementById('f-fixed').checked=false;document.getElementById('f-inst').checked=false;
@@ -473,26 +428,14 @@ function importFixed(){
   alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');
 }
 let pendingDeleteId=null;
-function deleteExpense(id){
-  pendingDeleteId=id;
-  const e=getExpenses().find(x=>x.id===id);
-  document.getElementById('confirmMsg').textContent=e?`刪除「${e.name}」？`:'確定刪除？';
-  document.getElementById('confirmModal').style.display='flex';
-}
+function deleteExpense(id){pendingDeleteId=id;const e=getExpenses().find(x=>x.id===id);document.getElementById('confirmMsg').textContent=e?`刪除「${e.name}」？`:'確定刪除？';document.getElementById('confirmModal').style.display='flex';}
 function confirmDelete(){
-  if(pendingDeleteId&&String(pendingDeleteId).startsWith('pay_')){
-    const pid=parseInt(String(pendingDeleteId).replace('pay_',''));
-    savePayments(getPayments().filter(p=>p.id!==pid));
-  }else if(pendingDeleteId){
-    saveExpenses(getExpenses().filter(e=>e.id!==pendingDeleteId));
-  }
+  if(pendingDeleteId&&String(pendingDeleteId).startsWith('pay_')){const pid=parseInt(String(pendingDeleteId).replace('pay_',''));savePayments(getPayments().filter(p=>p.id!==pid));}
+  else if(pendingDeleteId){saveExpenses(getExpenses().filter(e=>e.id!==pendingDeleteId));}
   pendingDeleteId=null;document.getElementById('confirmModal').style.display='none';render();
 }
 function cancelDelete(){pendingDeleteId=null;document.getElementById('confirmModal').style.display='none';}
-function togglePaid(id){
-  const d=getExpenses();const e=d.find(x=>x.id===id);
-  if(e)e.paid=!e.paid;saveExpenses(d);render();
-}
+function togglePaid(id){const d=getExpenses();const e=d.find(x=>x.id===id);if(e)e.paid=!e.paid;saveExpenses(d);render();}
 function openEdit(id){
   let e=getExpenses().find(x=>x.id===id);
   if(!e){for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);const found=getExpenses(d).find(x=>x.id===id);if(found){e=found;break;}}}
@@ -524,15 +467,13 @@ function saveEdit(){
   const instCurVal=isInst?parseInt(document.getElementById('e-inst-cur').value||1):null;
   const instTotalVal=isInst?parseInt(document.getElementById('e-inst-total').value||1):null;
   const billingMonthRaw=document.getElementById('e-billing-month').value;
-  const billingMonth=billingMonthRaw?billingMonthRaw.replace('-','/'):null;
+  const bm=billingMonthRaw?billingMonthRaw.replace('-','/'):null;
   if(!nameVal||!amtVal||!cardVal||!personVal||!dateVal){alert('請填寫所有必填欄位');return;}
   let sourceMonth=currentMonth,sourceEx=getExpenses(currentMonth);
-  if(!sourceEx.find(x=>x.id===editingId)){
-    for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);if(getExpenses(d).find(x=>x.id===editingId)){sourceMonth=d;sourceEx=getExpenses(d);break;}}
-  }
+  if(!sourceEx.find(x=>x.id===editingId)){for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);if(getExpenses(d).find(x=>x.id===editingId)){sourceMonth=d;sourceEx=getExpenses(d);break;}}}
   const oldItem=sourceEx.find(x=>x.id===editingId)||{};
-  const updatedExpense={...oldItem,name:nameVal,amount:amtVal,card:cardVal,person:personVal,date:dateVal,fixed:fixedVal,installment:isInst,instCur:instCurVal,instTotal:instTotalVal,billingMonth,id:editingId};
-  const newMonthStr=billingMonth||dateVal.substring(0,7);
+  const updatedExpense={...oldItem,name:nameVal,amount:amtVal,card:cardVal,person:personVal,date:dateVal,fixed:fixedVal,installment:isInst,instCur:instCurVal,instTotal:instTotalVal,billingMonth:bm,id:editingId};
+  const newMonthStr=bm||dateVal.substring(0,7);
   const srcMonthStr=`${sourceMonth.getFullYear()}/${String(sourceMonth.getMonth()+1).padStart(2,'0')}`;
   if(newMonthStr!==srcMonthStr){
     saveExpenses(sourceEx.filter(x=>x.id!==editingId),sourceMonth);
@@ -540,10 +481,7 @@ function saveEdit(){
     const targetDate=new Date(parseInt(tParts[0]),parseInt(tParts[1])-1,1);
     const targetEx=getExpenses(targetDate);targetEx.unshift(updatedExpense);saveExpenses(targetEx,targetDate);
     alert(`已移到 ${newMonthStr}`);
-  }else{
-    const i=sourceEx.findIndex(x=>x.id===editingId);
-    if(i>=0){sourceEx[i]=updatedExpense;saveExpenses(sourceEx,sourceMonth);}
-  }
+  }else{const i=sourceEx.findIndex(x=>x.id===editingId);if(i>=0){sourceEx[i]=updatedExpense;saveExpenses(sourceEx,sourceMonth);}}
   closeModal();render();
 }
 function badgeStr(e){
@@ -591,34 +529,22 @@ function renderList(fp='全部',fc='全部',ff='全部'){
   if(ff==='固定')ex=ex.filter(e=>e.fixed);
   if(ff==='一般')ex=ex.filter(e=>!e.fixed);
   const filters=`<div class="filter-bar">
-    <select class="filter-select" onchange="renderListF(this.value,document.getElementById('fc').value,document.getElementById('ff').value)" id="fp">
-      <option>全部</option>${people.map(p=>`<option ${p===fp?'selected':''}>${p}</option>`).join('')}
-    </select>
-    <select class="filter-select" onchange="renderListF(document.getElementById('fp').value,this.value,document.getElementById('ff').value)" id="fc">
-      <option>全部</option>${cards.map(c=>`<option ${c===fc?'selected':''}>${c}</option>`).join('')}
-    </select>
-    <select class="filter-select" onchange="renderListF(document.getElementById('fp').value,document.getElementById('fc').value,this.value)" id="ff">
-      <option>全部</option><option ${ff==='固定'?'selected':''}>固定</option><option ${ff==='一般'?'selected':''}>一般</option>
-    </select>
+    <select class="filter-select" onchange="renderListF(this.value,document.getElementById('fc').value,document.getElementById('ff').value)" id="fp"><option>全部</option>${people.map(p=>`<option ${p===fp?'selected':''}>${p}</option>`).join('')}</select>
+    <select class="filter-select" onchange="renderListF(document.getElementById('fp').value,this.value,document.getElementById('ff').value)" id="fc"><option>全部</option>${cards.map(c=>`<option ${c===fc?'selected':''}>${c}</option>`).join('')}</select>
+    <select class="filter-select" onchange="renderListF(document.getElementById('fp').value,document.getElementById('fc').value,this.value)" id="ff"><option>全部</option><option ${ff==='固定'?'selected':''}>固定</option><option ${ff==='一般'?'selected':''}>一般</option></select>
   </div>`;
   if(!ex.length)return filters+'<div class="empty">這個月還沒有記帳</div>';
-  const html=ex.map(e=>`
-    <div class="expense-card">
-      <div class="expense-card-left">
-        <div class="expense-card-name">${e.name}${badgeStr(e)}</div>
-        <div class="expense-card-meta">${cardPill(e.card)}${personPill(e.person)}
-          ${e.person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}
-        </div>
-        <div class="expense-card-date">${e.date}</div>
-      </div>
-      <div class="expense-card-right">
-        <div class="expense-card-amt">${fmt(e.amount)}</div>
-        <div class="expense-card-actions">
-          <button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button>
-          <button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button>
-        </div>
-      </div>
-    </div>`).join('');
+  const html=ex.map(e=>`<div class="expense-card">
+    <div class="expense-card-left">
+      <div class="expense-card-name">${e.name}${badgeStr(e)}</div>
+      <div class="expense-card-meta">${cardPill(e.card)}${personPill(e.person)}${e.person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}</div>
+      <div class="expense-card-date">${e.date}</div>
+    </div>
+    <div class="expense-card-right">
+      <div class="expense-card-amt">${fmt(e.amount)}</div>
+      <div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div>
+    </div>
+  </div>`).join('');
   return filters+`<div class="expense-list">${html}</div>`;
 }
 function renderListF(p,c,f){document.getElementById('mainContent').innerHTML=renderAddForm()+renderList(p,c,f);updateSummary();}
@@ -627,25 +553,8 @@ function renderCardView(){
   const sections=getCards().map(card=>{
     const items=ex.filter(e=>e.card===card);if(!items.length)return'';
     const total=items.reduce((s,e)=>s+e.amount,0);
-    const html=items.map(e=>`
-      <div class="expense-card">
-        <div class="expense-card-left">
-          <div class="expense-card-name">${e.name}${badgeStr(e)}</div>
-          <div class="expense-card-meta">${personPill(e.person)}</div>
-          <div class="expense-card-date">${e.date}</div>
-        </div>
-        <div class="expense-card-right">
-          <div class="expense-card-amt">${fmt(e.amount)}</div>
-          <div class="expense-card-actions">
-            <button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button>
-            <button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button>
-          </div>
-        </div>
-      </div>`).join('');
-    return`<div class="group-section">
-      <div class="group-header"><span>${cardPill(card)}</span><span class="group-total">${fmt(total)}</span></div>
-      <div class="expense-list">${html}</div>
-    </div>`;
+    const html=items.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${personPill(e.person)}</div><div class="expense-card-date">${e.date}</div></div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div></div></div>`).join('');
+    return`<div class="group-section"><div class="group-header"><span>${cardPill(card)}</span><span class="group-total">${fmt(total)}</span></div><div class="expense-list">${html}</div></div>`;
   }).join('');
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
@@ -655,30 +564,8 @@ function renderPersonView(){
     const items=ex.filter(e=>e.person===person);if(!items.length)return'';
     const total=items.reduce((s,e)=>s+e.amount,0);
     const unpaid=items.filter(e=>!e.paid&&person!=='我自己').reduce((s,e)=>s+e.amount,0);
-    const html=items.map(e=>`
-      <div class="expense-card">
-        <div class="expense-card-left">
-          <div class="expense-card-name">${e.name}${badgeStr(e)}</div>
-          <div class="expense-card-meta">${cardPill(e.card)}
-            ${person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}
-          </div>
-          <div class="expense-card-date">${e.date}</div>
-        </div>
-        <div class="expense-card-right">
-          <div class="expense-card-amt">${fmt(e.amount)}</div>
-          <div class="expense-card-actions">
-            <button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button>
-            <button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button>
-          </div>
-        </div>
-      </div>`).join('');
-    return`<div class="group-section">
-      <div class="group-header">
-        <span>${personPill(person)}</span><span class="group-total">${fmt(total)}</span>
-        ${unpaid>0?`<span class="group-owed">未收 ${fmt(unpaid)}</span>`:''}
-      </div>
-      <div class="expense-list">${html}</div>
-    </div>`;
+    const html=items.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${cardPill(e.card)}${person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}</div><div class="expense-card-date">${e.date}</div></div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div></div></div>`).join('');
+    return`<div class="group-section"><div class="group-header"><span>${personPill(person)}</span><span class="group-total">${fmt(total)}</span>${unpaid>0?`<span class="group-owed">未收 ${fmt(unpaid)}</span>`:''}</div><div class="expense-list">${html}</div></div>`;
   }).join('');
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
@@ -688,42 +575,18 @@ function renderOwed(){
   if(!unpaid.length)return'<div class="empty">目前沒有待收的帳 🎉</div>';
   const byP={};getPeople().filter(p=>p!=='我自己').forEach(p=>{byP[p]=[];});
   unpaid.forEach(e=>{if(byP[e.person])byP[e.person].push(e);});
-  const sc=Object.entries(byP).filter(([,i])=>i.length>0).map(([p,i])=>{
-    const t=i.reduce((s,e)=>s+e.amount,0);
-    return`<div class="owed-card"><div class="owed-name">${personPill(p)}</div><div class="owed-amt">${fmt(t)}</div><div class="owed-count">${i.length} 筆未收</div></div>`;
-  }).join('');
-  const html=unpaid.map(e=>`
-    <div class="expense-card">
-      <div class="expense-card-left">
-        <div class="expense-card-name">${e.name}${badgeStr(e)}</div>
-        <div class="expense-card-meta">${personPill(e.person)} ${cardPill(e.card)}</div>
-        <div class="expense-card-date">${e.date}</div>
-      </div>
-      <div class="expense-card-right">
-        <div class="expense-card-amt">${fmt(e.amount)}</div>
-        <button class="btn-sm" style="margin-top:4px;" onclick="togglePaid(${e.id})">標記已收</button>
-      </div>
-    </div>`).join('');
-  return`<div>
-    <div class="section-header">待收金額</div><div class="owed-grid">${sc}</div>
-    <div class="section-header">明細</div><div class="expense-list">${html}</div>
-  </div>`;
+  const sc=Object.entries(byP).filter(([,i])=>i.length>0).map(([p,i])=>{const t=i.reduce((s,e)=>s+e.amount,0);return`<div class="owed-card"><div class="owed-name">${personPill(p)}</div><div class="owed-amt">${fmt(t)}</div><div class="owed-count">${i.length} 筆未收</div></div>`;}).join('');
+  const html=unpaid.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${personPill(e.person)} ${cardPill(e.card)}</div><div class="expense-card-date">${e.date}</div></div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><button class="btn-sm" style="margin-top:4px;" onclick="togglePaid(${e.id})">標記已收</button></div></div>`).join('');
+  return`<div><div class="section-header">待收金額</div><div class="owed-grid">${sc}</div><div class="section-header">明細</div><div class="expense-list">${html}</div></div>`;
 }
-function applyBillingRange(card){
-  const f=document.getElementById(`br-from-${card}`);
-  const t=document.getElementById(`br-to-${card}`);
-  if(!f||!t)return;
-  billingRanges[card]={from:toSlash(f.value),to:toSlash(t.value)};
-  document.getElementById('mainContent').innerHTML=renderBilling();
-}
+
+// ★ 帳單對帳：用 billingMonth 篩選，有自己的月份切換
 function renderBilling(){
+  const bm=billingMonthStr();
   const settings=getCardSettings();
   const cols=getCards().filter(c=>c!=='現金').map(card=>{
     const s=settings[card]||{};
-    const range=billingRanges[card];
-    const fi=range?toInput(range.from):'';
-    const ti=range?toInput(range.to):'';
-    const items=(range&&range.from&&range.to)?getExpensesInRange(range.from,range.to).filter(e=>e.card===card):[];
+    const items=getExpensesByBillingMonth(bm).filter(e=>e.card===card);
     const checks=getBillingChecks(card);
     const total=items.reduce((s,e)=>s+e.amount,0);
     const checkedTotal=items.filter(e=>checks[e.id]).reduce((s,e)=>s+e.amount,0);
@@ -735,66 +598,41 @@ function renderBilling(){
     const pct=limit>0?Math.min(100,Math.round((uncheckedTotal+future)/limit*100)):0;
     const bc=pct>=90?'danger':pct>=70?'warn':'safe';
     const tc=pct>=90?'danger':pct>=70?'warn':'';
-    const bar=limit>0?`
-      <div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div>
-      <div class="limit-meta"><span>已用 ${pct}%（含未來分期）</span><span>額度 ${fmt(limit)}</span></div>`:'';
-    const remainBlock=limit>0?`
-      <div class="billing-remaining">實際可用 ${fmt(realRemaining)}</div>
-      ${future>0?`<div style="font-size:10px;color:#c87030;text-align:right;margin-top:1px;font-weight:600;">未來分期佔用 -${fmt(future)}</div>`:''}`:'';
+    const bar=limit>0?`<div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div><div class="limit-meta"><span>已用 ${pct}%（含未來分期）</span><span>額度 ${fmt(limit)}</span></div>`:'';
+    const remainBlock=limit>0?`<div class="billing-remaining">實際可用 ${fmt(realRemaining)}</div>${future>0?`<div style="font-size:10px;color:#c87030;text-align:right;margin-top:1px;font-weight:600;">未來分期佔用 -${fmt(future)}</div>`:''}`:'';
     const itemRows=items.length
-      ?`<div class="billing-stat-row">
-          <span>${items.length} 筆 · 已對帳 ${checkedCount} 筆 <span class="billing-checked-total">✓ ${fmt(checkedTotal)}</span></span>
-          <span>未對帳 <strong style="color:var(--blossom);font-family:'DM Mono',monospace;">${fmt(uncheckedTotal)}</strong></span>
-        </div>`
-       +items.map(e=>{
-          const isChecked=!!checks[e.id];
-          return`<div class="billing-item ${isChecked?'checked':''}">
-            <button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})" title="${isChecked?'取消':'已對帳'}">✓</button>
-            <div class="billing-item-left">
-              <div class="billing-item-name">${e.name}${badgeStr(e)}</div>
-              <div class="billing-item-date">${e.date} · ${personPill(e.person)}</div>
-            </div>
-            <span class="billing-item-amt">${fmt(e.amount)}</span>
-          </div>`;
-        }).join('')
-      :`<div class="billing-no-items">${(fi&&ti)?'這段期間沒有消費':'請設定日期範圍後按套用'}</div>`;
+      ?`<div class="billing-stat-row"><span>${items.length} 筆 · 已對帳 ${checkedCount} 筆 <span class="billing-checked-total">✓ ${fmt(checkedTotal)}</span></span><span>未對帳 <strong style="color:var(--blossom);font-family:'DM Mono',monospace;">${fmt(uncheckedTotal)}</strong></span></div>`
+       +items.map(e=>{const isChecked=!!checks[e.id];return`<div class="billing-item ${isChecked?'checked':''}"><button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})" title="${isChecked?'取消':'已對帳'}">✓</button><div class="billing-item-left"><div class="billing-item-name">${e.name}${badgeStr(e)}</div><div class="billing-item-date">${e.date} · ${personPill(e.person)}</div></div><span class="billing-item-amt">${fmt(e.amount)}</span></div>`;}).join('')
+      :`<div class="billing-no-items">${bm} 這張卡沒有消費</div>`;
     return`<div class="billing-card">
       <div class="billing-card-header">
         <div>${cardPill(card)}<div class="billing-card-info">結帳日：每月 ${s.billingDay||'—'} 號</div></div>
-        <div>
-          <div class="billing-total ${tc}">${fmt(uncheckedTotal)}</div>
-          ${remainBlock}
-        </div>
+        <div><div class="billing-total ${tc}">${fmt(uncheckedTotal)}</div>${remainBlock}</div>
       </div>
       ${bar}
-      <div class="billing-date-block">
-        <div class="billing-date-grid">
-          <div><label>從</label><input type="date" id="br-from-${card}" value="${fi}" style="background:#fff;color:var(--text);color-scheme:light;"/></div>
-          <div><label>到</label><input type="date" id="br-to-${card}" value="${ti}" style="background:#fff;color:var(--text);color-scheme:light;"/></div>
-        </div>
-        <button class="btn-apply-full" onclick="applyBillingRange('${card}')">套用日期範圍</button>
-      </div>
       <div class="billing-items">${itemRows}</div>
     </div>`;
   }).join('');
   return`<div>
+    <div class="billing-month-nav">
+      <button onclick="changeBillingMonth(-1)">‹</button>
+      <span class="billing-month-label">${bm}</span>
+      <button onclick="changeBillingMonth(1)">›</button>
+    </div>
     <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
       <button class="btn btn-primary" style="font-size:13px;padding:9px 18px;" onclick="openPaymentModal()">+ 記錄繳款</button>
     </div>
     <div class="billing-list">${cols}</div>
-    <div style="margin-top:22px;">
-      <div class="section-header">繳款紀錄</div>
-      ${renderPaymentHistory()}
-    </div>
+    <div style="margin-top:22px;"><div class="section-header">繳款紀錄</div>${renderPaymentHistory()}</div>
   </div>`;
 }
+
 function getPayments(){return S.get('card_payments',[]);}
 function savePayments(d){S.set('card_payments',d);}
 function openPaymentModal(){
   const cards=getCards().filter(c=>c!=='現金');
   document.getElementById('pm-card').innerHTML=cards.map(c=>`<option>${c}</option>`).join('');
-  const lm=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
-  document.getElementById('pm-month').value=`${lm.getFullYear()}-${String(lm.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('pm-month').value=`${billingMonth.getFullYear()}-${String(billingMonth.getMonth()+1).padStart(2,'0')}`;
   document.getElementById('pm-date').value=todayInput();
   document.getElementById('pm-amount').value='';document.getElementById('pm-note').value='';
   document.getElementById('paymentModal').style.display='flex';
@@ -816,76 +654,27 @@ function savePayment(){
 function renderPaymentHistory(){
   const payments=getPayments();
   if(!payments.length)return'<div class="empty">還沒有繳款紀錄</div>';
-  const html=payments.map(p=>`
-    <div class="expense-card">
-      <div class="expense-card-left">
-        <div class="expense-card-name">${cardPill(p.card)}</div>
-        <div class="expense-card-meta" style="margin-top:5px;">
-          <span style="font-size:11px;color:var(--muted);">帳單 ${p.month}</span>
-          <span style="font-size:11px;color:var(--muted);">繳款 ${p.date}</span>
-        </div>
-        ${p.note?`<div class="expense-card-date">${p.note}</div>`:''}
-      </div>
-      <div class="expense-card-right">
-        <div class="expense-card-amt">${fmt(p.amount)}</div>
-        <button class="btn-icon del" style="margin-top:4px;" onclick="deletePayment(${p.id})">✕</button>
-      </div>
-    </div>`).join('');
+  const html=payments.map(p=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${cardPill(p.card)}</div><div class="expense-card-meta" style="margin-top:5px;"><span style="font-size:11px;color:var(--muted);">帳單 ${p.month}</span><span style="font-size:11px;color:var(--muted);">繳款 ${p.date}</span></div>${p.note?`<div class="expense-card-date">${p.note}</div>`:''}</div><div class="expense-card-right"><div class="expense-card-amt">${fmt(p.amount)}</div><button class="btn-icon del" style="margin-top:4px;" onclick="deletePayment(${p.id})">✕</button></div></div>`).join('');
   return`<div class="expense-list" style="margin-top:8px;">${html}</div>`;
 }
-function deletePayment(id){
-  pendingDeleteId='pay_'+id;
-  document.getElementById('confirmMsg').textContent='確定刪除此繳款紀錄？';
-  document.getElementById('confirmModal').style.display='flex';
-}
+function deletePayment(id){pendingDeleteId='pay_'+id;document.getElementById('confirmMsg').textContent='確定刪除此繳款紀錄？';document.getElementById('confirmModal').style.display='flex';}
 function renderSettings(){
   const people=getPeople(),cards=getCards(),cs=getCardSettings(),sal=getSalary();
   const peopleList=people.map((p,i)=>`<div class="tag-item">${personPill(p)}${i===0?'':`<button onclick="removePerson(${i})">×</button>`}</div>`).join('');
   const cardsList=cards.map((c,i)=>`<div class="tag-item">${cardPill(c)}<button onclick="removeCard(${i})">×</button></div>`).join('');
-  const cardRows=cards.map(c=>{const s=cs[c]||{};return`<tr style="border-bottom:1px solid var(--border);">
-    <td style="padding:7px 8px;">${cardPill(c)}</td>
-    <td style="padding:7px 8px;"><input id="cs-limit-${c}" type="number" value="${s.limit||0}" style="max-width:100px;padding:5px 8px;font-size:12px;"/></td>
-    <td style="padding:7px 8px;">${c==='現金'?'—':`<input id="cs-day-${c}" type="number" value="${s.billingDay||0}" min="1" max="31" style="max-width:60px;padding:5px 8px;font-size:12px;"/>`}</td>
-  </tr>`;}).join('');
+  const cardRows=cards.map(c=>{const s=cs[c]||{};return`<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 8px;">${cardPill(c)}</td><td style="padding:7px 8px;"><input id="cs-limit-${c}" type="number" value="${s.limit||0}" style="max-width:100px;padding:5px 8px;font-size:12px;"/></td><td style="padding:7px 8px;">${c==='現金'?'—':`<input id="cs-day-${c}" type="number" value="${s.billingDay||0}" min="1" max="31" style="max-width:60px;padding:5px 8px;font-size:12px;"/>`}</td></tr>`;}).join('');
   return`<div style="max-width:560px;display:flex;flex-direction:column;gap:20px;">
-    <div class="settings-section">
-      <div class="settings-title">薪資設定</div>
-      <div style="display:flex;gap:8px;align-items:flex-end;">
-        <div style="flex:1;"><label>每月薪資（NT$）</label><input id="s-sal" type="number" value="${sal}" oninput="updateSalaryDetail()"/></div>
-        <button class="btn btn-primary" onclick="saveSalaryNow()">儲存</button>
-      </div>
-      <div class="salary-detail">
-        <div class="salary-row"><span>薪資</span><span class="salary-val green" id="sd-sal">${fmt(sal)}</span></div>
-        <div class="salary-row"><span>扣上月卡費（我自己）</span><span class="salary-val red" id="sd-card">計算中…</span></div>
-        <div class="salary-row"><span>扣本月現金支出</span><span class="salary-val red" id="sd-cash">計算中…</span></div>
-        <div class="salary-row total"><span>實際剩餘</span><span class="salary-val green" id="sd-left">計算中…</span></div>
-      </div>
+    <div class="settings-section"><div class="settings-title">薪資設定</div>
+      <div style="display:flex;gap:8px;align-items:flex-end;"><div style="flex:1;"><label>每月薪資（NT$）</label><input id="s-sal" type="number" value="${sal}" oninput="updateSalaryDetail()"/></div><button class="btn btn-primary" onclick="saveSalaryNow()">儲存</button></div>
+      <div class="salary-detail"><div class="salary-row"><span>薪資</span><span class="salary-val green" id="sd-sal">${fmt(sal)}</span></div><div class="salary-row"><span>扣上月卡費（我自己）</span><span class="salary-val red" id="sd-card">計算中…</span></div><div class="salary-row"><span>扣本月現金支出</span><span class="salary-val red" id="sd-cash">計算中…</span></div><div class="salary-row total"><span>實際剩餘</span><span class="salary-val green" id="sd-left">計算中…</span></div></div>
     </div>
-    <div class="settings-section">
-      <div class="settings-title">人員管理</div>
-      <div class="tag-list">${peopleList}</div>
-      <div class="tag-add-row"><input id="new-person" placeholder="新增人員名稱" onkeydown="if(event.key==='Enter')addPerson()"/><button class="btn btn-secondary" onclick="addPerson()">新增</button></div>
-    </div>
-    <div class="settings-section">
-      <div class="settings-title">付款方式管理</div>
-      <div class="tag-list">${cardsList}</div>
-      <div class="tag-add-row"><input id="new-card" placeholder="新增卡別名稱" onkeydown="if(event.key==='Enter')addCard()"/><button class="btn btn-secondary" onclick="addCard()">新增</button></div>
-    </div>
-    <div class="settings-section">
-      <div class="settings-title">信用卡額度與結帳日</div>
-      <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;">
-        <thead><tr style="background:var(--surface2);">
-          <th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">卡別</th>
-          <th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">額度（NT$）</th>
-          <th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">結帳日</th>
-        </tr></thead><tbody>${cardRows}</tbody>
-      </table></div>
+    <div class="settings-section"><div class="settings-title">人員管理</div><div class="tag-list">${peopleList}</div><div class="tag-add-row"><input id="new-person" placeholder="新增人員名稱" onkeydown="if(event.key==='Enter')addPerson()"/><button class="btn btn-secondary" onclick="addPerson()">新增</button></div></div>
+    <div class="settings-section"><div class="settings-title">付款方式管理</div><div class="tag-list">${cardsList}</div><div class="tag-add-row"><input id="new-card" placeholder="新增卡別名稱" onkeydown="if(event.key==='Enter')addCard()"/><button class="btn btn-secondary" onclick="addCard()">新增</button></div></div>
+    <div class="settings-section"><div class="settings-title">信用卡額度與結帳日</div>
+      <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:var(--surface2);"><th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">卡別</th><th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">額度（NT$）</th><th style="font-size:11px;color:var(--muted);padding:8px;text-align:left;font-weight:700;">結帳日</th></tr></thead><tbody>${cardRows}</tbody></table></div>
       <div style="margin-top:10px;"><button class="btn btn-primary" onclick="saveCardSettingsForm()">儲存卡片設定</button></div>
     </div>
-    <div class="settings-section">
-      <div class="settings-title">危險操作</div>
-      <button class="btn btn-danger-soft" onclick="clearMonth()">清除本月所有資料</button>
-    </div>
+    <div class="settings-section"><div class="settings-title">危險操作</div><button class="btn btn-danger-soft" onclick="clearMonth()">清除本月所有資料</button></div>
   </div>`;
 }
 function updateSalaryDetail(){
@@ -893,51 +682,21 @@ function updateSalaryDetail(){
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
   const lastCard=getExpenses(lastMonth).filter(e=>e.card!=='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
   const cash=getExpenses().filter(e=>e.card==='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
-  const sdSal=document.getElementById('sd-sal'),sdCard=document.getElementById('sd-card');
-  const sdCash=document.getElementById('sd-cash'),sdLeft=document.getElementById('sd-left');
-  if(sdSal)sdSal.textContent=fmt(sal);
-  if(sdCard)sdCard.textContent=`-${fmt(lastCard)}`;
-  if(sdCash)sdCash.textContent=`-${fmt(cash)}`;
-  const left=sal-lastCard-cash;
-  if(sdLeft){sdLeft.textContent=fmt(left);sdLeft.className='salary-val '+(left<0?'red':'green');}
+  const sdSal=document.getElementById('sd-sal'),sdCard=document.getElementById('sd-card'),sdCash=document.getElementById('sd-cash'),sdLeft=document.getElementById('sd-left');
+  if(sdSal)sdSal.textContent=fmt(sal);if(sdCard)sdCard.textContent=`-${fmt(lastCard)}`;if(sdCash)sdCash.textContent=`-${fmt(cash)}`;
+  const left=sal-lastCard-cash;if(sdLeft){sdLeft.textContent=fmt(left);sdLeft.className='salary-val '+(left<0?'red':'green');}
 }
-function saveSalaryNow(){
-  const v=parseInt(document.getElementById('s-sal').value);
-  if(v>0){saveSalary(v);updateSummary();updateSalaryDetail();alert('薪資已儲存！');}
-}
-function addPerson(){
-  const v=document.getElementById('new-person').value.trim();if(!v)return;
-  const p=getPeople();if(p.includes(v)){alert('已有這個人員');return;}
-  p.push(v);savePeople(p);document.getElementById('new-person').value='';
-  document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();
-}
-function removePerson(i){
-  const p=getPeople();p.splice(i,1);savePeople(p);
-  document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();
-}
-function addCard(){
-  const v=document.getElementById('new-card').value.trim();if(!v)return;
-  const c=getCards();if(c.includes(v)){alert('已有這個付款方式');return;}
-  c.push(v);saveCards(c);document.getElementById('new-card').value='';
-  document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();
-}
-function removeCard(i){
-  if(!confirm('確定移除？'))return;
-  const c=getCards();c.splice(i,1);saveCards(c);
-  document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();
-}
+function saveSalaryNow(){const v=parseInt(document.getElementById('s-sal').value);if(v>0){saveSalary(v);updateSummary();updateSalaryDetail();alert('薪資已儲存！');}}
+function addPerson(){const v=document.getElementById('new-person').value.trim();if(!v)return;const p=getPeople();if(p.includes(v)){alert('已有這個人員');return;}p.push(v);savePeople(p);document.getElementById('new-person').value='';document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();}
+function removePerson(i){const p=getPeople();p.splice(i,1);savePeople(p);document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();}
+function addCard(){const v=document.getElementById('new-card').value.trim();if(!v)return;const c=getCards();if(c.includes(v)){alert('已有這個付款方式');return;}c.push(v);saveCards(c);document.getElementById('new-card').value='';document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();}
+function removeCard(i){if(!confirm('確定移除？'))return;const c=getCards();c.splice(i,1);saveCards(c);document.getElementById('mainContent').innerHTML=renderSettings();updateSalaryDetail();}
 function saveCardSettingsForm(){
   const cards=getCards(),existing=S.get('card_settings',{});
-  cards.forEach(c=>{
-    const lEl=document.getElementById(`cs-limit-${c}`),dEl=document.getElementById(`cs-day-${c}`);
-    existing[c]={limit:lEl?parseInt(lEl.value||0):existing[c]?.limit||0,billingDay:dEl?parseInt(dEl.value||0):existing[c]?.billingDay||0};
-  });
-  saveCardSettings(existing);billingRanges={};initBillingRanges();alert('已儲存！');
+  cards.forEach(c=>{const lEl=document.getElementById(`cs-limit-${c}`),dEl=document.getElementById(`cs-day-${c}`);existing[c]={limit:lEl?parseInt(lEl.value||0):existing[c]?.limit||0,billingDay:dEl?parseInt(dEl.value||0):existing[c]?.billingDay||0};});
+  saveCardSettings(existing);alert('已儲存！');
 }
-function clearMonth(){
-  if(!confirm('確定要清除本月所有記帳資料？'))return;
-  S.del(monthKey(currentMonth));render();
-}
+function clearMonth(){if(!confirm('確定要清除本月所有記帳資料？'))return;S.del(monthKey(currentMonth));render();}
 function render(){
   updateSummary();
   const el=document.getElementById('mainContent');
@@ -948,33 +707,19 @@ function render(){
   else if(currentTab==='billing')el.innerHTML=renderBilling();
   else if(currentTab==='settings'){el.innerHTML=renderSettings();updateSalaryDetail();}
 }
-function reorderCards(){
-  const preferred=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];
-  const current=S.get('cards',null);if(!current)return;
-  const reordered=[...preferred.filter(c=>current.includes(c)),...current.filter(c=>!preferred.includes(c))];
-  localStorage.setItem('cards',JSON.stringify(reordered));
-  if(window.FB)window.FB.set('cards',JSON.stringify(reordered));
-}
+function reorderCards(){const preferred=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];const current=S.get('cards',null);if(!current)return;const reordered=[...preferred.filter(c=>current.includes(c)),...current.filter(c=>!preferred.includes(c))];localStorage.setItem('cards',JSON.stringify(reordered));if(window.FB)window.FB.set('cards',JSON.stringify(reordered));}
 async function syncFromFirebase(){
   if(!window.FB)return;showSyncStatus('同步中…');
   try{
-    const keys=['people','cards','card_settings','salary','card_payments',
-      ...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
+    const keys=['people','cards','card_settings','salary','card_payments',...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
     await Promise.all(keys.map(async k=>{const val=await window.FB.get(k);if(val!==null)localStorage.setItem(k,val);}));
     reorderCards();showSyncStatus('已同步 ✓',true);autoCarryInstallments();render();updateSummary();
   }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
 }
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
-initBillingRanges();autoCarryInstallments();render();
+autoCarryInstallments();render();
 (window._firebaseLoader||Promise.resolve()).then(()=>{
-  const firebaseConfig={
-    apiKey:"AIzaSyAMr1lm850UVU5NB0a0aCzHJFSJCnQ3CQ4",
-    authDomain:"budget-flow-629f4.firebaseapp.com",
-    projectId:"budget-flow-629f4",
-    storageBucket:"budget-flow-629f4.firebasestorage.app",
-    messagingSenderId:"646229662175",
-    appId:"1:646229662175:web:a12dd9e0515d0a75788c6a"
-  };
+  const firebaseConfig={apiKey:"AIzaSyAMr1lm850UVU5NB0a0aCzHJFSJCnQ3CQ4",authDomain:"budget-flow-629f4.firebaseapp.com",projectId:"budget-flow-629f4",storageBucket:"budget-flow-629f4.firebasestorage.app",messagingSenderId:"646229662175",appId:"1:646229662175:web:a12dd9e0515d0a75788c6a"};
   try{
     if(typeof firebase==='undefined')throw new Error('firebase not loaded');
     firebase.initializeApp(firebaseConfig);
