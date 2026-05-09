@@ -326,7 +326,7 @@ function personPill(p){const i=Math.abs(getPeople().indexOf(p))%10;return`<span 
 function cardPill(c){const i=(Math.abs(getCards().indexOf(c))+3)%10;return`<span class="card-pill" data-pi="${i}">${c}</span>`;}
 function monthKey(d){return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;}
 function getExpenses(d){return S.get(monthKey(d||currentMonth),[]);}
-​​function saveExpenses(data,d) {S.set(monthKey(d||currentMonth),data);}
+function saveExpenses(data,d) {S.set(monthKey(d||currentMonth),data);}
 function getSalary(){return S.get('salary',36884);}
 function saveSalary(v){S.set('salary',v);}
 function getCardSettings(){
