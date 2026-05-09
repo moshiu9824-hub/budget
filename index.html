@@ -176,13 +176,14 @@ select option{background:#fff;color:var(--text);}
 .empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:13px;}
 #syncStatus{font-size:11px;color:var(--muted);font-weight:600;}
 @media(max-width:640px){
-  .app{width:100%;height:calc(100vh-env(keyboard-inset-height,0px));min-height:calc(100%-60px);display:flex;flex-direction:column;}
+  html,body{height:100%;overflow:hidden;}
+  .app{width:100%;height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;}
   .tabs{display:flex;}.bottom-nav{display:none;}
   .tab{padding:7px 12px;font-size:11px;border-radius:8px;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .15s; font-weight:600;font-family:'Noto Sans TC',sans-serif;white-space: nowrap}
   .summary-bar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 24px;}
   .stat-val{font-size:13px;}.stat-card{padding:10px 11px;}
   .g3,.g2{grid-template-columns:1fr;gap: 12px;}
-  .main{padding:20px 24px 80px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;flex:1;min-height:0;max-height:calc(100vh-200px);}
+  .main{padding:20px 24px 80px;overflow-y:scroll;-webkit-overflow-scrolling:touch;flex:1;min-height:0;position:relative;}
   header{padding:16px 24px 0;}.add-form{padding:18px 24px;}
   .expense-card,.owed-card,.billing-card {padding: 16px 24px;}
   .group-header {padding: 8px 24px;}
