@@ -358,7 +358,7 @@ function getBillingRange(card,refMonth){
 }
 function initBillingRanges(){
   getCards().filter(c=>c!=='現金').forEach(c=>{
-    if(!billingRanges[c]){const r=getBillingRange(c,currentMonth);if(r)billingRanges[c]=r;}
+    const r=getBillingRange(c,currentMonth);if(r)billingRanges[c]=r;
   });
 }
 function getExpensesInRange(from,to){
@@ -432,7 +432,7 @@ function switchTab(tab){
   const tabs=['list','card','person','owed','billing','settings'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
   tabs.forEach(t=>{const el=document.getElementById('nav-'+t);if(el)el.classList.toggle('active',t===tab);});
-  if(tab==='billing')initBillingRanges();
+  if(tab==='billing'){billingRanges={};initBillingRanges();
   render();
 }
 function addExpense(){
