@@ -381,7 +381,7 @@ function updateSummary(){
   const {cardTotal,cashTotal}=calcMonthlyPayable();
   const totalPayable=cardTotal+cashTotal;
   const ex=getExpenses();
-  const owed=ex.filter(e=>e.person!=='我自己'&&!e.paid).reduce((s,e)=>s+e.amount,0);
+  const seen=new Set();let owed=0;getExpenses().filter(e=>e.person!=='我自己'&&!e.paid&&e.card==='現金').forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);owed+=e.amount;}});getCards().filter(c=>c!=='現金').forEach(card=>{const range=billingRanges[card];if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);owed+=e.amount;}});});
   const left=salary-totalPayable;
   document.getElementById('sumSalary').textContent=fmt(salary);
   document.getElementById('sumLastCard').textContent=fmt(totalPayable);
@@ -648,7 +648,7 @@ function renderPersonView(){
 
 function renderOwed(){
   const ex=getExpenses();
-  const unpaid=ex.filter(e=>e.person!=='我自己'&&!e.paid);
+  const seen2=new Set();const unpaid=[];getExpenses().filter(e=>e.person!=='我自己'&&!e.paid&&e.card==='現金').forEach(e=>{if(!seen2.has(e.id)){seen2.add(e.id);unpaid.push(e);}});getCards().filter(c=>c!=='現金').forEach(card=>{const range=billingRanges[card];if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen2.has(e.id)){seen2.add(e.id);unpaid.push(e);}});});
   if(!unpaid.length)return'<div class="empty">目前沒有待收的帳 🎉</div>';
   const byP={};getPeople().filter(p=>p!=='我自己').forEach(p=>{byP[p]=[];});
   unpaid.forEach(e=>{if(byP[e.person])byP[e.person].push(e);});
