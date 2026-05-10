@@ -817,41 +817,13 @@ function render(){
 
 function reorderCards(){const preferred=['台新','現金','玉山','國泰','富邦','聯邦','華南','中信'];const current=S.get('cards',null);if(!current)return;const reordered=[...preferred.filter(c=>current.includes(c)),...current.filter(c=>!preferred.includes(c))];localStorage.setItem('cards',JSON.stringify(reordered));if(window.FB)window.FB.set('cards',JSON.stringify(reordered));}
 
-async function syncFromFirebase() {
-  if (!window.FB) return;
-  showSyncStatus("同步中…");
-  try {
-    var cardsForChecks = S.get("cards", ["台新","玉山","國泰","富邦","聯邦","華南","中信"]);
-    var keys = [
-      "people",
-      "cards",
-      "card_settings",
-      "salary",
-      "card_payments",
-      "billing_ranges"
-    ];
-    for (var i = 0; i < cardsForChecks.length; i++) {
-      keys.push("billing_checks_" + cardsForChecks[i]);
-    }
-    for (var j = 0; j < 13; j++) {
-      var d = new Date();
-      d.setMonth(d.getMonth() - j);
-      keys.push("expenses_" + d.getFullYear() + "_" + (d.getMonth() + 1));
-    }
-    await Promise.all(keys.map(async function (k) {
-      var val = await window.FB.get(k);
-      if (val !== null) localStorage.setItem(k, val);
-    }));
-    reorderCards();
-    await processQuickAdd();
-    showSyncStatus("已同步 ✓", true);
-    autoCarryInstallments();
-    render();
-    updateSummary();
-  } catch (e) {
-    showSyncStatus("離線模式", false, true);
-    console.warn("Firebase sync failed:", e);
-  }
+async function syncFromFirebase(){
+  if(!window.FB)return;showSyncStatus('同步中…');
+  try{
+    const keys=['people','cards','card_settings','salary','card_payments','billing_ranges',...S.get('cards',['台新','玉山','國泰','富邦','聯邦','華南','中信']).map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
+    await Promise.all(keys.map(async k=>{const val=await window.FB.get(k);if(val!==null)localStorage.setItem(k,val);}));
+    reorderCards();showSyncStatus('已同步 ✓',true);autoCarryInstallments();render();updateSummary();
+  }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
 }
 
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
@@ -872,56 +844,5 @@ autoCarryInstallments();render();
   }catch(e){console.warn('Firebase init failed:',e);showSyncStatus('離線模式',false,true);}
 });
 </script>
-  async function processQuickAdd() {
-  if (typeof firebase === "undefined") return;
-  var db = firebase.firestore();
-  try {
-    var snap = await db.collection("quick_add").get();
-    if (snap.empty) return;
-    for (var i = 0; i < snap.docs.length; i++) {
-      var doc = snap.docs[i];
-      var data = doc.data();
-      var f = data.fields;
-      if (!f) continue;
-      function getStr(key) {
-        if (!f[key]) return "";
-        if (f[key].stringValue) return f[key].stringValue;
-        if (f[key].integerValue) return String(f[key].integerValue);
-        return "";
-      }
-      function getInt(key) {
-        if (!f[key]) return 0;
-        if (f[key].integerValue) return parseInt(f[key].integerValue, 10);
-        if (f[key].stringValue) return parseInt(f[key].stringValue, 10) || 0;
-        return 0;
-      }
-      var name = getStr("name") || "捷徑記帳";
-      var amount = getInt("amount");
-      var card = getStr("card") || "現金";
-      var person = getStr("person") || "我自己";
-      var date = getStr("date") || fmtSlash(new Date());
-      var expense = {
-        id: Date.now() + Math.random(),
-        name: name,
-        amount: amount,
-        card: card,
-        person: person,
-        date: date,
-        note: "",
-        fixed: false,
-        installment: false,
-        instCur: null,
-        instTotal: null,
-        paid: false
-      };
-      saveExpenseByDate(expense);
-      await doc.ref.delete();
-    }
-    render();
-    updateSummary();
-  } catch (e) {
-    console.warn("processQuickAdd error:", e);
-  }
-}
 </body>
 </html>
