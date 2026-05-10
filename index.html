@@ -224,6 +224,7 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
   </div>
   <div class="main" id="mainContent"></div>
 </div>
+
 <!-- Edit Modal -->
 <div class="modal-overlay" id="editModal" style="display:none;" onclick="closeModalOutside(event)">
   <div class="modal">
@@ -253,6 +254,7 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </div>
 </div>
+
 <!-- Confirm Delete -->
 <div class="modal-overlay" id="confirmModal" style="display:none;">
   <div class="modal" style="max-width:340px;border-radius:24px;padding:24px 20px 20px;">
@@ -268,6 +270,7 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </div>
 </div>
+
 <!-- Payment Modal -->
 <div class="modal-overlay" id="paymentModal" style="display:none;" onclick="closePaymentModalOutside(event)">
   <div class="modal" style="max-width:480px;">
@@ -286,6 +289,7 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </div>
 </div>
+
 <script>
 const S={get(k,def){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):def;}catch{return def;}},set(k,v){localStorage.setItem(k,JSON.stringify(v));if(window.FB)window.FB.set(k,JSON.stringify(v));},del(k){localStorage.removeItem(k);if(window.FB)window.FB.del(k);}};
 function showSyncStatus(msg,ok=false,warn=false){const el=document.getElementById('syncStatus');if(!el)return;el.textContent=msg;el.style.color=warn?'var(--warning)':ok?'var(--buttercup)':'var(--muted)';if(ok)setTimeout(()=>{if(el)el.textContent='';},3000);}
@@ -303,10 +307,22 @@ function savePeople(p){S.set('people',p);}
 function saveCards(c){S.set('cards',c);}
 function personPill(p){const i=Math.abs(getPeople().indexOf(p))%10;return`<span class="pill" data-pi="${i}">${p}</span>`;}
 function cardPill(c){const i=(Math.abs(getCards().indexOf(c))+3)%10;return`<span class="card-pill" data-pi="${i}">${c}</span>`;}
+
+// ★ 根據消費日期決定存到哪個月
 function monthKey(d){return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;}
 function getExpenses(d){return S.get(monthKey(d||currentMonth),[]);}
 function saveExpenses(data,d){S.set(monthKey(d||currentMonth),data);}
-function saveExpenseByDate(expense){const parts=expense.date.split('/');const d=new Date(parseInt(parts[0]),parseInt(parts[1])-1,1);const ex=getExpenses(d);const idx=ex.findIndex(x=>x.id===expense.id);if(idx>=0){ex[idx]=expense;}else{ex.unshift(expense);}saveExpenses(ex,d);}
+
+// ★ 用消費日期找到正確的月份存檔
+function saveExpenseByDate(expense){
+  const parts=expense.date.split('/');
+  const d=new Date(parseInt(parts[0]),parseInt(parts[1])-1,1);
+  const ex=getExpenses(d);
+  const idx=ex.findIndex(x=>x.id===expense.id);
+  if(idx>=0){ex[idx]=expense;}else{ex.unshift(expense);}
+  saveExpenses(ex,d);
+}
+
 function getSalary(){return S.get('salary',36884);}
 function saveSalary(v){S.set('salary',v);}
 function getCardSettings(){const saved=S.get('card_settings',{});const m={};getCards().forEach(c=>{m[c]=Object.assign({},CARD_DEFAULTS[c]||{limit:0,billingDay:0},saved[c]||{});});return m;}
@@ -317,54 +333,48 @@ function fmtSlash(d){return`${d.getFullYear()}/${String(d.getMonth()+1).padStart
 function todayInput(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fmt(n){return'NT$'+Math.round(n).toLocaleString();}
 
+// ★ 跨月撈帳單區間資料
 function getExpensesInRange(from,to){
   if(!from||!to)return[];
   const fromDate=new Date(from.replace(/\//g,'-')),toDate=new Date(to.replace(/\//g,'-'));
   if(isNaN(fromDate)||isNaN(toDate))return[];
   const results=[],cur=new Date(fromDate.getFullYear(),fromDate.getMonth(),1);
   const endMonth=new Date(toDate.getFullYear(),toDate.getMonth(),1);
-  while(cur<=endMonth){getExpenses(new Date(cur)).forEach(e=>{if(e.date&&e.date>=from&&e.date<=to)results.push(e);});cur.setMonth(cur.getMonth()+1);}
+  while(cur<=endMonth){
+    getExpenses(new Date(cur)).forEach(e=>{if(e.date&&e.date>=from&&e.date<=to)results.push(e);});
+    cur.setMonth(cur.getMonth()+1);
+  }
   return results;
 }
 
-// ★ 自動根據結帳日算本月應繳區間
-function getAutoPayableRange(card,refDate){
-  const s=getCardSettings()[card];
-  if(!s||!s.billingDay)return null;
-  const day=s.billingDay;
-  const y=refDate.getFullYear(),m=refDate.getMonth(),d=refDate.getDate();
-  if(d>=day){
-    // 已過結帳日：本月應繳是上月day+1到本月day
-    return{from:fmtSlash(new Date(y,m-1,day+1)),to:fmtSlash(new Date(y,m,day))};
-  }else{
-    // 未過結帳日：本月應繳是上上月day+1到上月day
-    return{from:fmtSlash(new Date(y,m-2,day+1)),to:fmtSlash(new Date(y,m-1,day))};
-  }
-}
-
-// ★ 本月應繳：根據結帳日自動算，只算「我自己」的
-function calcMonthlyPayable(){
-  const today=new Date();
-  let cardTotal=0;
-  const rangeInfo=[];
-  getCards().filter(c=>c!=='現金').forEach(card=>{
-    const range=getAutoPayableRange(card,today);
-    if(!range)return;
-    const items=getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person==='我自己');
-    const amt=items.reduce((s,e)=>s+e.amount,0);
-    cardTotal+=amt;
-    if(amt>0)rangeInfo.push(`${card} ${range.from.substring(5)}~${range.to.substring(5)}`);
-  });
-  const cashTotal=getExpenses().filter(e=>e.card==='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
-  return{cardTotal,cashTotal,rangeInfo};
-}
-
-// ★ 所有未打勾的消費都佔用額度
+// ★ 未來分期佔用額度
 function getFutureCommitted(card){const checks=getBillingChecks(card);const seen=new Set();let committed=0;for(let i=-36;i<=36;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);getExpenses(d).filter(e=>e.card===card&&!checks[e.id]).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);committed+=e.amount;}});}return committed;}
-
+function getAfterRangeCommitted(card,rangeTo){return 0;}
 function getBillingChecks(card){return S.get(`billing_checks_${card}`,{});}
 function saveBillingChecks(card,data){S.set(`billing_checks_${card}`,data);}
-function toggleBillingCheck(card,expenseId){const checks=getBillingChecks(card);checks[expenseId]=!checks[expenseId];saveBillingChecks(card,checks);document.getElementById('mainContent').innerHTML=renderBilling();}
+function toggleBillingCheck(card,expenseId){
+  const checks=getBillingChecks(card);
+  checks[expenseId]=!checks[expenseId];
+  saveBillingChecks(card,checks);
+  document.getElementById('mainContent').innerHTML=renderBilling();
+}
+
+// ★ 本月應繳 = 所有卡帳單區間內「我自己」的消費加總 + 本月現金「我自己」
+function calcMonthlyPayable(){
+  let cardTotal=0;
+  getCards().filter(c=>c!=='現金').forEach(card=>{
+    const range=billingRanges[card];
+    if(!range||!range.from||!range.to)return;
+    const items=getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person==='我自己');
+    cardTotal+=items.reduce((s,e)=>s+e.amount,0);
+  });
+  const cashTotal=getExpenses().filter(e=>e.card==='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
+  return{cardTotal,cashTotal};
+}
+
+function initBillingRanges(){
+  // 不自動初始化，讓使用者自己設定
+}
 
 function updateSummary(){
   const salary=getSalary();
@@ -381,7 +391,11 @@ function updateSummary(){
   document.getElementById('sumLeft').className='stat-val '+(left<0?'red':'green');
 }
 
-function changeMonth(dir){currentMonth.setMonth(currentMonth.getMonth()+dir);document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;autoCarryInstallments();render();}
+function changeMonth(dir){
+  currentMonth.setMonth(currentMonth.getMonth()+dir);
+  document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;if(Object.keys(billingRanges).length>0){getCards().filter(c=>c!=='現金').forEach(card=>{const r=billingRanges[card];if(!r||!r.from||!r.to)return;const fromDate=new Date(r.from.replace(/\//g,'-'));const toDate=new Date(r.to.replace(/\//g,'-'));fromDate.setMonth(fromDate.getMonth()+dir);toDate.setMonth(toDate.getMonth()+dir);billingRanges[card]={from:fmtSlash(fromDate),to:fmtSlash(toDate)};});S.set('billing_ranges',billingRanges);}
+  autoCarryInstallments();render();
+}
 
 function autoCarryInstallments(){
   const ex=getExpenses();
@@ -414,6 +428,7 @@ function switchTab(tab){
   render();
 }
 
+// ★ 新增消費：根據消費日期存到對應月份
 function addExpense(){
   const name=document.getElementById('f-name').value.trim();
   const amount=parseInt(document.getElementById('f-amount').value);
@@ -441,36 +456,72 @@ function importFixed(){
   const lastEx=getExpenses(lastMonth);
   const toCarry=lastEx.filter(e=>e.fixed||(e.installment&&e.instCur&&e.instTotal&&e.instCur<e.instTotal));
   if(!toCarry.length){alert('上個月沒有固定支出或未完成分期可以匯入');return;}
-  const ex=getExpenses();const today=toSlash(todayInput());
+  const ex=getExpenses();
+  const today=toSlash(todayInput());
   const existingSources=new Set(ex.filter(e=>e.sourceId).map(e=>e.sourceId));
   let imported=0;
   toCarry.forEach(e=>{
     if(existingSources.has(e.id))return;
     const nextCur=e.installment&&e.instCur?e.instCur+1:e.instCur;
     const newExp={...e,id:Date.now()+Math.random(),sourceId:e.id,date:today,paid:false,instCur:nextCur};
-    saveExpenseByDate(newExp);imported++;
+    saveExpenseByDate(newExp);
+    imported++;
   });
-  render();alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');
+  render();
+  alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');
 }
 
 let pendingDeleteId=null;
-function deleteExpense(id){pendingDeleteId=id;const e=findExpenseAnywhere(id);document.getElementById('confirmMsg').textContent=e?`刪除「${e.name}」？`:'確定刪除？';document.getElementById('confirmModal').style.display='flex';}
-function findExpenseAnywhere(id){for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);const found=getExpenses(d).find(x=>x.id===id);if(found)return found;}return null;}
+function deleteExpense(id){
+  pendingDeleteId=id;
+  const e=getExpenses().find(x=>x.id===id)||findExpenseAnywhere(id);
+  document.getElementById('confirmMsg').textContent=e?`刪除「${e.name}」？`:'確定刪除？';
+  document.getElementById('confirmModal').style.display='flex';
+}
+function findExpenseAnywhere(id){
+  for(let i=-12;i<=12;i++){
+    const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);
+    const found=getExpenses(d).find(x=>x.id===id);
+    if(found)return found;
+  }
+  return null;
+}
 function confirmDelete(){
-  if(pendingDeleteId&&String(pendingDeleteId).startsWith('pay_')){const pid=parseInt(String(pendingDeleteId).replace('pay_',''));savePayments(getPayments().filter(p=>p.id!==pid));}
-  else if(pendingDeleteId){for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);const ex=getExpenses(d);if(ex.find(x=>x.id===pendingDeleteId)){saveExpenses(ex.filter(x=>x.id!==pendingDeleteId),d);break;}}}
+  if(pendingDeleteId&&String(pendingDeleteId).startsWith('pay_')){
+    const pid=parseInt(String(pendingDeleteId).replace('pay_',''));
+    savePayments(getPayments().filter(p=>p.id!==pid));
+  }else if(pendingDeleteId){
+    // 在所有月份找到這筆並刪除
+    for(let i=-12;i<=12;i++){
+      const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);
+      const ex=getExpenses(d);
+      if(ex.find(x=>x.id===pendingDeleteId)){saveExpenses(ex.filter(x=>x.id!==pendingDeleteId),d);break;}
+    }
+  }
   pendingDeleteId=null;document.getElementById('confirmModal').style.display='none';render();
 }
 function cancelDelete(){pendingDeleteId=null;document.getElementById('confirmModal').style.display='none';}
-function togglePaid(id){for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);const ex=getExpenses(d);const e=ex.find(x=>x.id===id);if(e){e.paid=!e.paid;saveExpenses(ex,d);break;}}render();}
+function togglePaid(id){
+  for(let i=-12;i<=12;i++){
+    const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);
+    const ex=getExpenses(d);const e=ex.find(x=>x.id===id);
+    if(e){e.paid=!e.paid;saveExpenses(ex,d);break;}
+  }
+  render();
+}
 
 function openEdit(id){
-  let e=findExpenseAnywhere(id);if(!e)return;
+  let e=findExpenseAnywhere(id);
+  if(!e)return;
   editingId=id;
-  document.getElementById('e-name').value=e.name;document.getElementById('e-amount').value=e.amount;
-  document.getElementById('e-date').value=toInput(e.date);document.getElementById('e-note').value=e.note||'';
-  document.getElementById('e-fixed').checked=!!e.fixed;document.getElementById('e-inst').checked=!!e.installment;
-  document.getElementById('e-inst-cur').value=e.instCur||'';document.getElementById('e-inst-total').value=e.instTotal||'';
+  document.getElementById('e-name').value=e.name;
+  document.getElementById('e-amount').value=e.amount;
+  document.getElementById('e-date').value=toInput(e.date);
+  document.getElementById('e-note').value=e.note||'';
+  document.getElementById('e-fixed').checked=!!e.fixed;
+  document.getElementById('e-inst').checked=!!e.installment;
+  document.getElementById('e-inst-cur').value=e.instCur||'';
+  document.getElementById('e-inst-total').value=e.instTotal||'';
   document.getElementById('e-inst-fields').style.display=e.installment?'grid':'none';
   document.getElementById('e-card').innerHTML=getCards().map(c=>`<option ${c===e.card?'selected':''}>${c}</option>`).join('');
   document.getElementById('e-person').innerHTML=getPeople().map(p=>`<option ${p===e.person?'selected':''}>${p}</option>`).join('');
@@ -479,6 +530,7 @@ function openEdit(id){
 function closeModal(){document.getElementById('editModal').style.display='none';editingId=null;}
 function closeModalOutside(ev){if(ev.target===document.getElementById('editModal'))closeModal();}
 function toggleEditInst(){document.getElementById('e-inst-fields').style.display=document.getElementById('e-inst').checked?'grid':'none';}
+
 function saveEdit(){
   if(!editingId)return;
   const nameVal=document.getElementById('e-name').value.trim();
@@ -492,17 +544,32 @@ function saveEdit(){
   const instCurVal=isInst?parseInt(document.getElementById('e-inst-cur').value||1):null;
   const instTotalVal=isInst?parseInt(document.getElementById('e-inst-total').value||1):null;
   if(!nameVal||!amtVal||!cardVal||!personVal||!dateVal){alert('請填寫所有必填欄位');return;}
-  for(let i=-12;i<=12;i++){const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);const ex=getExpenses(d);if(ex.find(x=>x.id===editingId)){saveExpenses(ex.filter(x=>x.id!==editingId),d);break;}}
+  // 找到原本這筆在哪個月並刪除
+  for(let i=-12;i<=12;i++){
+    const d=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+i,1);
+    const ex=getExpenses(d);
+    if(ex.find(x=>x.id===editingId)){saveExpenses(ex.filter(x=>x.id!==editingId),d);break;}
+  }
+  // 根據新日期存到對應月份
   const updatedExpense={id:editingId,name:nameVal,amount:amtVal,card:cardVal,person:personVal,date:dateVal,note:noteVal,fixed:fixedVal,installment:isInst,instCur:instCurVal,instTotal:instTotalVal,paid:false};
-  saveExpenseByDate(updatedExpense);closeModal();render();
+  saveExpenseByDate(updatedExpense);
+  closeModal();render();
 }
 
-function badgeStr(e){let s='';if(e.fixed)s+=`<span class="fixed-badge">固定</span>`;if(e.installment)s+=`<span class="inst-badge">第${e.instCur}/${e.instTotal}期</span>`;return s;}
+function badgeStr(e){
+  let s='';
+  if(e.fixed)s+=`<span class="fixed-badge">固定</span>`;
+  if(e.installment)s+=`<span class="inst-badge">第${e.instCur}/${e.instTotal}期</span>`;
+  return s;
+}
 
 function renderAddForm(){
   const people=getPeople(),cards=getCards();
   return`<div class="add-form">
-    <div class="add-form-title"><span>新增記帳</span><button class="btn btn-secondary" style="font-size:11px;padding:5px 10px;" onclick="importFixed()">↓ 匯入上月固定</button></div>
+    <div class="add-form-title">
+      <span>新增記帳</span>
+      <button class="btn btn-secondary" style="font-size:11px;padding:5px 10px;" onclick="importFixed()">↓ 匯入上月固定</button>
+    </div>
     <div class="g3">
       <div><label>品項</label><input id="f-name" placeholder="例：晚餐"/></div>
       <div><label>金額</label><input id="f-amount" type="number" placeholder="0"/></div>
@@ -540,25 +607,48 @@ function renderList(fp='全部',fc='全部',ff='全部'){
     <select class="filter-select" onchange="renderListF(document.getElementById('fp').value,document.getElementById('fc').value,this.value)" id="ff"><option>全部</option><option ${ff==='固定'?'selected':''}>固定</option><option ${ff==='一般'?'selected':''}>一般</option></select>
   </div>`;
   if(!ex.length)return filters+'<div class="empty">這個月還沒有記帳</div>';
-  const html=ex.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${cardPill(e.card)}${personPill(e.person)}${e.person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}</div><div class="expense-card-date">${e.date}</div>${e.note?`<div class="expense-card-note">📝 ${e.note}</div>`:''}</div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div></div></div>`).join('');
+  const html=ex.map(e=>`<div class="expense-card">
+    <div class="expense-card-left">
+      <div class="expense-card-name">${e.name}${badgeStr(e)}</div>
+      <div class="expense-card-meta">${cardPill(e.card)}${personPill(e.person)}${e.person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}</div>
+      <div class="expense-card-date">${e.date}</div>
+      ${e.note?`<div class="expense-card-note">📝 ${e.note}</div>`:''}
+    </div>
+    <div class="expense-card-right">
+      <div class="expense-card-amt">${fmt(e.amount)}</div>
+      <div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div>
+    </div>
+  </div>`).join('');
   return filters+`<div class="expense-list">${html}</div>`;
 }
 function renderListF(p,c,f){document.getElementById('mainContent').innerHTML=renderAddForm()+renderList(p,c,f);updateSummary();}
 
 function renderCardView(){
   const ex=getExpenses();
-  const sections=getCards().map(card=>{const items=ex.filter(e=>e.card===card);if(!items.length)return'';const total=items.reduce((s,e)=>s+e.amount,0);const html=items.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${personPill(e.person)}</div><div class="expense-card-date">${e.date}</div>${e.note?`<div class="expense-card-note">📝 ${e.note}</div>`:''}</div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div></div></div>`).join('');return`<div class="group-section"><div class="group-header"><span>${cardPill(card)}</span><span class="group-total">${fmt(total)}</span></div><div class="expense-list">${html}</div></div>`;}).join('');
+  const sections=getCards().map(card=>{
+    const items=ex.filter(e=>e.card===card);if(!items.length)return'';
+    const total=items.reduce((s,e)=>s+e.amount,0);
+    const html=items.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${personPill(e.person)}</div><div class="expense-card-date">${e.date}</div>${e.note?`<div class="expense-card-note">📝 ${e.note}</div>`:''}</div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div></div></div>`).join('');
+    return`<div class="group-section"><div class="group-header"><span>${cardPill(card)}</span><span class="group-total">${fmt(total)}</span></div><div class="expense-list">${html}</div></div>`;
+  }).join('');
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
 
 function renderPersonView(){
   const ex=getExpenses();
-  const sections=getPeople().map(person=>{const items=ex.filter(e=>e.person===person);if(!items.length)return'';const total=items.reduce((s,e)=>s+e.amount,0);const unpaid=items.filter(e=>!e.paid&&person!=='我自己').reduce((s,e)=>s+e.amount,0);const html=items.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${cardPill(e.card)}${person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}</div><div class="expense-card-date">${e.date}</div>${e.note?`<div class="expense-card-note">📝 ${e.note}</div>`:''}</div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div></div></div>`).join('');return`<div class="group-section"><div class="group-header"><span>${personPill(person)}</span><span class="group-total">${fmt(total)}</span>${unpaid>0?`<span class="group-owed">未收 ${fmt(unpaid)}</span>`:''}</div><div class="expense-list">${html}</div></div>`;}).join('');
+  const sections=getPeople().map(person=>{
+    const items=ex.filter(e=>e.person===person);if(!items.length)return'';
+    const total=items.reduce((s,e)=>s+e.amount,0);
+    const unpaid=items.filter(e=>!e.paid&&person!=='我自己').reduce((s,e)=>s+e.amount,0);
+    const html=items.map(e=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${e.name}${badgeStr(e)}</div><div class="expense-card-meta">${cardPill(e.card)}${person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}</div><div class="expense-card-date">${e.date}</div>${e.note?`<div class="expense-card-note">📝 ${e.note}</div>`:''}</div><div class="expense-card-right"><div class="expense-card-amt">${fmt(e.amount)}</div><div class="expense-card-actions"><button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button><button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button></div></div></div>`).join('');
+    return`<div class="group-section"><div class="group-header"><span>${personPill(person)}</span><span class="group-total">${fmt(total)}</span>${unpaid>0?`<span class="group-owed">未收 ${fmt(unpaid)}</span>`:''}</div><div class="expense-list">${html}</div></div>`;
+  }).join('');
   return sections||'<div class="empty">這個月還沒有記帳</div>';
 }
 
 function renderOwed(){
-  const ex=getExpenses();const unpaid=ex.filter(e=>e.person!=='我自己'&&!e.paid);
+  const ex=getExpenses();
+  const unpaid=ex.filter(e=>e.person!=='我自己'&&!e.paid);
   if(!unpaid.length)return'<div class="empty">目前沒有待收的帳 🎉</div>';
   const byP={};getPeople().filter(p=>p!=='我自己').forEach(p=>{byP[p]=[];});
   unpaid.forEach(e=>{if(byP[e.person])byP[e.person].push(e);});
@@ -567,11 +657,13 @@ function renderOwed(){
   return`<div><div class="section-header">待收金額</div><div class="owed-grid">${sc}</div><div class="section-header">明細</div><div class="expense-list">${html}</div></div>`;
 }
 
+// ★ 帳單對帳：手動設日期區間，跨月撈，打勾恢復額度，不影響薪資剩餘
 function applyBillingRange(card){
-  const f=document.getElementById(`br-from-${card}`);const t=document.getElementById(`br-to-${card}`);
+  const f=document.getElementById(`br-from-${card}`);
+  const t=document.getElementById(`br-to-${card}`);
   if(!f||!t)return;
   billingRanges[card]={from:toSlash(f.value),to:toSlash(t.value)};
-  S.set('billing_ranges',billingRanges);
+  S.set('billing_ranges',billingRanges);updateSummary();
   document.getElementById('mainContent').innerHTML=renderBilling();
 }
 
@@ -582,24 +674,35 @@ function renderBilling(){
     const range=billingRanges[card];
     const fi=range?toInput(range.from):'';
     const ti=range?toInput(range.to):'';
+    // 所有人的消費都算額度佔用
     const allItems=(range&&range.from&&range.to)?getExpensesInRange(range.from,range.to).filter(e=>e.card===card):[];
     const checks=getBillingChecks(card);
     const total=allItems.reduce((s,e)=>s+e.amount,0);
+    // 打勾恢復額度：未打勾的才佔用額度
     const checkedTotal=allItems.filter(e=>checks[e.id]).reduce((s,e)=>s+e.amount,0);
     const uncheckedTotal=total-checkedTotal;
     const checkedCount=allItems.filter(e=>checks[e.id]).length;
     const limit=s.limit||0;
-    const future=getFutureCommitted(card);
-    const realRemaining=limit-future;
-    const pct=limit>0?Math.min(100,Math.round(future/limit*100)):0;
+    const future=getFutureCommitted(card);const afterRange=0;const realRemaining=limit-future;const pct=limit>0?Math.min(100,Math.round(future/limit*100)):0;
     const bc=pct>=90?'danger':pct>=70?'warn':'safe';
     const tc=pct>=90?'danger':pct>=70?'warn':'';
-    const bar=limit>0?`<div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div><div class="limit-meta"><span>已用 ${pct}%</span><span>額度 ${fmt(limit)}</span></div>`:'';
-    const remainBlock=limit>0?`<div class="billing-remaining">實際可用 ${fmt(realRemaining)}</div>`:'';
+    const bar=limit>0?`<div class="limit-bar-bg"><div class="limit-bar-fill ${bc}" style="width:${pct}%"></div></div><div class="limit-meta"><span>已用 ${pct}%（含未來分期）</span><span>額度 ${fmt(limit)}</span></div>`:'';
+    const remainBlock=limit>0?`<div class="billing-remaining">實際可用 ${fmt(realRemaining)}</div>${future>0?`<div style="font-size:10px;color:#c87030;text-align:right;margin-top:1px;font-weight:600;">未來分期佔用 -${fmt(future)}</div>`:''}${afterRange>0?`<div style="font-size:10px;color:#c87030;text-align:right;margin-top:1px;font-weight:600;">區間後消費 -${fmt(afterRange)}</div>`:''}`:'';
     const itemRows=allItems.length
       ?`<div class="billing-stat-row"><span>${allItems.length} 筆 · 已對帳 ${checkedCount} 筆 <span class="billing-checked-total">✓ ${fmt(checkedTotal)}</span></span><span>未對帳 <strong style="color:var(--blossom);font-family:'DM Mono',monospace;">${fmt(uncheckedTotal)}</strong></span></div>`
-       +allItems.map(e=>{const isChecked=!!checks[e.id];return`<div class="billing-item ${isChecked?'checked':''}"><button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})" title="${isChecked?'取消':'已對帳'}">✓</button><div class="billing-item-left"><div class="billing-item-name">${e.name}${badgeStr(e)}</div><div class="billing-item-date">${e.date} · ${personPill(e.person)}${e.note?` · <span style="font-style:italic;">${e.note}</span>`:''}</div></div><span class="billing-item-amt">${fmt(e.amount)}</span></div>`;}).join('')
+       +allItems.map(e=>{
+          const isChecked=!!checks[e.id];
+          return`<div class="billing-item ${isChecked?'checked':''}">
+            <button class="check-btn" onclick="toggleBillingCheck('${card}',${e.id})" title="${isChecked?'取消':'已對帳'}">✓</button>
+            <div class="billing-item-left">
+              <div class="billing-item-name">${e.name}${badgeStr(e)}</div>
+              <div class="billing-item-date">${e.date} · ${personPill(e.person)}${e.note?` · <span style="font-style:italic;">${e.note}</span>`:''}</div>
+            </div>
+            <span class="billing-item-amt">${fmt(e.amount)}</span>
+          </div>`;
+        }).join('')
       :`<div class="billing-no-items">${(fi&&ti)?'這段期間沒有消費':'請設定日期範圍後按套用'}</div>`;
+
     return`<div class="billing-card">
       <div class="billing-card-header">
         <div>${cardPill(card)}<div class="billing-card-info">結帳日：每月 ${s.billingDay||'—'} 號</div></div>
@@ -616,6 +719,7 @@ function renderBilling(){
       <div class="billing-items">${itemRows}</div>
     </div>`;
   }).join('');
+
   return`<div>
     <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
       <button class="btn btn-primary" style="font-size:13px;padding:9px 18px;" onclick="openPaymentModal()">+ 記錄繳款</button>
@@ -639,16 +743,20 @@ function openPaymentModal(){
 function closePaymentModal(){document.getElementById('paymentModal').style.display='none';}
 function closePaymentModalOutside(ev){if(ev.target===document.getElementById('paymentModal'))closePaymentModal();}
 function savePayment(){
-  const card=document.getElementById('pm-card').value;const month=document.getElementById('pm-month').value;
-  const amount=parseInt(document.getElementById('pm-amount').value);const date=toSlash(document.getElementById('pm-date').value);
+  const card=document.getElementById('pm-card').value;
+  const month=document.getElementById('pm-month').value;
+  const amount=parseInt(document.getElementById('pm-amount').value);
+  const date=toSlash(document.getElementById('pm-date').value);
   const note=document.getElementById('pm-note').value.trim();
   if(!card||!month||!amount||!date){alert('請填寫所有必填欄位');return;}
   const payments=getPayments();payments.unshift({id:Date.now(),card,month,amount,date,note});
-  savePayments(payments);closePaymentModal();if(currentTab==='billing')render();
+  savePayments(payments);closePaymentModal();
+  if(currentTab==='billing')render();
   alert(`✅ 已記錄 ${card} ${month} 繳款 NT$${amount.toLocaleString()}`);
 }
 function renderPaymentHistory(){
-  const payments=getPayments();if(!payments.length)return'<div class="empty">還沒有繳款紀錄</div>';
+  const payments=getPayments();
+  if(!payments.length)return'<div class="empty">還沒有繳款紀錄</div>';
   const html=payments.map(p=>`<div class="expense-card"><div class="expense-card-left"><div class="expense-card-name">${cardPill(p.card)}</div><div class="expense-card-meta" style="margin-top:5px;"><span style="font-size:11px;color:var(--muted);">帳單 ${p.month}</span><span style="font-size:11px;color:var(--muted);">繳款 ${p.date}</span></div>${p.note?`<div class="expense-card-date">${p.note}</div>`:''}</div><div class="expense-card-right"><div class="expense-card-amt">${fmt(p.amount)}</div><button class="btn-icon del" style="margin-top:4px;" onclick="deletePayment(${p.id})">✕</button></div></div>`).join('');
   return`<div class="expense-list" style="margin-top:8px;">${html}</div>`;
 }
@@ -679,7 +787,9 @@ function updateSalaryDetail(){
   const {cardTotal,cashTotal}=calcMonthlyPayable();
   const left=sal-cardTotal-cashTotal;
   const sdSal=document.getElementById('sd-sal'),sdCard=document.getElementById('sd-card'),sdCash=document.getElementById('sd-cash'),sdLeft=document.getElementById('sd-left');
-  if(sdSal)sdSal.textContent=fmt(sal);if(sdCard)sdCard.textContent=`-${fmt(cardTotal)}`;if(sdCash)sdCash.textContent=`-${fmt(cashTotal)}`;
+  if(sdSal)sdSal.textContent=fmt(sal);
+  if(sdCard)sdCard.textContent=`-${fmt(cardTotal)}`;
+  if(sdCash)sdCash.textContent=`-${fmt(cashTotal)}`;
   if(sdLeft){sdLeft.textContent=fmt(left);sdLeft.className='salary-val '+(left<0?'red':'green');}
 }
 function saveSalaryNow(){const v=parseInt(document.getElementById('s-sal').value);if(v>0){saveSalary(v);updateSummary();updateSalaryDetail();alert('薪資已儲存！');}}
@@ -710,8 +820,7 @@ function reorderCards(){const preferred=['台新','現金','玉山','國泰','�
 async function syncFromFirebase(){
   if(!window.FB)return;showSyncStatus('同步中…');
   try{
-    const cards=S.get('cards',DEFAULT_CARDS);
-    const keys=['people','cards','card_settings','salary','card_payments','billing_ranges',...cards.filter(c=>c!=='現金').map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
+    const keys=['people','cards','card_settings','salary','card_payments','billing_ranges',...S.get('cards',['台新','玉山','國泰','富邦','聯邦','華南','中信']).map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
     await Promise.all(keys.map(async k=>{const val=await window.FB.get(k);if(val!==null)localStorage.setItem(k,val);}));
     reorderCards();showSyncStatus('已同步 ✓',true);autoCarryInstallments();render();updateSummary();
   }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
