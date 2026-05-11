@@ -37,32 +37,32 @@ header{padding:28px 22px 16px;display:flex;align-items:center;justify-content:sp
 .month-label{font-size:16px;color:var(--muted);font-weight:700;min-width:80px;text-align:center;letter-spacing:1px;}
 
 /* ── 大摘要卡片 ── */
-.main-card{margin:0 22px 10px;background:var(--surface);border-radius:28px;padding:24px 22px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;}
-.main-card::before{content:'';position:absolute;width:180px;height:180px;border-radius:50%;top:-60px;right:-60px;background:var(--bubbles);opacity:0.08;}
-.main-label{font-size:18px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:8px;}
-.main-amount{font-size:28px;font-weight:900;color:var(--text);letter-spacing:2px;line-height:1;margin-bottom:22px;}
-.main-row{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--border);padding-top:18px;}
-.main-stat{display:flex;flex-direction:column;gap:5px;}
-.main-stat:first-child{padding-right:18px;border-right:1.5px solid var(--border);}
-.main-stat:last-child{padding-left:18px;}
-.main-stat-val{font-size:20px;font-weight:900;letter-spacing:2px;line-height:1;}
-.main-stat-val.green{color:#4a8a20;}
-.main-stat-val.red{color:var(--blossom);}
-.main-stat-label{font-size:18px;color:var(--muted);font-weight:700;letter-spacing:.5px;}
+.main-card{margin:0 22px 8px;background:var(--surface);border-radius:22px;padding:16px 18px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;}
+.main-card::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;top:-40px;right:-40px;background:var(--bubbles);opacity:0.08;}
+.main-label{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.5px;margin-bottom:4px;}
+.main-amount{font-size:22px;font-weight:900;color:var(--text);letter-spacing:1px;line-height:1;margin-bottom:14px;}
+.main-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);padding-top:12px;}
+.main-stat{display:flex;flex-direction:column;gap:3px;}
+.main-stat:first-child{padding-right:14px;border-right:1px solid var(--border);}
+.main-stat:last-child{padding-left:14px;}
+.main-stat-val{font-size:16px;font-weight:900;letter-spacing:1px;line-height:1;}
+.main-stat-val.green{color:#ced986;}
+.main-stat-val.red{color:#e15d5e;}
+.main-stat-label{font-size:13px;color:var(--muted);font-weight:700;}
 
 /* ── 代墊未收條 ── */
-.owed-bar{margin:0 22px;background:var(--surface);border-radius:20px;padding:18px 22px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;}
-.owed-bar-label{font-size:18px;color:var(--muted);font-weight:700;letter-spacing:.5px;}
-.owed-bar-val{font-size:20px;font-weight:900;color:#c07020;letter-spacing:2px;}
+.owed-bar{margin:0 22px;background:var(--surface);border-radius:16px;padding:12px 18px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;}
+.owed-bar-label{font-size:14px;color:var(--muted);font-weight:700;}
+.owed-bar-val{font-size:16px;font-weight:900;color:#c07020;letter-spacing:1px;}
 
 /* ── 分頁標籤 ── */
-.tabs-wrap{padding:16px 22px 0;}
+.tabs-wrap{padding:10px 22px 0;}
 .tabs{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#EDE8D8;border-radius:50px;padding:12px 8px;border:1.5px solid #D8D0C0;}
 .tab{font-size:15px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#dbc8a1;white-space:nowrap;text-align:center;width:100%;font-family:inherit;padding:0;line-height:1;transition:color .15s;}
 .tab.active{color:#9f754e;}
 
 /* ── Main content ── */
-.main{padding:16px 22px 60px;flex:1;}
+.main{padding:12px 22px 100px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
 /* ── 篩選列 ── */
 .filter-bar{margin-bottom:14px;display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;background:#EDE8D8;border-radius:50px;border:1.5px solid #D8D0C0;overflow:hidden;}
@@ -107,11 +107,11 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .card-note{font-size:12px;color:var(--muted);white-space:nowrap;text-align:right;flex-shrink:0;font-style:italic;}
 
 /* header colours per person index */
-.h0{background:#FEF3EE;}.h0 .card-header-person{color:#c84a38;}
-.h1{background:#EEF9FD;}.h1 .card-header-person{color:#3a9ec0;}
-.h2{background:#F0F9E8;}.h2 .card-header-person{color:#5a9a30;}
-.h3{background:#FFFDE8;}.h3 .card-header-person{color:#a08010;}
-.h4{background:#FEF0F7;}.h4 .card-header-person{color:#c0509a;}
+.h0{background:#ede8f5;}.h0 .card-header-person{color:#9070b8;}
+.h1{background:#fef5e4;}.h1 .card-header-person{color:#c8881a;}
+.h2{background:#e8f5f0;}.h2 .card-header-person{color:#3a9a7a;}
+.h3{background:#fde8ee;}.h3 .card-header-person{color:#c84060;}
+.h4{background:#e8f2f8;}.h4 .card-header-person{color:#4878a8;}
 .h5{background:#FEF6EE;}.h5 .card-header-person{color:#c87030;}
 .h6{background:#F0EEF8;}.h6 .card-header-person{color:#7060b0;}
 .h7{background:#EEF8F4;}.h7 .card-header-person{color:#308870;}
@@ -120,11 +120,11 @@ textarea{resize:none;height:68px;line-height:1.5;}
 
 /* pills & badges */
 .pill{display:inline-block;font-size:12px;padding:3px 10px;border-radius:50px;font-weight:700;white-space:nowrap;}
-[data-pi="0"]{background:var(--blossom-light);color:#c84a38;border:1.5px solid #F9C4B4;}
-[data-pi="1"]{background:var(--bubbles-light);color:#3a9ec0;border:1.5px solid #93D6ED;}
-[data-pi="2"]{background:var(--buttercup-light);color:#5a9a30;border:1.5px solid #A6D785;}
-[data-pi="3"]{background:var(--deco-yellow-light);color:#a08010;border:1.5px solid #FFE681;}
-[data-pi="4"]{background:var(--deco-pink-light);color:#c0509a;border:1.5px solid #F7A8CA;}
+[data-pi="0"]{background:#ede8f5;color:#9070b8;border:1.5px solid #d0b8de;}
+[data-pi="1"]{background:#fef5e4;color:#c8881a;border:1.5px solid #f3bc72;}
+[data-pi="2"]{background:#e8f5f0;color:#3a9a7a;border:1.5px solid #96d4bf;}
+[data-pi="3"]{background:#fde8ee;color:#c84060;border:1.5px solid #f6a5b4;}
+[data-pi="4"]{background:#e8f2f8;color:#4878a8;border:1.5px solid #79a5c8;}
 [data-pi="5"]{background:var(--warning-light);color:#c87030;border:1.5px solid #F9B384;}
 [data-pi="6"]{background:#F0EEF8;color:#7060b0;border:1.5px solid #C8C0E0;}
 [data-pi="7"]{background:#EEF8F4;color:#308870;border:1.5px solid #88D0B8;}
@@ -225,6 +225,20 @@ textarea{resize:none;height:68px;line-height:1.5;}
   .app{width:100%;height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;}
   .main{overflow-y:scroll;-webkit-overflow-scrolling:touch;flex:1;min-height:0;}
 }
+/* ── 浮動新增按鈕 ── */
+.fab{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);width:calc(100% - 44px);max-width:476px;background:var(--text);color:#fff;border:none;border-radius:50px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 6px 24px rgba(26,26,26,.28);z-index:50;display:flex;align-items:center;justify-content:center;gap:8px;}
+.overlay{position:fixed;inset:0;background:rgba(45,45,45,.2);backdrop-filter:blur(4px);z-index:55;display:none;}
+.overlay.open{display:block;}
+.form-sheet{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:var(--surface);border-radius:24px 24px 0 0;padding:18px 20px 44px;box-shadow:0 -6px 28px rgba(45,45,45,.15);z-index:60;display:none;max-height:92vh;overflow-y:auto;}
+.form-sheet.open{display:block;}
+.sheet-handle{width:36px;height:4px;background:var(--border);border-radius:3px;margin:0 auto 16px;}
+.sheet-title{font-size:15px;font-weight:700;color:var(--muted);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.btn-sheet-close{background:var(--surface2);border:1.5px solid var(--border);color:var(--muted);border-radius:50%;width:30px;height:30px;font-size:16px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sheet-g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.sheet-gfull{margin-bottom:12px;}
+.sheet-bottom{display:flex;align-items:center;gap:14px;flex-wrap:nowrap;margin-top:4px;}
+.sheet-cbx{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--muted);font-weight:700;white-space:nowrap;cursor:pointer;}
+.sheet-cbx input[type=checkbox]{width:16px;height:16px;accent-color:var(--blossom);-webkit-appearance:auto;appearance:auto;flex-shrink:0;}
 </style>
 <script>
 function loadScript(src){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}
@@ -280,6 +294,45 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
   </div>
 
   <div class="main" id="mainContent"></div>
+</div>
+
+<!-- 浮動新增按鈕 -->
+<button class="fab" id="fabBtn" onclick="openAddSheet()">＋ 新增記帳</button>
+
+<!-- 遮罩 -->
+<div class="overlay" id="overlay" onclick="closeAddSheet()"></div>
+
+<!-- 新增表單 Sheet -->
+<div class="form-sheet" id="addSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title">
+    <span>新增記帳</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;" onclick="importFixed()">↓ 匯入上月固定</button>
+      <button class="btn-sheet-close" onclick="closeAddSheet()">✕</button>
+    </div>
+  </div>
+  <div class="sheet-g2">
+    <div><label>品項</label><input id="f-name" placeholder="例：晚餐"/></div>
+    <div><label>金額</label><input id="f-amount" type="number" placeholder="0"/></div>
+  </div>
+  <div class="sheet-gfull"><label>消費日期</label><input id="f-date" type="date" value="" style="background:#fff;color-scheme:light;"/></div>
+  <div class="sheet-g2">
+    <div><label>付款方式</label><select id="f-card"></select></div>
+    <div><label>誰的帳</label><select id="f-person"></select></div>
+  </div>
+  <div class="sheet-gfull"><label>備註（選填）</label><textarea id="f-note" placeholder="例：實際刷卡日4/30，5/2才入帳"></textarea></div>
+  <div class="sheet-bottom">
+    <label class="sheet-cbx"><input type="checkbox" id="f-fixed"> 固定支出</label>
+    <label class="sheet-cbx"><input type="checkbox" id="f-inst" onchange="toggleAddInst()"> 分期</label>
+    <div id="f-inst-fields" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div><label>第幾期</label><input id="f-inst-cur" type="number" placeholder="1" min="1"/></div>
+        <div><label>共幾期</label><input id="f-inst-total" type="number" placeholder="12" min="1"/></div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin-left:auto;flex-shrink:0;" onclick="addExpense()">新增</button>
+  </div>
 </div>
 
 <!-- Edit Modal -->
@@ -443,10 +496,23 @@ function switchTab(tab){
   currentTab=tab;
   const tabs=['list','owed','billing','settings'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
+  const fab=document.getElementById('fabBtn');
+  if(fab)fab.style.display=(tab==='list')?'flex':'none';
   render();
 }
 
-function addExpense(){
+function openAddSheet(){
+  const people=getPeople(),cards=getCards();
+  document.getElementById('f-card').innerHTML=cards.map(c=>`<option>${c}</option>`).join('');
+  document.getElementById('f-person').innerHTML=people.map(p=>`<option>${p}</option>`).join('');
+  document.getElementById('f-date').value=todayInput();
+  document.getElementById('addSheet').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeAddSheet(){
+  document.getElementById('addSheet').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
   const name=document.getElementById('f-name').value.trim();
   const amount=parseInt(document.getElementById('f-amount').value);
   const card=document.getElementById('f-card').value;
@@ -463,6 +529,7 @@ function addExpense(){
   document.getElementById('f-name').value='';document.getElementById('f-amount').value='';document.getElementById('f-note').value='';
   document.getElementById('f-fixed').checked=false;document.getElementById('f-inst').checked=false;
   document.getElementById('f-inst-fields').style.display='none';
+  closeAddSheet();
   render();
 }
 function toggleAddInst(){document.getElementById('f-inst-fields').style.display=document.getElementById('f-inst').checked?'grid':'none';}
@@ -476,7 +543,7 @@ function importFixed(){
   const existingSources=new Set(ex.filter(e=>e.sourceId).map(e=>e.sourceId));
   let imported=0;
   toCarry.forEach(e=>{if(existingSources.has(e.id))return;const nextCur=e.installment&&e.instCur?e.instCur+1:e.instCur;const newExp={...e,id:Date.now()+Math.random(),sourceId:e.id,date:today,paid:false,instCur:nextCur};saveExpenseByDate(newExp);imported++;});
-  render();alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');
+  render();alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');closeAddSheet();
 }
 
 let pendingDeleteId=null;
@@ -794,11 +861,11 @@ function renderSettings(){
 
 function getTagStyle(pi){
   const styles=[
-    'background:#FEF3EE;color:#c84a38;border-color:#F9C4B4;',
-    'background:#EEF9FD;color:#3a9ec0;border-color:#93D6ED;',
-    'background:#F0F9E8;color:#5a9a30;border-color:#A6D785;',
-    'background:#FFFDE8;color:#a08010;border-color:#FFE681;',
-    'background:#FEF0F7;color:#c0509a;border-color:#F7A8CA;',
+    'background:#ede8f5;color:#9070b8;border-color:#d0b8de;',
+    'background:#fef5e4;color:#c8881a;border-color:#f3bc72;',
+    'background:#e8f5f0;color:#3a9a7a;border-color:#96d4bf;',
+    'background:#fde8ee;color:#c84060;border-color:#f6a5b4;',
+    'background:#e8f2f8;color:#4878a8;border-color:#79a5c8;',
     'background:#FEF6EE;color:#c87030;border-color:#F9B384;',
     'background:#F0EEF8;color:#7060b0;border-color:#C8C0E0;',
     'background:#EEF8F4;color:#308870;border-color:#88D0B8;',
@@ -830,7 +897,7 @@ function clearMonth(){if(!confirm('確定要清除本月所有記帳資料？'))
 function render(){
   updateSummary();
   const el=document.getElementById('mainContent');
-  if(currentTab==='list')el.innerHTML=renderAddForm()+renderList();
+  if(currentTab==='list')el.innerHTML=renderList();
   else if(currentTab==='owed')el.innerHTML=renderOwed();
   else if(currentTab==='billing')el.innerHTML=renderBilling();
   else if(currentTab==='settings'){el.innerHTML=renderSettings();updateSalaryDetail();}
