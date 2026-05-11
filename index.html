@@ -513,6 +513,7 @@ function closeAddSheet(){
   document.getElementById('addSheet').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
 }
+function addExpense(){
   const name=document.getElementById('f-name').value.trim();
   const amount=parseInt(document.getElementById('f-amount').value);
   const card=document.getElementById('f-card').value;
