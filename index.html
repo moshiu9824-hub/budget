@@ -591,36 +591,6 @@ function saveEdit(){
 
 function badgeStr(e){let s='';if(e.fixed)s+=`<span class="fixed-badge">固定</span>`;if(e.installment)s+=`<span class="inst-badge">第${e.instCur}/${e.instTotal}期</span>`;return s;}
 
-function renderAddForm(){
-  const people=getPeople(),cards=getCards();
-  return`<div class="add-form">
-    <div class="add-form-title">
-      <span>新增記帳</span>
-      <button class="btn btn-secondary" style="font-size:12px;padding:7px 12px;" onclick="importFixed()">↓ 匯入上月固定</button>
-    </div>
-    <div class="g2">
-      <div><label>品項</label><input id="f-name" placeholder="例：晚餐"/></div>
-      <div><label>金額</label><input id="f-amount" type="number" placeholder="0"/></div>
-    </div>
-    <div class="gfull"><label>消費日期</label><input id="f-date" type="date" value="${todayInput()}" style="background:#fff;color-scheme:light;"/></div>
-    <div class="g2">
-      <div><label>付款方式</label><select id="f-card">${cards.map(c=>`<option>${c}</option>`).join('')}</select></div>
-      <div><label>誰的帳</label><select id="f-person">${people.map(p=>`<option>${p}</option>`).join('')}</select></div>
-    </div>
-    <div class="gfull"><label>備註（選填）</label><textarea id="f-note" placeholder="例：實際刷卡日4/30，5/2才入帳"></textarea></div>
-    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
-      <label class="checkbox-label"><input type="checkbox" id="f-fixed"> 固定支出</label>
-      <label class="checkbox-label"><input type="checkbox" id="f-inst" onchange="toggleAddInst()"> 分期</label>
-      <div id="f-inst-fields" style="display:none;flex:1;min-width:180px;">
-        <div class="g2" style="margin-bottom:0;">
-          <div><label>第幾期</label><input id="f-inst-cur" type="number" placeholder="1" min="1"/></div>
-          <div><label>共幾期</label><input id="f-inst-total" type="number" placeholder="12" min="1"/></div>
-        </div>
-      </div>
-      <button class="btn btn-primary" style="margin-left:auto;" onclick="addExpense()">新增</button>
-    </div>
-  </div>`;
-}
 
 function renderExpenseCard(e){
   const hClass=personHeaderClass(e.person);
@@ -667,7 +637,7 @@ function renderList(fp='全部',fc='全部'){
   if(!ex.length)return filters+'<div class="empty">這個月還沒有記帳</div>';
   return filters+`<div class="expense-list">${ex.map(renderExpenseCard).join('')}</div>`;
 }
-function renderListF(p,c){document.getElementById('mainContent').innerHTML=renderAddForm()+renderList(p,c);updateSummary();}
+function renderListF(p,c){document.getElementById('mainContent').innerHTML=renderList(p,c);updateSummary();}
 
 function renderOwed(){
   const seen=new Set();const unpaid=[];
