@@ -638,38 +638,97 @@ function renderList(fp='全部',fc='全部'){
 }
 function renderListF(p,c){document.getElementById('mainContent').innerHTML=renderList(p,c);updateSummary();}
 
-function renderOwed(){
-  const seen=new Set();const unpaid=[];
-  getExpenses().filter(e=>e.person!=='我自己'&&!e.paid&&e.card==='現金').forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);unpaid.push(e);}});
-  getCards().filter(c=>c!=='現金').forEach(card=>{const range=billingRanges[card];if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);unpaid.push(e);}});});
-  if(!unpaid.length)return'<div class="empty">目前沒有待收的帳 🎉</div>';
-  const byP={};getPeople().filter(p=>p!=='我自己').forEach(p=>{byP[p]=[];});
-  unpaid.forEach(e=>{if(byP[e.person])byP[e.person].push(e);});
-  const sc=Object.entries(byP).filter(([,i])=>i.length>0).map(([p,i])=>{const t=i.reduce((s,e)=>s+e.amount,0);const hc=personHeaderClass(p);return`<div class="owed-card"><div class="owed-name">${personPill(p)}</div><div class="owed-amt">${fmt(t)}</div><div class="owed-count">${i.length} 筆未收</div></div>`;}).join('');
-  const html=unpaid.map(e=>{
-    const hClass=personHeaderClass(e.person);
-    return`<div class="expense-card">
-      <div class="card-header ${hClass}">
-        <span class="card-header-person">${e.person}</span>
-        <span class="card-header-date">${e.date}</span>
-        <div class="card-header-actions"></div>
-      </div>
-      <div class="card-body">
-        <div class="card-row1">
-          <div class="card-name">${e.name}</div>
-          <div class="card-amt">${fmt(e.amount)}</div>
+function renderOwed() {
+  const seen = new Set();
+  const unpaid = [];
+
+  // 本月：非我自己、未收、現金
+  getExpenses()
+    .filter(e => e.person !== '我自己' && !e.paid && e.card === '現金')
+    .forEach(e => {
+      if (!seen.has(e.id)) {
+        seen.add(e.id);
+        unpaid.push(e);
+      }
+    });
+
+  // 信用卡區間內：非我自己、未收
+  getCards().filter(c => c !== '現金').forEach(card => {
+    const range = billingRanges[card];
+    if (!range || !range.from || !range.to) return;
+    getExpensesInRange(range.from, range.to)
+      .filter(e => e.card === card && e.person !== '我自己' && !e.paid)
+      .forEach(e => {
+        if (!seen.has(e.id)) {
+          seen.add(e.id);
+          unpaid.push(e);
+        }
+      });
+  });
+
+  if (!unpaid.length) {
+    return '<div class="empty">目前沒有待收的帳 🎉</div>';
+  }
+
+  // 依人分組
+  const byP = {};
+  getPeople().filter(p => p !== '我自己').forEach(p => { byP[p] = []; });
+  unpaid.forEach(e => {
+    if (!byP[e.person]) byP[e.person] = [];
+    byP[e.person].push(e);
+  });
+
+  // 每個人：一張總額卡 + 該人的明細列表
+  const personBlocks = Object.entries(byP)
+    .filter(([, list]) => list.length > 0)
+    .map(([p, list]) => {
+      const total = list.reduce((s, e) => s + e.amount, 0);
+
+      const summaryCard = `
+        <div class="owed-card" style="margin-bottom:10px;">
+          <div class="owed-name">${personPill(p)}</div>
+          <div class="owed-amt">${fmt(total)}</div>
+          <div class="owed-count">${list.length} 筆未收</div>
         </div>
-        <div class="card-row2">
-          <div class="card-tags">
-            ${cardPill(e.card)}
-            ${badgeStr(e)}
+      `;
+
+      const detailCards = list.map(e => {
+        const hClass = personHeaderClass(e.person);
+        return `
+          <div class="expense-card">
+            <div class="card-header ${hClass}">
+              <span class="card-header-person">${e.person}</span>
+              <span class="card-header-date">${e.date}</span>
+              <div class="card-header-actions"></div>
+            </div>
+            <div class="card-body">
+              <div class="card-row1">
+                <div class="card-name">${e.name}</div>
+                <div class="card-amt">${fmt(e.amount)}</div>
+              </div>
+              <div class="card-row2">
+                <div class="card-tags">
+                  ${cardPill(e.card)}
+                  ${badgeStr(e)}
+                </div>
+                <button class="btn-sm" onclick="togglePaid(${e.id})">標記已收</button>
+              </div>
+            </div>
           </div>
-          <button class="btn-sm" onclick="togglePaid(${e.id})">標記已收</button>
+        `;
+      }).join('');
+
+      return `
+        <div style="margin-bottom:20px;">
+          ${summaryCard}
+          <div class="expense-list">
+            ${detailCards}
+          </div>
         </div>
-      </div>
-    </div>`;
-  }).join('');
-  return`<div><div class="section-header">待收金額</div><div class="owed-grid">${sc}</div><div class="section-header">明細</div><div class="expense-list">${html}</div></div>`;
+      `;
+    }).join('');
+
+  return `<div>${personBlocks}</div>`;
 }
 
 function applyBillingRange(card){
