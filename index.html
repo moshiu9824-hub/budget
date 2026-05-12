@@ -67,7 +67,7 @@ header{padding:28px 22px 16px;display:flex;align-items:center;justify-content:sp
 /* ── 篩選列 ── */
 .filter-bar{margin-bottom:14px;display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;background:#EDE8D8;border-radius:50px;border:1.5px solid #D8D0C0;overflow:hidden;}
 .filter-divider{width:1px;height:20px;background:#D8D0C0;}
-.filter-select{background:transparent;border:none;color:#9f754e;padding:11px 14px;font-size:15px;font-weight:700;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;width:100%;text-align:center;color-scheme:light;}
+.filter-select{background:transparent;border:none;color:#9f754e;padding:10px 0;font-size:13px;font-weight:700;font-family:inherit;outline:none;cursor:pointer;width:100%;text-align:center;line-height:1;}
 
 /* ── 新增表單 ── */
 .add-form{background:var(--surface);border-radius:var(--radius-lg);padding:22px 20px;margin-bottom:16px;box-shadow:var(--shadow);}
@@ -673,18 +673,34 @@ function renderList(fp='全部',fc='全部'){
   if(fp!=='全部')ex=ex.filter(e=>e.person===fp);
   if(fc!=='全部')ex=ex.filter(e=>e.card===fc);
   const filters=`<div class="filter-bar">
-    <select class="filter-select" onchange="renderListF(this.value,document.getElementById('fc').value)" id="fp">
-      <option>全部</option>${people.map(p=>`<option ${p===fp?'selected':''}>${p}</option>`).join('')}
-    </select>
+    <button class="filter-select" onclick="openFilterSheet('person','${fp}','${fc}')">${fp==='全部'?'人員：全部':fp}</button>
     <div class="filter-divider"></div>
-    <select class="filter-select" onchange="renderListF(document.getElementById('fp').value,this.value)" id="fc">
-      <option>全部</option>${cards.map(c=>`<option ${c===fc?'selected':''}>${c}</option>`).join('')}
-    </select>
+    <button class="filter-select" onclick="openFilterSheet('card','${fc}','${fp}')">${fc==='全部'?'付款：全部':fc}</button>
   </div>`;
   if(!ex.length)return filters+'<div class="empty">這個月還沒有記帳</div>';
   return filters+`<div class="expense-list">${ex.map(renderExpenseCard).join('')}</div>`;
 }
 function renderListF(p,c){document.getElementById('mainContent').innerHTML=renderList(p,c);updateSummary();}
+function openFilterSheet(type, current, other){
+  const people=getPeople(), cards=getCards();
+  const items=type==='person'?['全部',...people]:['全部',...cards];
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(45,45,45,.2);backdrop-filter:blur(4px);z-index:80;';
+  const sheet=document.createElement('div');
+  sheet.style.cssText='position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#fff;border-radius:24px 24px 0 0;padding:20px 20px 44px;z-index:81;box-shadow:0 -6px 28px rgba(45,45,45,.15);';
+  sheet.innerHTML=`<div style="width:36px;height:4px;background:#E8E4D8;border-radius:3px;margin:0 auto 16px;"></div>`
+    +items.map(item=>`<button onclick="selectFilter('${type}','${item}','${other}')" style="display:block;width:100%;text-align:left;padding:14px 16px;font-size:16px;font-weight:700;font-family:inherit;border:none;background:${item===current?'#EDE8D8':'transparent'};color:${item===current?'#9f754e':'#1A1A1A'};border-radius:12px;margin-bottom:4px;cursor:pointer;">${item==='全部'?(type==='person'?'人員：全部':'付款：全部'):item}</button>`).join('');
+  overlay.onclick=()=>{document.body.removeChild(overlay);document.body.removeChild(sheet);};
+  document.body.appendChild(overlay);
+  document.body.appendChild(sheet);
+}
+function selectFilter(type, value, other){
+  document.querySelectorAll('body>div[style*="z-index:80"],body>div[style*="z-index:81"]').forEach(el=>document.body.removeChild(el));
+  const fp=type==='person'?value:other;
+  const fc=type==='card'?value:other;
+  document.getElementById('mainContent').innerHTML=renderList(fp,fc);
+  updateSummary();
+}
 
 function renderOwed() {
   const seen = new Set();
