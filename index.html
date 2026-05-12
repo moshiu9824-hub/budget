@@ -140,6 +140,54 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .section-header::after{content:'';flex:1;height:1px;background:var(--border);}
 .owed-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
 .owed-card{background:var(--surface);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
+/* 代收總額卡：新排版 */
+.owed-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 10px 14px 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+}
+
+/* 上面：人員色塊 + 人名（用 pill 顏色） */
+.owed-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+/* 下面：金額（左） + 筆數（右） */
+.owed-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 金額：大字，靠左 */
+.owed-total-amt {
+  font-size: 20px;
+  font-weight: 900;
+  color: #c87030; /* 和你原本 owed-amt 顏色一樣 */
+}
+
+/* 筆數：右側，大數字 + 小「筆」字 */
+.owed-count-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.owed-count-num {
+  font-size: 20px;
+  font-weight: 900;
+  color: #c87030;
+}
+
+.owed-count-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
 .owed-name{font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700;}
 .owed-amt{font-size:20px;color:#c87030;font-weight:900;letter-spacing:1px;}
 .owed-count{font-size:13px;color:var(--muted);margin-top:4px;font-weight:600;}
@@ -684,13 +732,20 @@ function renderOwed() {
     .map(([p, list]) => {
       const total = list.reduce((s, e) => s + e.amount, 0);
 
-      const summaryCard = `
-        <div class="owed-card" style="margin-bottom:10px;">
-          <div class="owed-name">${personPill(p)}</div>
-          <div class="owed-amt">${fmt(total)}</div>
-          <div class="owed-count">${list.length} 筆未收</div>
-        </div>
-      `;
+     const summaryCard = `
+  <div class="owed-card">
+    <div class="owed-card-header">
+      ${personPill(p)}
+    </div>
+    <div class="owed-card-bottom">
+      <div class="owed-total-amt">${fmt(total)}</div>
+      <div class="owed-count-wrap">
+        <span class="owed-count-num">${list.length}</span>
+        <span class="owed-count-label">筆</span>
+      </div>
+    </div>
+  </div>
+`;
 
       const detailCards = list.map(e => {
         const hClass = personHeaderClass(e.person);
