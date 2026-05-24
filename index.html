@@ -1014,6 +1014,7 @@ async function syncFromFirebase(){
 }
 
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
+billingRanges=S.get('billing_ranges',{});
 autoCarryInstallments();render();
 
 (window._firebaseLoader||Promise.resolve()).then(()=>{
