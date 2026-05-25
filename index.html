@@ -1008,7 +1008,18 @@ async function syncFromFirebase(){
   if(!window.FB)return;showSyncStatus('同步中…');
   try{
     const keys=['people','cards','card_settings','salary','card_payments','billing_ranges',...S.get('cards',['台新','玉山','國泰','富邦','聯邦','華南','中信']).map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
-    await Promise.all(keys.map(async k=>{const val=await window.FB.get(k);if(val!==null)localStorage.setItem(k,val);}));
+    await Promise.all(keys.map(async k=>{
+  const val=await window.FB.get(k);
+  if(val!==null){
+    if(k==='billing_ranges'){
+      // billing_ranges 只有本機沒有時才從 Firebase 拉
+      const local=localStorage.getItem('billing_ranges');
+      if(!local||local==='{}')localStorage.setItem(k,val);
+    } else {
+      localStorage.setItem(k,val);
+    }
+  }
+}));
     reorderCards();billingRanges=S.get('billing_ranges',{});showSyncStatus('已同步 ✓',true);autoCarryInstallments();render();updateSummary();
   }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
 }
