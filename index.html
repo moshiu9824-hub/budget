@@ -36,38 +36,38 @@ header{padding:28px 22px 16px;display:flex;align-items:center;justify-content:sp
 .month-nav button:hover{background:var(--blossom);color:#fff;border-color:var(--blossom);}
 .month-label{font-size:16px;color:var(--muted);font-weight:700;min-width:80px;text-align:center;letter-spacing:1px;}
 
-/* ── 大摘要卡片 ── */
-.main-card{margin:0 22px 8px;background:var(--surface);border-radius:22px;padding:16px 18px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;}
-.main-card::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;top:-40px;right:-40px;background:var(--bubbles);opacity:0.08;}
-.main-label{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.5px;margin-bottom:4px;}
-.main-amount{font-size:22px;font-weight:900;color:var(--text);letter-spacing:1px;line-height:1;margin-bottom:14px;}
-.main-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);padding-top:12px;}
-.main-stat{display:flex;flex-direction:column;gap:3px;}
-.main-stat:first-child{padding-right:14px;border-right:1px solid var(--border);}
-.main-stat:last-child{padding-left:14px;}
-.main-stat-val{font-size:16px;font-weight:900;letter-spacing:1px;line-height:1;}
+/* ── 大摘要卡片（更小版）── */
+.main-card{margin:0 22px 8px;background:var(--surface);border-radius:20px;padding:13px 16px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;}
+.main-card::before{content:"";position:absolute;width:100px;height:100px;border-radius:50%;top:-30px;right:-30px;background:var(--bubbles);opacity:0.08;}
+.main-label{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.5px;margin-bottom:3px;}
+.main-amount{font-size:18px;font-weight:900;color:var(--text);letter-spacing:1px;line-height:1;margin-bottom:11px;}
+.main-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);padding-top:10px;}
+.main-stat{display:flex;flex-direction:column;gap:2px;}
+.main-stat:first-child{padding-right:12px;border-right:1px solid var(--border);}
+.main-stat:last-child{padding-left:12px;}
+.main-stat-val{font-size:14px;font-weight:900;letter-spacing:1px;line-height:1;}
 .main-stat-val.green{color:#ced986;}
 .main-stat-val.red{color:#e15d5e;}
-.main-stat-label{font-size:13px;color:var(--muted);font-weight:700;}
+.main-stat-label{font-size:11px;color:var(--muted);font-weight:700;}
 
 /* ── 代墊未收條 ── */
-.owed-bar{margin:0 22px;background:var(--surface);border-radius:16px;padding:12px 18px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;}
-.owed-bar-label{font-size:14px;color:var(--muted);font-weight:700;}
-.owed-bar-val{font-size:16px;font-weight:900;color:#c07020;letter-spacing:1px;}
+.owed-bar{margin:0 22px;background:var(--surface);border-radius:14px;padding:10px 16px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;}
+.owed-bar-label{font-size:12px;color:var(--muted);font-weight:700;}
+.owed-bar-val{font-size:14px;font-weight:900;color:#c07020;letter-spacing:1px;}
 
 /* ── 分頁標籤 ── */
-.tabs-wrap{padding:10px 22px 0;}
-.tabs{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#EDE8D8;border-radius:50px;padding:12px 8px;border:1.5px solid #D8D0C0;}
-.tab{font-size:15px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#dbc8a1;white-space:nowrap;text-align:center;width:100%;font-family:inherit;padding:0;line-height:1;transition:color .15s;}
+.tabs-wrap{padding:8px 22px 0;}
+.tabs{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#EDE8D8;border-radius:50px;padding:10px 6px;border:1.5px solid #D8D0C0;}
+.tab{font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#dbc8a1;white-space:nowrap;text-align:center;width:100%;font-family:inherit;padding:0;line-height:1;transition:color .15s;}
 .tab.active{color:#9f754e;}
 
 /* ── Main content ── */
-.main{padding:12px 22px 100px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.main{padding:10px 22px 100px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
 /* ── 篩選列 ── */
-.filter-bar{margin-bottom:14px;display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;background:#EDE8D8;border-radius:50px;border:1.5px solid #D8D0C0;overflow:hidden;}
-.filter-divider{width:1px;height:20px;background:#D8D0C0;}
-.filter-select{background:transparent;border:none;color:#9f754e;padding:10px 0;font-size:13px;font-weight:700;font-family:inherit;outline:none;cursor:pointer;width:100%;text-align:center;line-height:1;}
+.filter-bar{margin-bottom:12px;display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;background:#EDE8D8;border-radius:50px;border:1.5px solid #D8D0C0;overflow:hidden;}
+.filter-divider{width:1px;height:16px;background:#D8D0C0;}
+.filter-select{background:transparent;border:none;color:#9f754e;padding:10px 0;font-size:13px;font-weight:700;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;width:100%;text-align:center;text-align-last:center;-webkit-text-align-last:center;color-scheme:light;line-height:1;display:block;}
 
 /* ── 新增表單 ── */
 .add-form{background:var(--surface);border-radius:var(--radius-lg);padding:22px 20px;margin-bottom:16px;box-shadow:var(--shadow);}
@@ -140,54 +140,6 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .section-header::after{content:'';flex:1;height:1px;background:var(--border);}
 .owed-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
 .owed-card{background:var(--surface);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
-/* 代收總額卡：新排版 */
-.owed-card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 10px 14px 12px;
-  box-shadow: var(--shadow);
-  margin-bottom: 10px;
-}
-
-/* 上面：人員色塊 + 人名（用 pill 顏色） */
-.owed-card-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-/* 下面：金額（左） + 筆數（右） */
-.owed-card-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* 金額：大字，靠左 */
-.owed-total-amt {
-  font-size: 26px;
-  font-weight: 900;
-  color: #c87030; /* 和你原本 owed-amt 顏色一樣 */
-}
-
-/* 筆數：右側，大數字 + 小「筆」字 */
-.owed-count-wrap {
-  display: flex;
-  align-items: baseline;
-  gap: 3px;
-}
-
-.owed-count-num {
-  font-size: 32px;
-  font-weight: 900;
-  color: #e15d5e;
-}
-
-.owed-count-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--muted);
-}
 .owed-name{font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700;}
 .owed-amt{font-size:20px;color:#c87030;font-weight:900;letter-spacing:1px;}
 .owed-count{font-size:13px;color:var(--muted);margin-top:4px;font-weight:600;}
@@ -322,6 +274,8 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
       </div>
     </div>
   </div>
+
+  <div style="height:6px;"></div>
 
   <!-- 代墊未收條 -->
   <div class="owed-bar">
@@ -673,138 +627,57 @@ function renderList(fp='全部',fc='全部'){
   if(fp!=='全部')ex=ex.filter(e=>e.person===fp);
   if(fc!=='全部')ex=ex.filter(e=>e.card===fc);
   const filters=`<div class="filter-bar">
-    <button class="filter-select" onclick="openFilterSheet('person','${fp}','${fc}')">${fp==='全部'?'人員：全部':fp}</button>
+    <select class="filter-select" onchange="renderListF(this.value,document.getElementById('fc').value)" id="fp">
+      <option>全部</option>${people.map(p=>`<option ${p===fp?'selected':''}>${p}</option>`).join('')}
+    </select>
     <div class="filter-divider"></div>
-    <button class="filter-select" onclick="openFilterSheet('card','${fc}','${fp}')">${fc==='全部'?'付款：全部':fc}</button>
+    <select class="filter-select" onchange="renderListF(document.getElementById('fp').value,this.value)" id="fc">
+      <option>全部</option>${cards.map(c=>`<option ${c===fc?'selected':''}>${c}</option>`).join('')}
+    </select>
   </div>`;
   if(!ex.length)return filters+'<div class="empty">這個月還沒有記帳</div>';
   return filters+`<div class="expense-list">${ex.map(renderExpenseCard).join('')}</div>`;
 }
 function renderListF(p,c){document.getElementById('mainContent').innerHTML=renderList(p,c);updateSummary();}
-function openFilterSheet(type, current, other){
-  const people=getPeople(), cards=getCards();
-  const items=type==='person'?['全部',...people]:['全部',...cards];
-  const overlay=document.createElement('div');
-  overlay.style.cssText='position:fixed;inset:0;background:rgba(45,45,45,.2);backdrop-filter:blur(4px);z-index:80;';
-  const sheet=document.createElement('div');
-  sheet.style.cssText='position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#fff;border-radius:24px 24px 0 0;padding:20px 20px 44px;z-index:81;box-shadow:0 -6px 28px rgba(45,45,45,.15);';
-  sheet.innerHTML=`<div style="width:36px;height:4px;background:#E8E4D8;border-radius:3px;margin:0 auto 16px;"></div>`
-    +items.map(item=>`<button onclick="selectFilter('${type}','${item}','${other}')" style="display:block;width:100%;text-align:left;padding:14px 16px;font-size:16px;font-weight:700;font-family:inherit;border:none;background:${item===current?'#EDE8D8':'transparent'};color:${item===current?'#9f754e':'#1A1A1A'};border-radius:12px;margin-bottom:4px;cursor:pointer;">${item==='全部'?(type==='person'?'人員：全部':'付款：全部'):item}</button>`).join('');
-  overlay.onclick=()=>{document.body.removeChild(overlay);document.body.removeChild(sheet);};
-  document.body.appendChild(overlay);
-  document.body.appendChild(sheet);
-}
-function selectFilter(type, value, other){
-  document.querySelectorAll('body>div[style*="z-index:80"],body>div[style*="z-index:81"]').forEach(el=>document.body.removeChild(el));
-  const fp=type==='person'?value:other;
-  const fc=type==='card'?value:other;
-  document.getElementById('mainContent').innerHTML=renderList(fp,fc);
-  updateSummary();
-}
 
-function renderOwed() {
-  const seen = new Set();
-  const unpaid = [];
-
-  // 本月：非我自己、未收、現金
-  getExpenses()
-    .filter(e => e.person !== '我自己' && !e.paid && e.card === '現金')
-    .forEach(e => {
-      if (!seen.has(e.id)) {
-        seen.add(e.id);
-        unpaid.push(e);
-      }
-    });
-
-  // 信用卡區間內：非我自己、未收
-  getCards().filter(c => c !== '現金').forEach(card => {
-    const range = billingRanges[card];
-    if (!range || !range.from || !range.to) return;
-    getExpensesInRange(range.from, range.to)
-      .filter(e => e.card === card && e.person !== '我自己' && !e.paid)
-      .forEach(e => {
-        if (!seen.has(e.id)) {
-          seen.add(e.id);
-          unpaid.push(e);
-        }
-      });
-  });
-
-  if (!unpaid.length) {
-    return '<div class="empty">目前沒有待收的帳 🎉</div>';
-  }
-
-  // 依人分組
-  const byP = {};
-  getPeople().filter(p => p !== '我自己').forEach(p => { byP[p] = []; });
-  unpaid.forEach(e => {
-    if (!byP[e.person]) byP[e.person] = [];
-    byP[e.person].push(e);
-  });
-
-  // 每個人：一張總額卡 + 該人的明細列表
-  const personBlocks = Object.entries(byP)
-    .filter(([, list]) => list.length > 0)
-    .map(([p, list]) => {
-      const total = list.reduce((s, e) => s + e.amount, 0);
-
-     const summaryCard = `
-  <div class="owed-card">
-    <div class="owed-card-header">
-      ${personPill(p)}
-    </div>
-    <div class="owed-card-bottom">
-      <div class="owed-total-amt">${fmt(total)}</div>
-      <div class="owed-count-wrap">
-        <span class="owed-count-num">${list.length}</span>
-        <span class="owed-count-label">筆</span>
+function renderOwed(){
+  const seen=new Set();const unpaid=[];
+  getExpenses().filter(e=>e.person!=='我自己'&&!e.paid&&e.card==='現金').forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);unpaid.push(e);}});
+  getCards().filter(c=>c!=='現金').forEach(card=>{const range=billingRanges[card];if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);unpaid.push(e);}});});
+  if(!unpaid.length)return'<div class="empty">目前沒有待收的帳 🎉</div>';
+  const byP={};getPeople().filter(p=>p!=='我自己').forEach(p=>{byP[p]=[];});
+  unpaid.forEach(e=>{if(byP[e.person])byP[e.person].push(e);});
+  const sc=Object.entries(byP).filter(([,i])=>i.length>0).map(([p,i])=>{const t=i.reduce((s,e)=>s+e.amount,0);const hc=personHeaderClass(p);return`<div class="owed-card"><div class="owed-name">${personPill(p)}</div><div class="owed-amt">${fmt(t)}</div><div class="owed-count">${i.length} 筆未收</div></div>`;}).join('');
+  const html=unpaid.map(e=>{
+    const hClass=personHeaderClass(e.person);
+    return`<div class="expense-card">
+      <div class="card-header ${hClass}">
+        <span class="card-header-person">${e.person}</span>
+        <span class="card-header-date">${e.date}</span>
+        <div class="card-header-actions"></div>
       </div>
-    </div>
-  </div>
-`;
-
-      const detailCards = list.map(e => {
-        const hClass = personHeaderClass(e.person);
-        return `
-          <div class="expense-card">
-            <div class="card-header ${hClass}">
-              <span class="card-header-person">${e.person}</span>
-              <span class="card-header-date">${e.date}</span>
-              <div class="card-header-actions"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-row1">
-                <div class="card-name">${e.name}</div>
-                <div class="card-amt">${fmt(e.amount)}</div>
-              </div>
-              <div class="card-row2">
-                <div class="card-tags">
-                  ${cardPill(e.card)}
-                  ${badgeStr(e)}
-                </div>
-                <button class="btn-sm" onclick="togglePaid(${e.id})">標記已收</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      return `
-        <div style="margin-bottom:20px;">
-          ${summaryCard}
-          <div class="expense-list">
-            ${detailCards}
-          </div>
+      <div class="card-body">
+        <div class="card-row1">
+          <div class="card-name">${e.name}</div>
+          <div class="card-amt">${fmt(e.amount)}</div>
         </div>
-      `;
-    }).join('');
-
-  return `<div>${personBlocks}</div>`;
+        <div class="card-row2">
+          <div class="card-tags">
+            ${cardPill(e.card)}
+            ${badgeStr(e)}
+          </div>
+          <button class="btn-sm" onclick="togglePaid(${e.id})">標記已收</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  return`<div><div class="section-header">待收金額</div><div class="owed-grid">${sc}</div><div class="section-header">明細</div><div class="expense-list">${html}</div></div>`;
 }
 
+function padDateSlash(s){if(!s)return'';const p=s.split('-');return`${p[0]}/${p[1].padStart(2,'0')}/${p[2].padStart(2,'0')}`;}
 function applyBillingRange(card){
   const f=document.getElementById(`br-from-${card}`);const t=document.getElementById(`br-to-${card}`);if(!f||!t)return;
-  billingRanges[card]={from:toSlash(f.value),to:toSlash(t.value)};S.set('billing_ranges',billingRanges);updateSummary();
+  billingRanges[card]={from:padDateSlash(f.value),to:padDateSlash(t.value)};S.set('billing_ranges',billingRanges);updateSummary();
   document.getElementById('mainContent').innerHTML=renderBilling();
 }
 
@@ -1007,25 +880,23 @@ function reorderCards(){const preferred=['台新','現金','玉山','國泰','�
 async function syncFromFirebase(){
   if(!window.FB)return;showSyncStatus('同步中…');
   try{
-    const keys=['people','cards','card_settings','salary','card_payments','billing_ranges',...S.get('cards',['台新','玉山','國泰','富邦','聯邦','華南','中信']).map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
+    const keys=['people','cards','card_settings','salary','card_payments',...S.get('cards',['台新','玉山','國泰','富邦','聯邦','華南','中信']).map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
     await Promise.all(keys.map(async k=>{
-  const val=await window.FB.get(k);
-  if(val!==null){
-    if(k==='billing_ranges'){
-      // billing_ranges 只有本機沒有時才從 Firebase 拉
-      const local=localStorage.getItem('billing_ranges');
-      if(!local||local==='{}')localStorage.setItem(k,val);
-    } else {
-      localStorage.setItem(k,val);
-    }
-  }
-}));
+      const val=await window.FB.get(k);
+      if(val!==null){
+        if(k==='billing_ranges'){
+          const local=localStorage.getItem('billing_ranges');
+          if(!local||local==='{}'||local==='null')localStorage.setItem(k,val);
+        }else{
+          localStorage.setItem(k,val);
+        }
+      }
+    }));
     reorderCards();billingRanges=S.get('billing_ranges',{});showSyncStatus('已同步 ✓',true);autoCarryInstallments();render();updateSummary();
   }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
 }
 
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
-billingRanges=S.get('billing_ranges',{});
 autoCarryInstallments();render();
 
 (window._firebaseLoader||Promise.resolve()).then(()=>{
