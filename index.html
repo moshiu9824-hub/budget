@@ -452,7 +452,7 @@ function toggleBillingCheck(card,expenseId){const checks=getBillingChecks(card);
 
 function calcMonthlyPayable(){
   let cardTotal=0;
-  getCards().filter(c=>c!=='現金').forEach(card=>{const range=billingRanges[card];if(!range||!range.from||!range.to)return;const items=getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person==='我自己');cardTotal+=items.reduce((s,e)=>s+e.amount,0);});
+  getCards().filter(c=>c!=='現金').forEach(card=>{const range=getRangeForCurrentMonth(card,currentMonth);if(!range||!range.from||!range.to)return;const items=getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person==='我自己');cardTotal+=items.reduce((s,e)=>s+e.amount,0);});
   const cashTotal=getExpenses().filter(e=>e.card==='現金'&&e.person==='我自己').reduce((s,e)=>s+e.amount,0);
   return{cardTotal,cashTotal};
 }
@@ -463,7 +463,7 @@ function updateSummary(){
   const totalPayable=cardTotal+cashTotal;
   const seen=new Set();let owed=0;
   getExpenses().filter(e=>e.person!=='我自己'&&!e.paid&&e.card==='現金').forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);owed+=e.amount;}});
-  getCards().filter(c=>c!=='現金').forEach(card=>{const range=billingRanges[card];if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);owed+=e.amount;}});});
+  getCards().filter(c=>c!=='現金').forEach(card=>{const range=getRangeForCurrentMonth(card,currentMonth);if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);owed+=e.amount;}});});
   const left=salary-totalPayable;
   document.getElementById('sumSalary').textContent=fmt(salary);
   document.getElementById('sumLastCard').textContent=fmt(totalPayable);
@@ -475,7 +475,6 @@ function updateSummary(){
 function changeMonth(dir){
   currentMonth.setMonth(currentMonth.getMonth()+dir);
   document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
-  if(Object.keys(billingRanges).length>0){getCards().filter(c=>c!=='現金').forEach(card=>{const r=billingRanges[card];if(!r||!r.from||!r.to)return;const fromDate=new Date(r.from.replace(/\//g,'-'));const toDate=new Date(r.to.replace(/\//g,'-'));fromDate.setMonth(fromDate.getMonth()+dir);toDate.setMonth(toDate.getMonth()+dir);billingRanges[card]={from:fmtSlash(fromDate),to:fmtSlash(toDate)};});S.set('billing_ranges',billingRanges);}
   autoCarryInstallments();render();
 }
 
@@ -678,14 +677,22 @@ function renderOwed(){
 function padDateSlash(s){if(!s)return'';const p=s.split('-');return`${p[0]}/${p[1].padStart(2,'0')}/${p[2].padStart(2,'0')}`;}
 function applyBillingRange(card){
   const f=document.getElementById(`br-from-${card}`);const t=document.getElementById(`br-to-${card}`);if(!f||!t)return;
-  billingRanges[card]={from:padDateSlash(f.value),to:padDateSlash(t.value)};S.set('billing_ranges',billingRanges);updateSummary();
+  
+  // ✨ 儲存時，順便把當前畫面的月份 (currentMonth) 當作錨點記下來！
+  billingRanges[card]={
+    from:padDateSlash(f.value),
+    to:padDateSlash(t.value),
+    anchor:`${currentMonth.getFullYear()}/${currentMonth.getMonth()+1}`
+  };
+  
+  S.set('billing_ranges',billingRanges);updateSummary();
   document.getElementById('mainContent').innerHTML=renderBilling();
 }
 
 function renderBilling(){
   const settings=getCardSettings();
   const cols=getCards().filter(c=>c!=='現金').map(card=>{
-    const s=settings[card]||{};const range=billingRanges[card];
+    const s=settings[card]||{};const range=getRangeForCurrentMonth(card,currentMonth);
     const fi=range?toInput(range.from):'';const ti=range?toInput(range.to):'';
     const allItems=(range&&range.from&&range.to)?getExpensesInRange(range.from,range.to).filter(e=>e.card===card):[];allItems.sort((a,b)=>new Date(b.date.replace(/\//g,'-'))-new Date(a.date.replace(/\//g,'-')));
     const checks=getBillingChecks(card);
@@ -846,6 +853,41 @@ function getTagStyle(pi){
     'background:#F8EEF0;color:#b04060;border-color:#E0A8B0;'
   ];
   return styles[pi%10];
+}
+
+// 安全增減月份，避免 31 號溢出漏洞
+function shiftMonthSafe(dateStr, dir) {
+  if (!dateStr) return '';
+  const parts = dateStr.split('/');
+  if (parts.length !== 3) return dateStr;
+  const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1 + dir, 1);
+  const maxDays = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  d.setDate(Math.min(parseInt(parts[2]), maxDays));
+  return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+}
+
+// 🎯 核心：根據當前畫面月份，動態精準計算這張卡片的對帳區間
+function getRangeForCurrentMonth(card, targetDate) {
+  const template = billingRanges[card];
+  if (!template || !template.from || !template.to) return null;
+  
+  // 如果是以前舊方式存的資料沒有 anchor，就先抓原本的（建議重新點一次套用鎖定）
+  if (!template.anchor) return template;
+  
+  const anchorParts = template.anchor.split('/');
+  const anchorYear = parseInt(anchorParts[0]);
+  const anchorMonth = parseInt(anchorParts[1]) - 1;
+  
+  // 計算「目前畫面月份」與「當初設定時的基準月份」差了幾個月
+  const diffMonths = (targetDate.getFullYear() - anchorYear) * 12 + (targetDate.getMonth() - anchorMonth);
+  
+  if (diffMonths === 0) return template;
+  
+  // 依據相差月數，精準等比例平移日期
+  return {
+    from: shiftMonthSafe(template.from, diffMonths),
+    to: shiftMonthSafe(template.to, diffMonths)
+  };
 }
 
 function updateSalaryDetail(){
