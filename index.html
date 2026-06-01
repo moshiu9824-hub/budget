@@ -626,6 +626,7 @@ function renderList(fp='全部',fc='全部'){
   let ex=getExpenses();ex.sort((a,b)=>b.date.localeCompare(a.date));
   if(fp!=='全部')ex=ex.filter(e=>e.person===fp);
   if(fc!=='全部')ex=ex.filter(e=>e.card===fc);
+  ex.sort((a,b)=>new Date(b.date.replace(/\//g,'-'))-new Date(a.date.replace(/\//g,'-')));
   const filters=`<div class="filter-bar">
     <select class="filter-select" onchange="renderListF(this.value,document.getElementById('fc').value)" id="fp">
       <option>全部</option>${people.map(p=>`<option ${p===fp?'selected':''}>${p}</option>`).join('')}
