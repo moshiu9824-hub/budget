@@ -623,7 +623,7 @@ function renderExpenseCard(e){
 
 function renderList(fp='全部',fc='全部'){
   const people=getPeople(),cards=getCards();
-  let ex=getExpenses();
+  let ex=getExpenses();ex.sort((a,b)=>b.date.localeCompare(a.date));
   if(fp!=='全部')ex=ex.filter(e=>e.person===fp);
   if(fc!=='全部')ex=ex.filter(e=>e.card===fc);
   const filters=`<div class="filter-bar">
