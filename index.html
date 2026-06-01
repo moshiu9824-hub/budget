@@ -687,7 +687,7 @@ function renderBilling(){
   const cols=getCards().filter(c=>c!=='現金').map(card=>{
     const s=settings[card]||{};const range=billingRanges[card];
     const fi=range?toInput(range.from):'';const ti=range?toInput(range.to):'';
-    const allItems=(range&&range.from&&range.to)?getExpensesInRange(range.from,range.to).filter(e=>e.card===card):[];
+    const allItems=(range&&range.from&&range.to)?getExpensesInRange(range.from,range.to).filter(e=>e.card===card):[];allItems.sort((a,b)=>new Date(b.date.replace(/\//g,'-'))-new Date(a.date.replace(/\//g,'-')));
     const checks=getBillingChecks(card);
     const total=allItems.reduce((s,e)=>s+e.amount,0);
     const checkedTotal=allItems.filter(e=>checks[e.id]).reduce((s,e)=>s+e.amount,0);
