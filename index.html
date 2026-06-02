@@ -643,35 +643,67 @@ function renderListF(p,c){document.getElementById('mainContent').innerHTML=rende
 function renderOwed(){
   const seen=new Set();const unpaid=[];
   getExpenses().filter(e=>e.person!=='我自己'&&!e.paid&&e.card==='現金').forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);unpaid.push(e);}});
-  getCards().filter(c=>c!=='現金').forEach(card=>{const range=billingRanges[card];if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);unpaid.push(e);}});});
+  
+  getCards().filter(c=>c!=='現金').forEach(card=>{
+    // 💡 這裡完美融合了我們上一波改好的「動態天數鎖定」機制，沒設定好就吃舊 range 確保不噴錯
+    const range = typeof getRangeForCurrentMonth === 'function' ? getRangeForCurrentMonth(card, currentMonth) : billingRanges[card];
+    if(!range||!range.from||!range.to)return;
+    getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);unpaid.push(e);}});
+  });
+  
   if(!unpaid.length)return'<div class="empty">目前沒有待收的帳 🎉</div>';
+  
+  // 初始化每個人員的明細陣列
   const byP={};getPeople().filter(p=>p!=='我自己').forEach(p=>{byP[p]=[];});
   unpaid.forEach(e=>{if(byP[e.person])byP[e.person].push(e);});
-  const sc=Object.entries(byP).filter(([,i])=>i.length>0).map(([p,i])=>{const t=i.reduce((s,e)=>s+e.amount,0);const hc=personHeaderClass(p);return`<div class="owed-card"><div class="owed-name">${personPill(p)}</div><div class="owed-amt">${fmt(t)}</div><div class="owed-count">${i.length} 筆未收</div></div>`;}).join('');
-  const html=unpaid.map(e=>{
-    const hClass=personHeaderClass(e.person);
-    return`<div class="expense-card">
-      <div class="card-header ${hClass}">
-        <span class="card-header-person">${e.person}</span>
-        <span class="card-header-date">${e.date}</span>
-        <div class="card-header-actions"></div>
-      </div>
-      <div class="card-body">
-        <div class="card-row1">
-          <div class="card-name">${e.name}</div>
-          <div class="card-amt">${fmt(e.amount)}</div>
+  
+  // 🎯 核心改造：依據「人員」各自打包成獨立區塊
+  const sections = Object.entries(byP).filter(([,items])=>items.length>0).map(([p,items])=>{
+    const total = items.reduce((s,e)=>s+e.amount,0);
+    
+    // ✨ 順便幫明細加上「最新花費排在最上面」的排序，對帳更直覺！
+    items.sort((a,b)=>new Date(b.date.replace(/\//g,'-'))-new Date(a.date.replace(/\//g,'-')));
+    
+    // 渲染該人員底下的每筆明細卡片
+    const itemHtml = items.map(e=>{
+      const hClass=personHeaderClass(e.person);
+      return `<div class="expense-card">
+        <div class="card-header ${hClass}">
+          <span class="card-header-person">${e.person}</span>
+          <span class="card-header-date">${e.date}</span>
+          <div class="card-header-actions"></div>
         </div>
-        <div class="card-row2">
-          <div class="card-tags">
-            ${cardPill(e.card)}
-            ${badgeStr(e)}
+        <div class="card-body">
+          <div class="card-row1">
+            <div class="card-name">${e.name}</div>
+            <div class="card-amt">${fmt(e.amount)}</div>
           </div>
-          <button class="btn-sm" onclick="togglePaid(${e.id})">標記已收</button>
+          <div class="card-row2">
+            <div class="card-tags">
+              ${cardPill(e.card)}
+              ${badgeStr(e)}
+            </div>
+            <button class="btn-sm" onclick="togglePaid(${e.id})">標記已收</button>
+          </div>
         </div>
+      </div>`;
+    }).join('');
+    
+    // 回傳「人物 總額」+「專屬明細清單」的乾淨排版
+    return `
+      <div class="owed-person-section" style="margin-bottom: 28px;">
+        <div class="owed-person-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 6px 4px; border-bottom: 2px solid #ede8f5;">
+          <div style="font-size: 16px; font-weight: 700;">${personPill(p)}</div>
+          <div style="font-size: 18px; font-weight: 800; color: #c84060;">
+            應收總額：${fmt(total)} <span style="font-size: 12px; color: var(--muted); font-weight: 600;">(${items.length} 筆)</span>
+          </div>
+        </div>
+        <div class="expense-list">${itemHtml}</div>
       </div>
-    </div>`;
+    `;
   }).join('');
-  return`<div><div class="section-header">待收金額</div><div class="owed-grid">${sc}</div><div class="section-header">明細</div><div class="expense-list">${html}</div></div>`;
+  
+  return `<div>${sections}</div>`;
 }
 
 function padDateSlash(s){if(!s)return'';const p=s.split('-');return`${p[0]}/${p[1].padStart(2,'0')}/${p[2].padStart(2,'0')}`;}
