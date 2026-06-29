@@ -71,7 +71,7 @@ header{padding:28px 22px 16px;display:flex;align-items:center;justify-content:sp
 .gfull{margin-bottom:14px;}
 label{font-size:14px;color:var(--muted);display:block;margin-bottom:6px;font-weight:700;letter-spacing:.2px;}
 input,select,textarea{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text);border-radius:12px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none;color-scheme:light;}
-input[type=\"date\"],input[type=\"month\"]{background:#fff!important;color-scheme:light!important;}
+input[type="date"],input[type="month"]{background:#fff!important;color-scheme:light!important;}
 input:focus,select:focus,textarea:focus{border-color:var(--bubbles);}
 textarea{resize:none;height:68px;line-height:1.5;}
 .btn{border:none;border-radius:12px;padding:11px 18px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s;}
@@ -115,16 +115,16 @@ textarea{resize:none;height:68px;line-height:1.5;}
 
 /* pills & badges */
 .pill{display:inline-block;font-size:12px;padding:3px 10px;border-radius:50px;font-weight:700;white-space:nowrap;}
-[data-pi=\"0\"]{background:#ede8f5;color:#9070b8;border:1.5px solid #d0b8de;}
-[data-pi=\"1\"]{background:#fef5e4;color:#c8881a;border:1.5px solid #f3bc72;}
-[data-pi=\"2\"]{background:#e8f5f0;color:#3a9a7a;border:1.5px solid #96d4bf;}
-[data-pi=\"3\"]{background:#fde8ee;color:#c84060;border:1.5px solid #f6a5b4;}
-[data-pi=\"4\"]{background:#e8f2f8;color:#4878a8;border:1.5px solid #79a5c8;}
-[data-pi=\"5\"]{background:var(--warning-light);color:#c87030;border:1.5px solid #F9B384;}
-[data-pi=\"6\"]{background:#F0EEF8;color:#7060b0;border:1.5px solid #C8C0E0;}
-[data-pi=\"7\"]{background:#EEF8F4;color:#308870;border:1.5px solid #88D0B8;}
-[data-pi=\"8\"]{background:#EEF4F8;color:#3060a0;border:1.5px solid #88B0D8;}
-[data-pi=\"9\"]{background:#F8EEF0;color:#b04060;border:1.5px solid #E0A8B0;}
+[data-pi="0"]{background:#ede8f5;color:#9070b8;border:1.5px solid #d0b8de;}
+[data-pi="1"]{background:#fef5e4;color:#c8881a;border:1.5px solid #f3bc72;}
+[data-pi="2"]{background:#e8f5f0;color:#3a9a7a;border:1.5px solid #96d4bf;}
+[data-pi="3"]{background:#fde8ee;color:#c84060;border:1.5px solid #f6a5b4;}
+[data-pi="4"]{background:#e8f2f8;color:#4878a8;border:1.5px solid #79a5c8;}
+[data-pi="5"]{background:var(--warning-light);color:#c87030;border:1.5px solid #F9B384;}
+[data-pi="6"]{background:#F0EEF8;color:#7060b0;border:1.5px solid #C8C0E0;}
+[data-pi="7"]{background:#EEF8F4;color:#308870;border:1.5px solid #88D0B8;}
+[data-pi="8"]{background:#EEF4F8;color:#3060a0;border:1.5px solid #88B0D8;}
+[data-pi="9"]{background:#F8EEF0;color:#b04060;border:1.5px solid #E0A8B0;}
 .fixed-badge{font-size:11px;background:var(--buttercup-light);color:#5a9a30;border-radius:50px;padding:3px 9px;font-weight:700;border:1.5px solid #A6D785;display:inline-block;}
 .inst-badge{font-size:11px;color:#7060b0;background:#F0EEF8;border-radius:50px;padding:3px 9px;font-weight:700;border:1.5px solid #C8C0E0;display:inline-block;}
 
@@ -132,7 +132,7 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .section-header{font-size:13px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.5px;}
 .section-header::after{content:'';flex:1;height:1px;background:var(--border);}
 .owed-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
-.owed-card{background:var(--surface);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
+.owed-card{background:var(--surface);border-radius:var(--radius);padding:166px 16px; padding:16px;box-shadow:var(--shadow);}
 .owed-name{font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700;}
 .owed-amt{font-size:20px;color:#c87030;font-weight:900;letter-spacing:1px;}
 .owed-count{font-size:13px;color:var(--muted);margin-top:4px;font-weight:600;}
@@ -183,9 +183,6 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .modal-actions .btn{flex:1;padding:13px;}
 .mg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .mgfull{margin-bottom:12px;}
-
-/* ── Empty ── */
-.empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:14px;}
 
 @media(max-width:640px){
   html,body{height:100%;overflow:hidden;}
@@ -428,7 +425,6 @@ function closeAddSheet(){
 function toggleAddInst(){
   document.getElementById('f-inst-fields').style.display=document.getElementById('f-inst').checked?'block':'none';
 }
-// 修正：連動彈窗分期區塊
 function toggleEditInst(){
   document.getElementById('e-inst-fields').style.display=document.getElementById('e-inst').checked?'grid':'none';
 }
@@ -486,7 +482,12 @@ function addExpense(){
   updateSummary();
 }
 
-// ✨ 核心修復：使用陣列索引（Index）進行編輯與刪除，免除因為日期變更導致特徵抓不到的死結
+// 👑 依照你的網頁核心機制，使用「特徵鑰匙」而非隨機ID來尋找比對明細項目
+function findExpenseIndex(list, item) {
+  if (!item) return -1;
+  return list.findIndex(x => x.name === item.name && x.amount === item.amount && x.date === item.date && x.card === item.card && x.person === item.person && (x.note||'') === (item.note||''));
+}
+
 function editExpense(idx){
   const list=getExpenses();
   const item=list[idx];
@@ -578,7 +579,7 @@ function autoCarryInstallments(){
   if(changed){saveExpenses(currentList);updateSummary();}
 }
 
-// ✨ 全新引導式匯入固定支出機制：支援完全抓取、任意自訂日期寫入、保證可編可刪
+/* ── 👑 核心修復：引導式自訂日期匯入固定支出，完美相容編輯、刪除，絕不漏筆 ── */
 function openImportModal() {
   const prevMonth = new Date(currentMonth);
   prevMonth.setMonth(prevMonth.getMonth() - 1);
@@ -624,14 +625,12 @@ function confirmImportFixed() {
 
   let count = 0;
   fixedItems.forEach(p => {
-    // 防重複：同天、同名、同金額才過濾
-    const exist = currentList.some(c => c.name === p.name && c.amount === p.amount && c.date === formattedTargetDate);
-    if(!exist) {
-      currentList.unshift(Object.assign({}, p, {
-        date: formattedTargetDate // 直接修正內部核心日期，保證與畫面的 Index 完全契合對應
-      }));
-      count++;
-    }
+    // 💡 拋棄以前死板的名字判定，有幾筆固定就無條件抓幾筆進來，杜絕漏抓
+    const newFixedItem = Object.assign({}, p, {
+      date: formattedTargetDate // 牢牢寫入你指定的新日期，使其符合目前月份的編輯與刪除定位
+    });
+    currentList.unshift(newFixedItem);
+    count++;
   });
 
   if(count > 0) {
@@ -642,9 +641,9 @@ function confirmImportFixed() {
     }
     closeImportModal();
     closeAddSheet();
-    alert(`成功從 ${srcYear}/${srcMonth} 匯入 ${count} 項固定支出至 ${formattedTargetDate}！`);
+    alert(`成功從 ${srcYear}/${srcMonth} 完整匯入所有 ${count} 項固定支出至 ${formattedTargetDate}！`);
   } else {
-    alert('選取的固定支出在該日期的列表中皆已存在。');
+    alert('未成功匯入項目。');
     closeImportModal();
   }
 }
@@ -676,7 +675,6 @@ function render(){
   if(currentTab==='list'){
     if(list.length===0){container.innerHTML='<div class="empty">本月尚無任何記帳明細喔 ☕</div>';return;}
     let html='<div class="expense-list">';
-    // ✨ 傳入陣列的真正 index，讓按鈕完美對應位置
     list.forEach((item, idx)=>{
       html+=`
         <div class="expense-card">
@@ -799,7 +797,7 @@ function updateCardSet(card,key,val){
   s[card][key]=val;saveCardSettings(s);
 }
 
-// ── 初始化啟動與雙向同步 ──
+// ── 初始化啟動與Firebase雲端防鎖同步 ──
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
 renderOptions();
 autoCarryInstallments();
