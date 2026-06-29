@@ -855,13 +855,11 @@ async function syncFromFirebase(){
   }catch(e){showSyncStatus('離線模式',false,true);console.warn('Firebase sync failed:',e);}
 }
 
-// ── 8. 初始化啟動 ──
 // ── 初始化啟動 ──
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
-renderOptions();
 autoCarryInstallments();
 render();
-updateSummary();
+if(typeof updateSummary === 'function') updateSummary();
 
 (window._firebaseLoader||Promise.resolve()).then(async ()=>{
   const firebaseConfig={
@@ -887,18 +885,17 @@ updateSummary();
     
     showSyncStatus('雲端同步中...',false);
     
-    // ✨ 新增：定義所有需要跟雲端同步下載的 Key（包含你的區間設定 billing_ranges）
+    // 定義所有需要跟雲端同步下載的 Key（包含你的區間設定 billing_ranges）
     const cloudKeys=['people','cards','card_settings','salary','billing_ranges'];
     
-    // ✨ 新增：動態打包前後半年的帳目月份進行同步下載
+    // 動態打包前後半年的帳目月份進行同步下載
     const m=new Date();
     for(let i=-6; i<=6; i++){
       const td=new Date(m.getFullYear(), m.getMonth()+i, 1);
-      const mStr=String(td.getMonth()+1).padStart(2,'0');
-      cloudKeys.push(`expenses_${td.getFullYear()}_${mStr}`);
+      cloudKeys.push(`expenses_${td.getFullYear()}_${td.getMonth()+1}`);
     }
     
-    // ✨ 新增：從 Firebase 撈出最新資料，強行更新本地端儲存，防止設定與帳目跑掉
+    // 從 Firebase 撈出最新資料，強行更新本地端儲存，防止設定與帳目跑掉
     let hasChanges = false;
     for(const k of cloudKeys){
       const cloudVal = await window.FB.get(k);
@@ -908,12 +905,12 @@ updateSummary();
       }
     }
     
-    // ✨ 新增：如果發現雲端資料跟原本本地的不同，立刻刷新畫面顯示最新狀態
+    // 如果發現雲端資料有更新，立刻刷新畫面顯示最新狀態
     if(hasChanges){
       billingRanges=S.get('billing_ranges',{}); // 鎖定區間設定不跑移
       autoCarryInstallments();
       render();
-      updateSummary();
+      if(typeof updateSummary === 'function') updateSummary();
     }
     
     showSyncStatus('已同步 ✓',true);
