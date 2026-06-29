@@ -302,7 +302,33 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
   <div class="sheet-title">
     <span>新增記帳</span>
     <div style="display:flex;gap:8px;align-items:center;">
-      <button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;" onclick="importFixed()">↓ 匯入上月固定</button>
+      <button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;" onclick="openImportModal()">↓ 匯入固定支出</button>
+
+<div class="modal-overlay" id="importFixedModal" style="display:none; z-index:70;" onclick="if(event.target.id==='importFixedModal') closeImportModal()">
+  <div class="modal" style="max-width:360px; border-radius:24px; padding:20px;">
+    <div class="modal-handle"></div>
+    <div style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:14px;">⚙️ 匯入固定支出設定</div>
+    
+    <div class="mgfull">
+      <label>1. 選擇資料來源月份</label>
+      <input type="month" id="imp-source-month" style="background:#fff; color-scheme:light;"/>
+    </div>
+    
+    <div class="mgfull">
+      <label>2. 設定寫入本月的消費日期</label>
+      <input type="date" id="imp-target-date" style="background:#fff; color-scheme:light;"/>
+    </div>
+    
+    <div style="font-size:12px; color:var(--muted); margin:8px 0 14px; line-height:1.4;" id="imp-preview-text">
+      將會複製該月份標記為「固定支出」的項目。
+    </div>
+    
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-secondary" style="flex:1;" onclick="closeImportModal()">取消</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="confirmImportFixed()">執行匯入</button>
+    </div>
+  </div>
+</div>
       <button class="btn-sheet-close" onclick="closeAddSheet()">✕</button>
     </div>
   </div>
