@@ -774,13 +774,105 @@ function addExpense(){
 }
 function toggleAddInst(){document.getElementById('f-inst-fields').style.display=document.getElementById('f-inst').checked?'grid':'none';}
 
-function importFixed(){
-  const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
-  const lastEx=getExpenses(lastMonth);const toCarry=lastEx.filter(e=>e.fixed||(e.installment&&e.instCur&&e.instTotal&&e.instCur<e.instTotal));
-  if(!toCarry.length){alert('上個月沒有可匯入項目');return;}
-  const ex=getExpenses();const today=toSlash(todayInput());const existingSources=new Set(ex.filter(e=>e.sourceId).map(e=>e.sourceId));let imported=0;
-  toCarry.forEach(e=>{if(existingSources.has(e.id))return;const nextCur=e.installment&&e.instCur?e.instCur+1:e.instCur;saveExpenseByDate({...e,id:Date.now()+Math.random(),sourceId:e.id,date:today,paid:false,instCur:nextCur});imported++;});
-  render();alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過');closeAddSheet();
+// 打開匯入設定視窗
+function openImportModal() {
+  // 1. 預設來源月份：目前畫面上顯示月份的上一個月
+  const prevMonth = new Date(currentMonth);
+  prevMonth.setMonth(prevMonth.getMonth() - 1);
+  const y = prevMonth.getFullYear();
+  const m = String(prevMonth.getMonth() + 1).padStart(2, '0');
+  document.getElementById('imp-source-month').value = `${y}-${m}`;
+
+  // 2. 預設寫入日期：帶入今天
+  document.getElementById('imp-target-date').value = new Date().toISOString().split('T')[0];
+  
+  // 更新一下預覽文字提示
+  document.getElementById('imp-preview-text').textContent = `將自動尋找 ${y}/${m} 標記為「固定支出」的項目，並複製到您指定的日期中。`;
+  
+  // 監聽來源月份切換，動態改提示
+  document.getElementById('imp-source-month').onchange = function() {
+    const parts = this.value.split('-');
+    if(parts.length === 2) {
+      document.getElementById('imp-preview-text').textContent = `將自動尋找 ${parts[0]}/${parts[1]} 標記為「固定支出」的項目，並複製到您指定的日期中。`;
+    }
+  };
+
+  document.getElementById('importFixedModal').style.display = 'flex';
+}
+
+// 關閉匯入視窗
+function closeImportModal() {
+  document.getElementById('importFixedModal').style.display = 'none';
+}
+
+// 執行匯入核心邏輯
+function confirmImportFixed() {
+  const sourceMonthVal = document.getElementById('imp-source-month').value; // 格式 "YYYY-MM"
+  const targetDateVal = document.getElementById('imp-target-date').value; // 格式 "YYYY-MM-DD"
+
+  if(!sourceMonthVal || !targetDateVal) {
+    alert('請選擇來源月份與寫入日期！');
+    return;
+  }
+
+  // 解析來源月份，取得該月份的 Key
+  const sParts = sourceMonthVal.split('-');
+  const srcYear = parseInt(sParts[0]);
+  const srcMonth = parseInt(sParts[1]);
+  const srcKey = `expenses_${srcYear}_${srcMonth}`;
+  
+  // 從 LocalStorage 撈取來源月的資料
+  let srcList = [];
+  try {
+    const v = localStorage.getItem(srcKey);
+    if(v !== null) srcList = JSON.parse(v);
+  } catch(e) { console.warn(e); }
+
+  // 篩選出固定支出
+  const fixedItems = srcList.filter(x => x.fixed);
+
+  if(fixedItems.length === 0) {
+    alert(`在 ${srcYear}/${srcMonth} 中找不到任何設定為「固定支出」的明細項目喔！`);
+    return;
+  }
+
+  // 解析我們要寫入的目的地月份（根據使用者選的自訂日期）
+  const tParts = targetDateVal.split('-'); // [YYYY, MM, DD]
+  const targetM = new Date(parseInt(tParts[0]), parseInt(tParts[1]) - 1, 1);
+  const currentList = getExpenses(targetM);
+  
+  // 轉換日期格式為網頁用的斜線格式 "YYYY/M/D"
+  const formattedTargetDate = `${parseInt(tParts[0])}/${parseInt(tParts[1])}/${parseInt(tParts[2])}`;
+
+  let count = 0;
+  fixedItems.forEach(p => {
+    // 檢查目的地月份是不是已經有同名的固定支出，防止重複匯入
+    const exist = currentList.some(c => c.name === p.name && c.fixed);
+    if(!exist) {
+      currentList.push(Object.assign({}, p, {
+        id: 'ex_fix_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        date: formattedTargetDate // 💡 寫入使用者指定的自訂消費日期！
+      }));
+      count++;
+    }
+  });
+
+  if(count > 0) {
+    saveExpenses(currentList, targetM);
+    
+    // 如果匯入的目的地剛好是目前畫面上顯示的月份，就重新整理畫面
+    if(targetM.getFullYear() === currentMonth.getFullYear() && targetM.getMonth() === currentMonth.getMonth()) {
+      render();
+      if(typeof updateSummary === 'function') updateSummary();
+    }
+    
+    closeImportModal();
+    closeAddSheet(); // 順便把新增面板也關掉
+    alert(`成功從 ${srcYear}/${srcMonth} 匯入 ${count} 項固定支出至 ${formattedTargetDate}！`);
+  } else {
+    alert('選取項目皆已存在於該月份中，未重複匯入。');
+    closeImportModal();
+  }
 }
 
 function deleteExpense(id){pendingDeleteId=id;const e=findExpenseAnywhere(id);document.getElementById('confirmMsg').textContent=e?`刪除「${e.name}」？`:'確定刪除？';document.getElementById('confirmModal').style.display='flex';}
