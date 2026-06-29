@@ -774,13 +774,62 @@ function addExpense(){
 }
 function toggleAddInst(){document.getElementById('f-inst-fields').style.display=document.getElementById('f-inst').checked?'grid':'none';}
 
-function importFixed(){
-  const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
-  const lastEx=getExpenses(lastMonth);const toCarry=lastEx.filter(e=>e.fixed||(e.installment&&e.instCur&&e.instTotal&&e.instCur<e.instTotal));
-  if(!toCarry.length){alert('上個月沒有可匯入項目');return;}
-  const ex=getExpenses();const today=toSlash(todayInput());const existingSources=new Set(ex.filter(e=>e.sourceId).map(e=>e.sourceId));let imported=0;
-  toCarry.forEach(e=>{if(existingSources.has(e.id))return;const nextCur=e.installment&&e.instCur?e.instCur+1:e.instCur;saveExpenseByDate({...e,id:Date.now()+Math.random(),sourceId:e.id,date:today,paid:false,instCur:nextCur});imported++;});
-  render();alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過');closeAddSheet();
+function importFixed() {
+  const sourceMonthVal = document.getElementById('imp-source-month').value;
+  const targetDateVal = document.getElementById('imp-target-date').value;
+  if(!sourceMonthVal || !targetDateVal) { alert('請選擇來源月份與寫入日期！'); return; }
+
+  const sParts = sourceMonthVal.split('-');
+  const srcYear = parseInt(sParts[0]);
+  const srcMonth = parseInt(sParts[1]);
+  const srcKey = `expenses_${srcYear}_${srcMonth}`;
+  
+  let srcList = [];
+  try { const v = localStorage.getItem(srcKey); if(v !== null) srcList = JSON.parse(v); } catch(e) {}
+  const fixedItems = srcList.filter(x => x.fixed);
+
+  if(fixedItems.length === 0) { alert(`在 ${srcYear}/${srcMonth} 中找不到任何固定支出項目！`); return; }
+
+  const tParts = targetDateVal.split('-');
+  const targetYear = parseInt(tParts[0]);
+  const targetMonth = parseInt(tParts[1]);
+  const targetDay = parseInt(tParts[2]);
+  const targetM = new Date(targetYear, targetMonth - 1, 1);
+  const currentList = getExpenses(targetM);
+  const formattedTargetDate = `${targetYear}/${targetMonth}/${targetDay}`;
+
+  let count = 0;
+  
+  // 💡 安全防護：使用基礎底層時間戳記，在迴圈內部透過逐步遞增，保證 ID 絕對唯一且不碰撞
+  const baseTimestamp = Date.now();
+
+  fixedItems.forEach((p, index) => {
+    // 建立一個具備時間序、索引值（防高速併發）的「極限唯一識別碼」，防止後面重名帳目被吃掉
+    const uniqueId = Number(`${baseTimestamp}${index}`) + Math.floor(Math.random() * 100000);
+    
+    const newFixedItem = Object.assign({}, p, {
+      id: uniqueId, 
+      date: formattedTargetDate,
+      paid: false // 新月份預設為未付清
+    });
+    
+    currentList.unshift(newFixedItem);
+    count++;
+  });
+
+  if(count > 0) {
+    saveExpenses(currentList, targetM);
+    if(targetM.getFullYear() === currentMonth.getFullYear() && targetM.getMonth() === currentMonth.getMonth()) {
+      render();
+      if(typeof updateSummary === 'function') updateSummary();
+    }
+    closeImportModal();
+    closeAddSheet();
+    alert(`成功從 ${srcYear}/${srcMonth} 完整匯入所有 ${count} 項固定支出至 ${formattedTargetDate}！`);
+  } else {
+    alert('未成功匯入項目。');
+    closeImportModal();
+  }
 }
 
 function deleteExpense(id){pendingDeleteId=id;const e=findExpenseAnywhere(id);document.getElementById('confirmMsg').textContent=e?`刪除「${e.name}」？`:'確定刪除？';document.getElementById('confirmModal').style.display='flex';}
