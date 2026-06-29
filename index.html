@@ -536,14 +536,20 @@ function toggleAddInst(){document.getElementById('f-inst-fields').style.display=
 
 function importFixed(){
   const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
+  const lastMonthLabel=`${lastMonth.getFullYear()}/${String(lastMonth.getMonth()+1).padStart(2,'0')}`;
   const lastEx=getExpenses(lastMonth);
   const toCarry=lastEx.filter(e=>e.fixed||(e.installment&&e.instCur&&e.instTotal&&e.instCur<e.instTotal));
-  if(!toCarry.length){alert('上個月沒有固定支出或未完成分期可以匯入');return;}
-  const ex=getExpenses();const today=toSlash(todayInput());
+  if(!toCarry.length){alert(`${lastMonthLabel} 沒有固定支出或未完成分期可以匯入`);return;}
+  const itemNames=toCarry.map(e=>e.name).join('、');
+  const dateInput=prompt(`即將匯入「${lastMonthLabel}」的固定支出／分期（共 ${toCarry.length} 筆：${itemNames}）\n\n請輸入這些項目要記錄的日期（格式 YYYY/MM/DD）：`, toSlash(todayInput()));
+  if(!dateInput)return;
+  const useDate=dateInput.trim();
+  if(!/^\d{4}\/\d{2}\/\d{2}$/.test(useDate)){alert('日期格式錯誤，請用 YYYY/MM/DD 格式（例如 2026/06/01）');return;}
+  const ex=getExpenses();
   const existingSources=new Set(ex.filter(e=>e.sourceId).map(e=>e.sourceId));
   let imported=0;
-  toCarry.forEach(e=>{if(existingSources.has(e.id))return;const nextCur=e.installment&&e.instCur?e.instCur+1:e.instCur;const newExp={...e,id:Date.now()+Math.random(),sourceId:e.id,date:today,paid:false,instCur:nextCur};saveExpenseByDate(newExp);imported++;});
-  render();alert(imported>0?`已匯入 ${imported} 筆`:'本月已匯入過，不重複新增');closeAddSheet();
+  toCarry.forEach(e=>{if(existingSources.has(e.id))return;const nextCur=e.installment&&e.instCur?e.instCur+1:e.instCur;const newExp={...e,id:Date.now()+Math.random(),sourceId:e.id,date:useDate,paid:false,instCur:nextCur};saveExpenseByDate(newExp);imported++;});
+  render();alert(imported>0?`已從 ${lastMonthLabel} 匯入 ${imported} 筆，日期記為 ${useDate}`:'本月已匯入過，不重複新增');closeAddSheet();
 }
 
 let pendingDeleteId=null;
@@ -622,7 +628,7 @@ function renderExpenseCard(e){
 
 function renderList(fp='全部',fc='全部'){
   const people=getPeople(),cards=getCards();
-  let ex=getExpenses();ex.sort((a,b)=>b.date.localeCompare(a.date));
+  let ex=getExpenses();
   if(fp!=='全部')ex=ex.filter(e=>e.person===fp);
   if(fc!=='全部')ex=ex.filter(e=>e.card===fc);
   ex.sort((a,b)=>new Date(b.date.replace(/\//g,'-'))-new Date(a.date.replace(/\//g,'-')));
@@ -955,7 +961,7 @@ function reorderCards(){const preferred=['台新','現金','玉山','國泰','�
 async function syncFromFirebase(){
   if(!window.FB)return;showSyncStatus('同步中…');
   try{
-    const keys=['people','cards','card_settings','salary','card_payments',...S.get('cards',['台新','玉山','國泰','富邦','聯邦','華南','中信']).map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
+    const keys=['people','cards','card_settings','salary','card_payments','billing_ranges',...S.get('cards',['台新','玉山','國泰','富邦','聯邦','華南','中信']).map(c=>`billing_checks_${c}`),...Array.from({length:13},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-i);return`expenses_${d.getFullYear()}_${d.getMonth()+1}`;})];
     await Promise.all(keys.map(async k=>{
       const val=await window.FB.get(k);
       if(val!==null){
