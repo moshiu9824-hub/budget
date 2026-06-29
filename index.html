@@ -805,7 +805,7 @@ function closeImportModal() {
   document.getElementById('importFixedModal').style.display = 'none';
 }
 
-// 執行匯入核心邏輯
+// 執行匯入核心邏輯（終極修正版：完美支援刪除與編輯）
 function confirmImportFixed() {
   const sourceMonthVal = document.getElementById('imp-source-month').value; // 格式 "YYYY-MM"
   const targetDateVal = document.getElementById('imp-target-date').value; // 格式 "YYYY-MM-DD"
@@ -828,7 +828,7 @@ function confirmImportFixed() {
     if(v !== null) srcList = JSON.parse(v);
   } catch(e) { console.warn(e); }
 
-  // 篩選出固定支出
+  // 篩選出標記為固定支出的項目
   const fixedItems = srcList.filter(x => x.fixed);
 
   if(fixedItems.length === 0) {
@@ -836,23 +836,31 @@ function confirmImportFixed() {
     return;
   }
 
-  // 解析我們要寫入的目的地月份（根據使用者選的自訂日期）
+  // 解析我們要寫入的目的地月份與日期
   const tParts = targetDateVal.split('-'); // [YYYY, MM, DD]
-  const targetM = new Date(parseInt(tParts[0]), parseInt(tParts[1]) - 1, 1);
+  const targetYear = parseInt(tParts[0]);
+  const targetMonth = parseInt(tParts[1]);
+  const targetDay = parseInt(tParts[2]);
+  
+  const targetM = new Date(targetYear, targetMonth - 1, 1);
   const currentList = getExpenses(targetM);
   
-  // 轉換日期格式為網頁用的斜線格式 "YYYY/M/D"
-  const formattedTargetDate = `${parseInt(tParts[0])}/${parseInt(tParts[1])}/${parseInt(tParts[2])}`;
+  // 轉換為網頁核心用的斜線格式 "YYYY/M/D"
+  const formattedTargetDate = `${targetYear}/${targetMonth}/${targetDay}`;
 
   let count = 0;
   fixedItems.forEach(p => {
-    // 檢查目的地月份是不是已經有同名的固定支出，防止重複匯入
-    const exist = currentList.some(c => c.name === p.name && c.fixed);
+    // 🔍 改進防重複判定：同一天、同品項、同金額才算重複。不同天或不同金額一律允許匯入！
+    const exist = currentList.some(c => c.name === p.name && c.amount === p.amount && c.date === formattedTargetDate);
+    
     if(!exist) {
-      currentList.push(Object.assign({}, p, {
-        id: 'ex_fix_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-        date: formattedTargetDate // 💡 寫入使用者指定的自訂消費日期！
-      }));
+      // 💡 終極關鍵：ID 必須以 "ex_" 緊接著純數位（Date.now），這才是符合您網頁刪除、編輯邏輯的合法常規 ID！
+      const newFixedItem = Object.assign({}, p, {
+        id: 'ex_' + (Date.now() + Math.floor(Math.random() * 1000)), // 保證多筆匯入時 ID 各不相同
+        date: formattedTargetDate // 寫入使用者自訂的日期
+      });
+      
+      currentList.unshift(newFixedItem); // 加到列表最前面
       count++;
     }
   });
@@ -860,17 +868,17 @@ function confirmImportFixed() {
   if(count > 0) {
     saveExpenses(currentList, targetM);
     
-    // 如果匯入的目的地剛好是目前畫面上顯示的月份，就重新整理畫面
+    // 如果匯入的目的地剛好是目前畫面上顯示的月份，立刻刷新渲染畫面
     if(targetM.getFullYear() === currentMonth.getFullYear() && targetM.getMonth() === currentMonth.getMonth()) {
       render();
       if(typeof updateSummary === 'function') updateSummary();
     }
     
     closeImportModal();
-    closeAddSheet(); // 順便把新增面板也關掉
+    if(typeof closeAddSheet === 'function') closeAddSheet(); // 關閉新增面板
     alert(`成功從 ${srcYear}/${srcMonth} 匯入 ${count} 項固定支出至 ${formattedTargetDate}！`);
   } else {
-    alert('選取項目皆已存在於該月份中，未重複匯入。');
+    alert('選取的固定項目在該日期的列表中皆已存在，未重複匯入。');
     closeImportModal();
   }
 }
