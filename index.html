@@ -856,22 +856,72 @@ async function syncFromFirebase(){
 }
 
 // ── 8. 初始化啟動 ──
+// ── 初始化啟動 ──
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
+renderOptions();
 autoCarryInstallments();
 render();
+updateSummary();
 
-(window._firebaseLoader||Promise.resolve()).then(()=>{
-  const firebaseConfig={apiKey:"AIzaSyAMr1lm850UVU5NB0a0aCzHJFSJCnQ3CQ4",authDomain:"budget-flow-629f4.firebaseapp.com",projectId:"budget-flow-629f4",storageBucket:"budget-flow-629f4.firebasestorage.app",messagingSenderId:"646229662175",appId:"1:646229662175:web:a12dd9e0515d0a75788c6a"};
+(window._firebaseLoader||Promise.resolve()).then(async ()=>{
+  const firebaseConfig={
+    apiKey:"AIzaSyAMr1lm850UVU5NB0a0aCzHJFSJCnQ3CQ4",
+    authDomain:"budget-flow-629f4.firebaseapp.com",
+    projectId:"budget-flow-629f4",
+    storageBucket:"budget-flow-629f4.firebasestorage.app",
+    messagingSenderId:"646229662175",
+    appId:"1:646229662175:web:a12dd9e0515d0a75788c6a"
+  };
+  
   try{
-    if(typeof firebase==='undefined')throw new Error('firebase not loaded');
-    firebase.initializeApp(firebaseConfig);const db=firebase.firestore();const USER='default';
+    if(typeof firebase==='undefined') throw new Error('firebase not loaded');
+    firebase.initializeApp(firebaseConfig);
+    const db=firebase.firestore();
+    const USER='default';
+    
     window.FB={
-      async get(key){try{const s=await db.collection(USER).doc(key).get();return s.exists?s.data().value:null;}catch(e){return null;}},
-      async set(key,value){try{await db.collection(USER).doc(key).set({value});return true;}catch(e){return false;}},
-      async del(key){try{await db.collection(USER).doc(key).delete();return true;}catch(e){return false;}}
+      async get(key){try{const s=await db.collection(USER).doc(key).get();return s.exists?s.data().value:null;}catch(e){console.warn('FB.get',e);return null;}},
+      async set(key,value){try{await db.collection(USER).doc(key).set({value:value});}catch(e){console.warn('FB.set',e);}},
+      async del(key){try{await db.collection(USER).doc(key).delete();}catch(e){console.warn('FB.del',e);}}
     };
-    syncFromFirebase();
-  }catch(e){console.warn('Firebase init failed:',e);showSyncStatus('離線模式',false,true);}
+    
+    showSyncStatus('雲端同步中...',false);
+    
+    // ✨ 新增：定義所有需要跟雲端同步下載的 Key（包含你的區間設定 billing_ranges）
+    const cloudKeys=['people','cards','card_settings','salary','billing_ranges'];
+    
+    // ✨ 新增：動態打包前後半年的帳目月份進行同步下載
+    const m=new Date();
+    for(let i=-6; i<=6; i++){
+      const td=new Date(m.getFullYear(), m.getMonth()+i, 1);
+      const mStr=String(td.getMonth()+1).padStart(2,'0');
+      cloudKeys.push(`expenses_${td.getFullYear()}_${mStr}`);
+    }
+    
+    // ✨ 新增：從 Firebase 撈出最新資料，強行更新本地端儲存，防止設定與帳目跑掉
+    let hasChanges = false;
+    for(const k of cloudKeys){
+      const cloudVal = await window.FB.get(k);
+      if(cloudVal !== null) {
+        localStorage.setItem(k, cloudVal); 
+        hasChanges = true;
+      }
+    }
+    
+    // ✨ 新增：如果發現雲端資料跟原本本地的不同，立刻刷新畫面顯示最新狀態
+    if(hasChanges){
+      billingRanges=S.get('billing_ranges',{}); // 鎖定區間設定不跑移
+      autoCarryInstallments();
+      render();
+      updateSummary();
+    }
+    
+    showSyncStatus('已同步 ✓',true);
+    
+  }catch(e){
+    showSyncStatus('離線模式',false,true);
+    console.warn('Firebase sync failed:',e);
+  }
 });
 </script>
 </body>
