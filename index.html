@@ -476,6 +476,7 @@ function changeMonth(dir){
   currentMonth.setMonth(currentMonth.getMonth()+dir);
   document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
   autoCarryInstallments();render();
+  if(window.FB)syncFromFirebase();
 }
 
 function autoCarryInstallments(){
@@ -979,6 +980,10 @@ async function syncFromFirebase(){
 
 document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
 autoCarryInstallments();render();
+
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&window.FB)syncFromFirebase();
+});
 
 (window._firebaseLoader||Promise.resolve()).then(()=>{
   const firebaseConfig={apiKey:"AIzaSyAMr1lm850UVU5NB0a0aCzHJFSJCnQ3CQ4",authDomain:"budget-flow-629f4.firebaseapp.com",projectId:"budget-flow-629f4",storageBucket:"budget-flow-629f4.firebasestorage.app",messagingSenderId:"646229662175",appId:"1:646229662175:web:a12dd9e0515d0a75788c6a"};
