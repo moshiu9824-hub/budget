@@ -615,19 +615,12 @@ function calcMonthlyPayable(){
 }
 
 function updateSummary(){
-  const salary=getSalary();
-  const {cardTotal,cashTotal}=calcMonthlyPayable();
-  const totalPayable=cardTotal+cashTotal;
-  const seen=new Set();let owed=0;
-  getExpenses().filter(e=>e.person!=='我自己'&&!e.paid&&e.card==='現金').forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);owed+=e.amount;}});
-  getCards().filter(c=>c!=='現金').forEach(card=>{const range=getRangeForCurrentMonth(card,currentMonth);if(!range||!range.from||!range.to)return;getExpensesInRange(range.from,range.to).filter(e=>e.card===card&&e.person!=='我自己'&&!e.paid).forEach(e=>{if(!seen.has(e.id)){seen.add(e.id);owed+=e.amount;}});});
-  const left=salary-totalPayable;
-  document.getElementById('sumSalary').textContent=fmt(salary);
-  document.getElementById('sumLastCard').textContent=fmt(totalPayable);
-  document.getElementById('sumLeft').textContent=fmt(left);
-  document.getElementById('sumLeft').className='main-stat-val '+(left<0?'red':'green');
+  const sUnchecked=document.getElementById('sumUnchecked');
+  const sLastCard=document.getElementById('sumLastCard');
+  if(sUnchecked) sUnchecked.textContent=fmt(getUncheckedTotal());
+  if(sLastCard) sLastCard.textContent=fmt(getLastMonthUnpaidCardTotal());
 
- // 信用卡額度 strip 升級版
+  // 信用卡額度 strip 升級版
   const settings=getCardSettings();
   const stripEl=document.getElementById('cardStrip');
   if(stripEl){
@@ -638,22 +631,20 @@ function updateSummary(){
       const s=settings[card]||{};
       const limit=s.limit||0;
       const billingDay=s.billingDay||0;
-      const future=getFutureCommitted(card); // 已使用額度（含未對帳項目）
+      const future=getFutureCommitted(card); // 已使用額度
       
       if(!limit){return'';}
       
       const remaining=limit-future;
       const pct=Math.min(100,Math.round(future/limit*100));
       const cls=pct>=90?'danger':pct>=70?'warn':'ok';
-      const pi=(Math.abs(getCards().indexOf(card))+3)%10;
 
-      // ── 新增：計算帳單日倒數 ──
+      // ── 1. 計算帳單日倒數 ──
       let countdownText = '未設結帳日';
       if(billingDay > 0) {
         if (currentDay <= billingDay) {
           countdownText = `距結帳 ${billingDay - currentDay} 天`;
         } else {
-          // 已過本月結帳日，計算到下個月的結帳日天數
           const nextBillingDate = new Date(today.getFullYear(), today.getMonth() + 1, billingDay);
           const diffTime = Math.abs(nextBillingDate - today);
           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -661,13 +652,11 @@ function updateSummary(){
         }
       }
 
-      // ── 新增：計算本月已刷金額 ──
-      // 撈取目前設定的對帳區間內，該卡別的所有消費總額
-      const range = getRangeForCurrentMonth(card, currentMonth);
-      const periodItems = (range && range.from && range.to) ? getExpensesInRange(range.from, range.to).filter(e=>e.card===card) : [];
-      const thisMonthSwiped = periodItems.reduce((sum, e) => sum + e.amount, 0);
+      // ── 2. 計算本月已刷金額（相容性最高版本） ──
+      // 直接撈取當前月份主畫面陣列中該卡的總消費
+      const thisMonthSwiped = getExpenses().filter(e => e.card === card).reduce((sum, e) => sum + e.amount, 0);
 
-      return `<div class="cs-row" style="padding: 14px 16px;">
+      return `<div class="cs-row" style="padding: 14px 16px; margin-bottom: 10px;">
         <div class="cs-row-top" style="align-items: center; margin-bottom: 4px;">
           <span class="cs-row-name" style="font-size: 15px; display: flex; align-items: center; gap: 6px;">
             ${card}
@@ -679,7 +668,6 @@ function updateSummary(){
           </span>
         </div>
         
-        <!-- 錢包卡數據列 -->
         <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); font-weight: 700; margin: 4px 0 8px;">
           <span>本月已刷：<strong style="color: var(--text);">${fmt(thisMonthSwiped)}</strong></span>
           <span>已用比例：${pct}%</span>
@@ -690,18 +678,6 @@ function updateSummary(){
     }).join('');
     stripEl.innerHTML=chips||'<div style="font-size:12px;color:var(--muted);padding:10px 4px;">尚未設定信用卡額度</div>';
   }
-
-function autoCarryInstallments(){
-  const ex=getExpenses();
-  const lastMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1);
-  const lastEx=getExpenses(lastMonth);
-  const pendingInst=lastEx.filter(e=>e.installment&&e.instCur&&e.instTotal&&e.instCur<e.instTotal);
-  if(!pendingInst.length)return;
-  const existingSources=new Set(ex.filter(e=>e.sourceId).map(e=>e.sourceId));
-  const existingOrigins=new Set(ex.filter(e=>e.originId).map(e=>e.originId));
-  let added=0;
-  pendingInst.forEach(e=>{const origin=e.originId||e.id;if(existingSources.has(e.id)||existingOrigins.has(origin))return;const nextCur=e.instCur+1;const origDay=parseInt((e.date||'').split('/')[2]||'1');const y=currentMonth.getFullYear(),m=currentMonth.getMonth();const day=Math.min(origDay,new Date(y,m+1,0).getDate());const date=`${y}/${String(m+1).padStart(2,'0')}/${String(day).padStart(2,'0')}`;ex.push({...e,id:Date.now()+Math.random(),sourceId:e.id,originId:origin,date,paid:false,instCur:nextCur});added++;});
-  if(added>0)saveExpenses(ex);
 }
 
 // ── 5. 視圖渲染元件 ──
