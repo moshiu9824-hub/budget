@@ -620,12 +620,6 @@ function updateSummary(){
   if(sUnchecked) sUnchecked.textContent=fmt(getUncheckedTotal());
   if(sLastCard) sLastCard.textContent=fmt(getLastMonthUnpaidCardTotal());
 
-  function updateSummary(){
-  const sUnchecked=document.getElementById('sumUnchecked');
-  const sLastCard=document.getElementById('sumLastCard');
-  if(sUnchecked) sUnchecked.textContent=fmt(getUncheckedTotal());
-  if(sLastCard) sLastCard.textContent=fmt(getLastMonthUnpaidCardTotal());
-
   // 信用卡額度 strip 升級版
   const settings=getCardSettings();
   const stripEl=document.getElementById('cardStrip');
@@ -637,7 +631,7 @@ function updateSummary(){
       const s=settings[card]||{};
       const limit=s.limit||0;
       const billingDay=s.billingDay||0;
-      const future=getFutureCommitted(card); // 畫面上未對帳金額 + 已刷未對帳
+      const future=getFutureCommitted(card); // 已使用額度
       
       if(!limit){return'';}
       
@@ -659,8 +653,8 @@ function updateSummary(){
       }
 
       // ── 2. 精準計算本月已刷金額 ──
-      // 遍歷全域的 items 陣列，只要是當前月份且卡別吻合的消費（無論對帳與否）都加總
-      const thisMonthSwiped = (typeof items !== 'undefined' ? items : [])
+      // 串接你原本檔案裡的 getExpenses()，並限定當月與卡別
+      const thisMonthSwiped = getExpenses()
         .filter(e => e.card === card && new Date(e.date).getMonth() === today.getMonth() && new Date(e.date).getFullYear() === today.getFullYear())
         .reduce((sum, e) => sum + e.amount, 0);
 
@@ -687,7 +681,6 @@ function updateSummary(){
     stripEl.innerHTML=chips||'<div style="font-size:12px;color:var(--muted);padding:10px 4px;">尚未設定信用卡額度</div>';
   }
 }
-
 // ── 5. 視圖渲染元件 ──
 
 // 人員色點色碼
