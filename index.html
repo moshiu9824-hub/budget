@@ -362,22 +362,6 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     <button id="pswSettings" onclick="switchTab('settings')">⚙️設定</button>
   </div>
 
-  <div id="overviewPage">
-    <div class="main-card">
-      <div class="main-label">本月薪資</div>
-      <div class="main-amount" id="sumSalary">—</div>
-      <div class="main-row">
-        <div class="main-stat">
-          <div class="main-stat-val green" id="sumLeft">—</div>
-          <div class="main-stat-label">薪資剩餘</div>
-        </div>
-        <div class="main-stat">
-          <div class="main-stat-val red" id="sumLastCard">—</div>
-          <div class="main-stat-label">本月應繳</div>
-        </div>
-      </div>
-    </div>
-
     <div style="height:10px;"></div>
     <div style="margin:0 22px 8px;font-size:13px;font-weight:800;color:var(--muted);">信用卡使用狀況</div>
     <div class="wallet-cards" id="cardStrip"></div>
@@ -396,6 +380,21 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
   </div>
 
   <div class="main" id="mainContent"></div>
+  <div id="overviewPage">
+    <div class="main-card">
+      <div class="main-label">本月薪資</div>
+      <div class="main-amount" id="sumSalary">—</div>
+      <div class="main-row">
+        <div class="main-stat">
+          <div class="main-stat-val green" id="sumLeft">—</div>
+          <div class="main-stat-label">薪資剩餘</div>
+        </div>
+        <div class="main-stat">
+          <div class="main-stat-val red" id="sumLastCard">—</div>
+          <div class="main-stat-label">本月應繳</div>
+        </div>
+      </div>
+    </div>
 </div>
 
 <button class="fab" id="fabBtn" onclick="openAddSheet()">＋ 新增記帳</button>
@@ -906,11 +905,30 @@ function renderSettings(){
 function render(){
   updateSummary();
   if(currentTab==='calendar'){ renderCalendar(); renderDayList(); }
+  
+  // 只有動態分頁才去複寫容器，總覽和月曆保留在原地
   const el=document.getElementById('mainContent');
-  if(currentTab==='owed') el.innerHTML=renderOwed();
-  else if(currentTab==='billing') el.innerHTML=renderBilling();
-  else if(currentTab==='settings'){ el.innerHTML=renderSettings(); updateSalaryDetail(); }
-  else el.innerHTML='';
+  if(!el) return;
+  
+  if(currentTab==='owed') {
+    // 隱藏總覽與月曆，塞入代收資料
+    el.innerHTML=`<div id="overviewPage" style="display:none;"></div><div id="calendarPage" style="display:none;"></div>${renderOwed()}`;
+  }
+  else if(currentTab==='billing') {
+    el.innerHTML=`<div id="overviewPage" style="display:none;"></div><div id="calendarPage" style="display:none;"></div>${renderBilling()}`;
+  }
+  else if(currentTab==='settings'){ 
+    el.innerHTML=`<div id="overviewPage" style="display:none;"></div><div id="calendarPage" style="display:none;"></div>${renderSettings()}`; 
+    updateSalaryDetail(); 
+  }
+  else {
+    // 如果是總覽或月曆，恢復基礎的內部 DOM 結構，確保節點不會消失
+    // 這邊檢查如果原本的頁面 div 不見了才補上
+    if(!document.getElementById('overviewPage') || !document.getElementById('calendarPage')){
+      // 重新恢復初始狀態的結構（如果被沖掉的話）
+      location.reload(); // 最安全直覺的做法是重新整理或初始化
+    }
+  }
 }
 
 function parseDateStr(s){
@@ -1036,8 +1054,13 @@ function switchTab(tab){
   currentTab=tab;
   const map={overview:'pswOverview',calendar:'pswCalendar',owed:'pswOwed',billing:'pswBilling',settings:'pswSettings'};
   Object.keys(map).forEach(k=>{const btn=document.getElementById(map[k]);if(btn)btn.classList.toggle('active',k===tab);});
-  document.getElementById('overviewPage').style.display=(tab==='overview')?'block':'none';
-  document.getElementById('calendarPage').style.display=(tab==='calendar')?'block':'none';
+  
+  // 控制各頁面的顯示與隱藏
+  const overviewEl = document.getElementById('overviewPage');
+  const calendarEl = document.getElementById('calendarPage');
+  if(overviewEl) overviewEl.style.display=(tab==='overview')?'block':'none';
+  if(calendarEl) calendarEl.style.display=(tab==='calendar')?'block':'none';
+  
   const fab=document.getElementById('fabBtn');
   if(fab) fab.style.display=(tab==='overview'||tab==='calendar')?'flex':'none';
   render();
