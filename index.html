@@ -88,23 +88,106 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .checkbox-label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:700;}
 .checkbox-label input[type=checkbox]{width:16px;height:16px;accent-color:var(--blossom);-webkit-appearance:auto;appearance:auto;}
 
-/* ── 明細卡片 ── */
-.expense-list{display:flex;flex-direction:column;gap:12px;}
+/* ── 信用卡錢包卡片 ── */
+.wallet-cards{display:flex;flex-direction:column;gap:14px;margin:0 22px;}
+.wcard{border-radius:20px;padding:18px 22px 16px;position:relative;overflow:hidden;min-height:148px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 8px 28px rgba(0,0,0,.18);}
+.wcard::before{content:'';position:absolute;top:-40px;right:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.09);pointer-events:none;}
+.wcard::after{content:'';position:absolute;top:30px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none;}
+.wcard-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
+.wcard-name{font-size:16px;font-weight:900;color:rgba(255,255,255,.95);letter-spacing:.5px;}
+.wcard-countdown{text-align:right;}
+.wcard-countdown-num{font-size:22px;font-weight:900;color:#fff;line-height:1;}
+.wcard-countdown-label{font-size:10px;color:rgba(255,255,255,.7);font-weight:700;margin-top:1px;text-align:right;}
+.wcard-chip{width:34px;height:26px;border-radius:5px;background:linear-gradient(135deg,rgba(255,255,255,.5) 0%,rgba(255,200,100,.6) 100%);border:1px solid rgba(255,255,255,.4);position:relative;z-index:1;}
+.wcard-chip::after{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,.5);transform:translateY(-50%);}
+.wcard-mid{position:relative;z-index:1;}
+.wcard-spent-label{font-size:10px;color:rgba(255,255,255,.65);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px;}
+.wcard-spent{font-size:24px;font-weight:900;color:#fff;letter-spacing:.5px;line-height:1;}
+.wcard-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;}
+.wcard-limit-label{font-size:10px;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:3px;}
+.wcard-limit{font-size:12px;color:rgba(255,255,255,.85);font-weight:800;}
+.wcard-bar-wrap{flex:1;margin:0 14px 2px;}
+.wcard-bar{height:4px;border-radius:4px;background:rgba(255,255,255,.2);overflow:hidden;}
+.wcard-bar-fill{height:4px;border-radius:4px;background:rgba(255,255,255,.85);transition:width .4s;}
+.wcard-bar-fill.danger{background:#ff8080;}
+.wcard-remain-label{font-size:10px;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:3px;text-align:right;}
+.wcard-remain{font-size:12px;color:rgba(255,255,255,.9);font-weight:900;text-align:right;}
+
+/* 每張卡的漸層色 */
+.wc-0{background:linear-gradient(135deg,#4a4a8a 0%,#7868c8 100%);}
+.wc-1{background:linear-gradient(135deg,#186888 0%,#38a8c8 100%);}
+.wc-2{background:linear-gradient(135deg,#285838 0%,#4a9860 100%);}
+.wc-3{background:linear-gradient(135deg,#882838 0%,#c86878 100%);}
+.wc-4{background:linear-gradient(135deg,#8a5820 0%,#c89040 100%);}
+.wc-5{background:linear-gradient(135deg,#385888 0%,#6898c8 100%);}
+.wc-6{background:linear-gradient(135deg,#584888 0%,#9878c0 100%);}
+.wc-7{background:linear-gradient(135deg,#1a6858 0%,#38a888 100%);}
+
+
+/* ── 頁面切換 ── */
+.page-switch{display:flex;gap:6px;margin:0 22px 14px;overflow-x:auto;scrollbar-width:none;}
+.page-switch::-webkit-scrollbar{display:none;}
+.page-switch button{flex:1;min-width:60px;background:var(--surface);border:2px solid var(--border);color:var(--muted);font-weight:800;font-size:11px;padding:8px 4px;border-radius:14px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.page-switch button.active{background:var(--text);color:#fff;border-color:var(--text);}
+
+/* ── 月曆 ── */
+.cal-card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);margin:0 22px;padding:14px 8px 10px;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:6px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:2px;}
+.cal-cell{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:3px 0;cursor:pointer;}
+.cal-daynum{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:13px;font-weight:700;color:var(--text);transition:all .12s;}
+.cal-cell.dim .cal-daynum{color:#D8D2C0;}
+.cal-cell.sun .cal-daynum{color:var(--blossom);}
+.cal-cell.sat .cal-daynum{color:#4f9a48;}
+.cal-cell.dim.sun .cal-daynum,.cal-cell.dim.sat .cal-daynum{color:#E8D8D2;}
+.cal-cell.today .cal-daynum{border:2px solid var(--text);}
+.cal-cell.selected .cal-daynum{background:var(--text);color:#fff;border-color:var(--text);}
+.cal-dotwrap{height:6px;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.cal-dot{width:4px;height:4px;border-radius:50%;background:var(--blossom);}
+
+.cal-day-head{display:flex;justify-content:space-between;align-items:baseline;margin:16px 22px 8px;}
+.cal-day-head .d{font-size:16px;font-weight:900;color:var(--text);}
+.cal-day-head .t{font-size:13px;color:var(--blossom);font-weight:800;}
+.expense-list{display:flex;flex-direction:column;gap:10px;}
+.exp-row{background:var(--surface);display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
+.exp-row:active{background:var(--surface2);}
+/* 外層 div 的第一個/最後一個子節點控制圓角 */
+.expense-list>div:first-child .exp-row{border-radius:var(--radius) var(--radius) 0 0;}
+.expense-list>div:last-child .exp-row{border-radius:0 0 var(--radius) var(--radius);border-bottom:none;}
+.expense-list>div:only-child .exp-row{border-radius:var(--radius);border-bottom:none;}
+.expense-list>div:last-child .exp-detail{border-bottom:none;}
+.exp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.exp-mid{flex:1;min-width:0;}
+.exp-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.exp-sub{display:flex;align-items:center;gap:5px;margin-top:2px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.exp-sub::-webkit-scrollbar{display:none;}
+.exp-sub>*{flex-shrink:0;}
+.exp-date{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap;flex-shrink:0;}
+.exp-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.exp-amt{font-size:14px;font-weight:900;color:var(--blossom);white-space:nowrap;}
+.exp-edit-btn{width:26px;height:26px;border-radius:50%;background:#F0EDE4;border:none;color:#9A8870;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit;}
+
+/* 展開詳情 */
+.exp-detail{background:var(--surface2);padding:10px 14px 11px 32px;border-bottom:1px solid var(--border);display:none;}
+.exp-detail.open{display:block;}
+.exp-detail-btns{display:flex;gap:8px;margin-top:0;align-items:center;flex-wrap:wrap;}
+
+/* 舊版 expense-card 仍用於代收帳、繳款紀錄 */
 .expense-card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
-.card-header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:10px 14px;}
-.card-header-person{font-size:15px;font-weight:700;justify-self:start;}
-.card-header-date{font-size:13px;font-weight:700;color:var(--text);text-align:center;}
+.card-header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 14px;}
+.card-header-person{font-size:14px;font-weight:700;justify-self:start;}
+.card-header-date{font-size:12px;font-weight:700;color:var(--text);text-align:center;}
 .card-header-actions{display:flex;gap:6px;justify-self:end;}
 .btn-icon{background:transparent;border:none;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700;width:26px;height:26px;border-radius:50%;}
 .btn-icon.edit{background:#F0EDE4;color:#9A8870;}
 .btn-icon.del{background:var(--blossom-light);color:var(--blossom);}
-.card-body{padding:12px 16px 14px;}
-.card-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px;}
-.card-name{font-size:19px;font-weight:900;color:var(--text);flex:1;line-height:1.2;}
-.card-amt{font-size:19px;font-weight:900;color:var(--blossom);white-space:nowrap;margin-left:12px;}
+.card-body{padding:10px 14px 12px;}
+.card-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;}
+.card-name{font-size:16px;font-weight:900;color:var(--text);flex:1;line-height:1.2;}
+.card-amt{font-size:16px;font-weight:900;color:var(--blossom);white-space:nowrap;margin-left:12px;}
 .card-row2{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.card-tags{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
-.card-note{font-size:12px;color:var(--muted);white-space:nowrap;text-align:right;flex-shrink:0;font-style:italic;}
+.card-tags{display:flex;flex-wrap:wrap;gap:4px;flex:1;}
+.card-note{font-size:11px;color:var(--muted);white-space:nowrap;text-align:right;flex-shrink:0;font-style:italic;}
 
 /* header colours per person index */
 .h0{background:#ede8f5;}.h0 .card-header-person{color:#9070b8;}
@@ -119,7 +202,7 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .h9{background:#F8EEF0;}.h9 .card-header-person{color:#b04060;}
 
 /* pills & badges */
-.pill{display:inline-block;font-size:12px;padding:3px 10px;border-radius:50px;font-weight:700;white-space:nowrap;}
+.pill{display:inline-block;font-size:11px;padding:2px 7px;border-radius:50px;font-weight:700;white-space:nowrap;}
 [data-pi="0"]{background:#ede8f5;color:#9070b8;border:1.5px solid #d0b8de;}
 [data-pi="1"]{background:#fef5e4;color:#c8881a;border:1.5px solid #f3bc72;}
 [data-pi="2"]{background:#e8f5f0;color:#3a9a7a;border:1.5px solid #96d4bf;}
@@ -130,9 +213,9 @@ textarea{resize:none;height:68px;line-height:1.5;}
 [data-pi="7"]{background:#EEF8F4;color:#308870;border:1.5px solid #88D0B8;}
 [data-pi="8"]{background:#EEF4F8;color:#3060a0;border:1.5px solid #88B0D8;}
 [data-pi="9"]{background:#F8EEF0;color:#b04060;border:1.5px solid #E0A8B0;}
-.fixed-badge{font-size:11px;background:var(--buttercup-light);color:#5a9a30;border-radius:50px;padding:3px 9px;font-weight:700;border:1.5px solid #A6D785;display:inline-block;}
-.inst-badge{font-size:11px;color:#7060b0;background:#F0EEF8;border-radius:50px;padding:3px 9px;font-weight:700;border:1.5px solid #C8C0E0;display:inline-block;}
-.btn-sm{background:var(--surface2);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;font-size:12px;padding:4px 12px;border-radius:50px;font-family:inherit;font-weight:700;white-space:nowrap;}
+.fixed-badge{font-size:10px;background:var(--buttercup-light);color:#5a9a30;border-radius:50px;padding:2px 7px;font-weight:700;border:1.5px solid #A6D785;display:inline-block;white-space:nowrap;flex-shrink:0;}
+.inst-badge{font-size:10px;color:#7060b0;background:#F0EEF8;border-radius:50px;padding:2px 7px;font-weight:700;border:1.5px solid #C8C0E0;display:inline-block;white-space:nowrap;flex-shrink:0;}
+.btn-sm{background:var(--surface2);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;font-size:11px;padding:2px 9px;border-radius:50px;font-family:inherit;font-weight:700;white-space:nowrap;}
 .btn-sm.done{border-color:#A6D785;color:#5a9a30;background:var(--buttercup-light);}
 
 /* ── 代收帳 ── */
@@ -271,35 +354,45 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
     </div>
   </header>
 
-  <div class="main-card">
-    <div class="main-label">本月薪資</div>
-    <div class="main-amount" id="sumSalary">—</div>
-    <div class="main-row">
-      <div class="main-stat">
-        <div class="main-stat-val green" id="sumLeft">—</div>
-        <div class="main-stat-label">薪資剩餘</div>
-      </div>
-      <div class="main-stat">
-        <div class="main-stat-val red" id="sumLastCard">—</div>
-        <div class="main-stat-label">本月應繳</div>
-      </div>
-    </div>
+  <div class="page-switch">
+    <button class="active" id="pswOverview" onclick="switchTab('overview')">📊總覽</button>
+    <button id="pswCalendar" onclick="switchTab('calendar')">📅月曆</button>
+    <button id="pswOwed" onclick="switchTab('owed')">🤝代收</button>
+    <button id="pswBilling" onclick="switchTab('billing')">🧾對帳</button>
+    <button id="pswSettings" onclick="switchTab('settings')">⚙️設定</button>
   </div>
 
-  <div style="height:6px;"></div>
+  <div id="overviewPage">
+    <div class="main-card">
+      <div class="main-label">本月薪資</div>
+      <div class="main-amount" id="sumSalary">—</div>
+      <div class="main-row">
+        <div class="main-stat">
+          <div class="main-stat-val green" id="sumLeft">—</div>
+          <div class="main-stat-label">薪資剩餘</div>
+        </div>
+        <div class="main-stat">
+          <div class="main-stat-val red" id="sumLastCard">—</div>
+          <div class="main-stat-label">本月應繳</div>
+        </div>
+      </div>
+    </div>
 
-  <div class="owed-bar">
-    <div class="owed-bar-label">代墊未收</div>
-    <div class="owed-bar-val" id="sumOwed">—</div>
+    <div style="height:10px;"></div>
+    <div style="margin:0 22px 8px;font-size:13px;font-weight:800;color:var(--muted);">信用卡使用狀況</div>
+    <div class="wallet-cards" id="cardStrip"></div>
   </div>
 
-  <div class="tabs-wrap">
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('list')">明細表</button>
-      <button class="tab" onclick="switchTab('owed')">代收帳</button>
-      <button class="tab" onclick="switchTab('billing')">對帳單</button>
-      <button class="tab" onclick="switchTab('settings')">設定區</button>
+  <div id="calendarPage" style="display:none;">
+    <div class="cal-card">
+      <div class="cal-weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+      <div class="cal-grid" id="calGrid"></div>
     </div>
+    <div class="cal-day-head">
+      <span class="d" id="calDayLabel">—</span>
+      <span class="t" id="calDayTotal">—</span>
+    </div>
+    <div id="calDayList"></div>
   </div>
 
   <div class="main" id="mainContent"></div>
@@ -441,7 +534,7 @@ window._firebaseLoader=loadScript('https://www.gstatic.com/firebasejs/9.23.0/fir
 
 <script>
 // ── 1. 全域變數定義 ──
-let currentTab='list', currentMonth=new Date(), editingId=null, pendingDeleteId=null, importCandidates=[];
+let currentTab='overview', currentMonth=new Date(), selectedDate=new Date(), editingId=null, pendingDeleteId=null, importCandidates=[];
 currentMonth.setDate(1);
 
 const DEFAULT_PEOPLE=['我自己','懶人爸','阿肥媽','豬頭弟','小八貓'];
@@ -545,9 +638,52 @@ function updateSummary(){
   const left=salary-totalPayable;
   document.getElementById('sumSalary').textContent=fmt(salary);
   document.getElementById('sumLastCard').textContent=fmt(totalPayable);
-  document.getElementById('sumOwed').textContent=fmt(owed);
   document.getElementById('sumLeft').textContent=fmt(left);
   document.getElementById('sumLeft').className='main-stat-val '+(left<0?'red':'green');
+
+  // 錢包卡片
+  const settings=getCardSettings();
+  const stripEl=document.getElementById('cardStrip');
+  if(stripEl){
+    const today=new Date();
+    const chips=getCards().filter(c=>c!=='現金').map((card,ci)=>{
+      const s=settings[card]||{};const limit=s.limit||0;
+      const billingDay=s.billingDay||0;
+      // 本月帳單結算範圍內的消費
+      const range=getRangeForCurrentMonth(card,currentMonth);
+      const thisMonthSpent=(range&&range.from&&range.to)?getExpensesInRange(range.from,range.to).filter(e=>e.card===card).reduce((sum,e)=>sum+e.amount,0):0;
+      // 帳單日倒數
+      let countdown='—', countdownLabel='帳單日';
+      if(billingDay>0){
+        const bd=new Date(today.getFullYear(),today.getMonth(),billingDay);
+        if(bd<=today) bd.setMonth(bd.getMonth()+1);
+        const diff=Math.ceil((bd-today)/(1000*60*60*24));
+        countdown=diff; countdownLabel=`天後帳單日`;
+      }
+      const pct=limit>0?Math.min(100,Math.round(thisMonthSpent/limit*100)):0;
+      const remaining=limit-thisMonthSpent;
+      const barCls=pct>=90?'danger':'';
+      const wc=`wc-${ci%8}`;
+      if(!limit) return`<div class="wcard ${wc}">
+        <div class="wcard-top"><span class="wcard-name">${card}</span><div class="wcard-countdown"><div class="wcard-countdown-num">${countdown}</div><div class="wcard-countdown-label">${countdownLabel}</div></div></div>
+        <div class="wcard-mid"><div class="wcard-spent-label">本期消費</div><div class="wcard-spent">${fmt(thisMonthSpent)}</div></div>
+        <div class="wcard-bottom"><div><div class="wcard-limit-label">額度</div><div class="wcard-limit">未設定</div></div></div>
+      </div>`;
+      return`<div class="wcard ${wc}">
+        <div class="wcard-top">
+          <div><div class="wcard-chip"></div></div>
+          <div class="wcard-countdown"><div class="wcard-countdown-num">${countdown}</div><div class="wcard-countdown-label">${countdownLabel}</div></div>
+        </div>
+        <div class="wcard-mid"><div class="wcard-spent-label">${card} · 本期消費</div><div class="wcard-spent">${fmt(thisMonthSpent)}</div></div>
+        <div class="wcard-bottom">
+          <div><div class="wcard-limit-label">信用額度</div><div class="wcard-limit">${fmt(limit)}</div></div>
+          <div class="wcard-bar-wrap"><div class="wcard-bar"><div class="wcard-bar-fill ${barCls}" style="width:${pct}%"></div></div></div>
+          <div><div class="wcard-remain-label">剩餘</div><div class="wcard-remain">${fmt(remaining)}</div></div>
+        </div>
+      </div>`;
+    }).join('');
+    stripEl.innerHTML=chips||'<div style="font-size:13px;color:var(--muted);padding:10px 0;">尚未設定信用卡</div>';
+  }
 }
 
 function autoCarryInstallments(){
@@ -564,32 +700,50 @@ function autoCarryInstallments(){
 }
 
 // ── 5. 視圖渲染元件 ──
+
+// 人員色點色碼
+const DOT_COLORS=['#9070b8','#c8881a','#3a9a7a','#c84060','#4878a8','#c87030','#7060b0','#308870','#3060a0','#b04060'];
+
 function renderExpenseCard(e){
-  const hClass=personHeaderClass(e.person);
-  return`<div class="expense-card">
-    <div class="card-header ${hClass}">
-      <span class="card-header-person">${e.person}</span>
-      <span class="card-header-date">${e.date}</span>
-      <div class="card-header-actions">
-        <button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button>
-        <button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button>
+  const pi=Math.abs(getPeople().indexOf(e.person))%10;
+  const dotColor=DOT_COLORS[pi];
+  const badges=badgeStr(e);
+  const cardTag=cardPill(e.card);
+  const personTag=e.person!=='我自己'?personPill(e.person):'';
+  const paidBtn=e.person!=='我自己'?`<button class="btn-sm ${e.paid?'done':''}" onclick="event.stopPropagation();togglePaid(${e.id})">${e.paid?'✓ 已收':'未收'}</button>`:'';
+  const noteHtml=e.note?`<div style="font-size:11px;color:var(--muted);font-style:italic;margin-bottom:7px;">📝 ${e.note}</div>`:'';
+
+  return`<div>
+    <div class="exp-row" onclick="toggleExpRow(this)">
+      <span class="exp-dot" style="background:${dotColor};"></span>
+      <div class="exp-mid">
+        <div class="exp-name">${e.name}</div>
+        <div class="exp-sub">${cardTag}${badges}${personTag}<span class="exp-date">${e.date}</span></div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-amt">${fmt(e.amount)}</div>
+        <button class="exp-edit-btn" onclick="event.stopPropagation();openEdit(${e.id})">✎</button>
       </div>
     </div>
-    <div class="card-body">
-      <div class="card-row1">
-        <div class="card-name">${e.name}</div>
-        <div class="card-amt">${fmt(e.amount)}</div>
-      </div>
-      <div class="card-row2">
-        <div class="card-tags">
-          ${cardPill(e.card)}
-          ${badgeStr(e)}
-          ${e.person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}
-        </div>
-        ${e.note?`<div class="card-note">📝 ${e.note}</div>`:''}
+    <div class="exp-detail">
+      ${noteHtml}
+      <div class="exp-detail-btns">
+        <button class="btn btn-danger-soft" style="font-size:12px;padding:5px 14px;" onclick="deleteExpense(${e.id})">✕ 刪除</button>
+        ${paidBtn}
       </div>
     </div>
   </div>`;
+}
+
+function toggleExpRow(el){
+  const detail=el.nextElementSibling;
+  if(!detail||!detail.classList.contains('exp-detail'))return;
+  const isOpen=detail.classList.toggle('open');
+  // 關閉同一 expense-list 裡其他展開的
+  if(isOpen){
+    const list=el.closest('.expense-list');
+    if(list)list.querySelectorAll('.exp-detail.open').forEach(d=>{if(d!==detail){d.classList.remove('open');}});
+  }
 }
 
 function renderList(fp='全部',fc='全部'){
@@ -751,32 +905,149 @@ function renderSettings(){
 // ── 6. 功能操作邏輯 ──
 function render(){
   updateSummary();
+  if(currentTab==='calendar'){ renderCalendar(); renderDayList(); }
   const el=document.getElementById('mainContent');
-  if(currentTab=='list') el.innerHTML=renderList();
-  else if(currentTab=='owed') el.innerHTML=renderOwed();
-  else if(currentTab=='billing') el.innerHTML=renderBilling();
-  else if(currentTab=='settings'){ el.innerHTML=renderSettings(); updateSalaryDetail(); }
+  if(currentTab==='owed') el.innerHTML=renderOwed();
+  else if(currentTab==='billing') el.innerHTML=renderBilling();
+  else if(currentTab==='settings'){ el.innerHTML=renderSettings(); updateSalaryDetail(); }
+  else el.innerHTML='';
+}
+
+function parseDateStr(s){
+  if(!s)return null;
+  const p=s.split('/').map(n=>parseInt(n,10));
+  return new Date(p[0],p[1]-1,p[2]);
+}
+function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+function daysInMonth(y,m){return new Date(y,m+1,0).getDate();}
+
+function expensesOnDate(d){
+  return getExpenses(d).filter(e=>{const p=parseDateStr(e.date);return p&&sameDay(p,d);});
+}
+
+function renderCalendar(){
+  const grid=document.getElementById('calGrid');
+  if(!grid)return;
+  const y=currentMonth.getFullYear(), m=currentMonth.getMonth();
+  const firstWeekday=new Date(y,m,1).getDay();
+  const totalDays=daysInMonth(y,m);
+  const prevTotalDays=new Date(y,m,0).getDate();
+  const cells=[];
+  // 上個月補齊
+  for(let i=0;i<firstWeekday;i++){
+    const dnum=prevTotalDays-firstWeekday+1+i;
+    const dObj=new Date(y,m-1,dnum);
+    cells.push({date:dObj,dim:true});
+  }
+  // 本月
+  for(let d=1;d<=totalDays;d++){
+    cells.push({date:new Date(y,m,d),dim:false});
+  }
+  // 補齊到 7 的倍數
+  let next=1;
+  while(cells.length%7!==0){
+    cells.push({date:new Date(y,m+1,next),dim:true});
+    next++;
+  }
+  const today=new Date();
+  grid.innerHTML=cells.map(c=>{
+    const wd=c.date.getDay();
+    const isToday=sameDay(c.date,today);
+    const isSel=sameDay(c.date,selectedDate);
+    const has=expensesOnDate(c.date).length>0;
+    let cls='cal-cell';
+    if(c.dim)cls+=' dim';
+    if(wd===0)cls+=' sun'; else if(wd===6)cls+=' sat';
+    if(isToday)cls+=' today';
+    if(isSel)cls+=' selected';
+    return`<div class="${cls}" onclick="selectDay(${c.date.getFullYear()},${c.date.getMonth()},${c.date.getDate()})">
+      <div class="cal-daynum">${c.date.getDate()}</div>
+      <div class="cal-dotwrap">${has?'<span class="cal-dot"></span>':''}</div>
+    </div>`;
+  }).join('');
+}
+
+function selectDay(y,m,d){
+  const target=new Date(y,m,d);
+  if(target.getFullYear()!==currentMonth.getFullYear()||target.getMonth()!==currentMonth.getMonth()){
+    currentMonth=new Date(target.getFullYear(),target.getMonth(),1);
+    document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
+    autoCarryInstallments();
+  }
+  selectedDate=target;
+  renderCalendar();
+  renderDayList();
+}
+
+function renderExpenseCardFull(e){
+  const hClass=personHeaderClass(e.person);
+  return`<div class="expense-card">
+    <div class="card-header ${hClass}">
+      <span class="card-header-person">${e.person}</span>
+      <span class="card-header-date">${e.date}</span>
+      <div class="card-header-actions">
+        <button class="btn-icon edit" onclick="openEdit(${e.id})">✎</button>
+        <button class="btn-icon del" onclick="deleteExpense(${e.id})">✕</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-row1">
+        <div class="card-name">${e.name}</div>
+        <div class="card-amt">${fmt(e.amount)}</div>
+      </div>
+      <div class="card-row2">
+        <div class="card-tags">
+          ${cardPill(e.card)}
+          ${badgeStr(e)}
+          ${e.person!=='我自己'?`<span class="btn-sm ${e.paid?'done':''}" style="cursor:pointer;" onclick="togglePaid(${e.id})">${e.paid?'已收':'未收'}</span>`:''}
+        </div>
+        ${e.note?`<div class="card-note">📝 ${e.note}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderDayList(){
+  const listEl=document.getElementById('calDayList');
+  const labelEl=document.getElementById('calDayLabel');
+  const totalEl=document.getElementById('calDayTotal');
+  if(!listEl)return;
+  const weekdays=['日','一','二','三','四','五','六'];
+  labelEl.textContent=`${selectedDate.getMonth()+1}月${selectedDate.getDate()}日 週${weekdays[selectedDate.getDay()]}`;
+  const items=expensesOnDate(selectedDate).sort((a,b)=>b.id-a.id);
+  const total=items.reduce((s,e)=>s+e.amount,0);
+  totalEl.textContent=items.length?fmt(total):'';
+  if(!items.length){
+    listEl.innerHTML='<div class="empty">這天還沒有記帳</div>';
+    return;
+  }
+  listEl.innerHTML=`<div class="expense-list" style="margin:0 22px;">${items.map(renderExpenseCardFull).join('')}</div>`;
 }
 
 function changeMonth(dir){
   currentMonth.setMonth(currentMonth.getMonth()+dir);
   document.getElementById('monthLabel').textContent=`${currentMonth.getFullYear()}/${String(currentMonth.getMonth()+1).padStart(2,'0')}`;
+  const clampDay=Math.min(selectedDate.getDate(),daysInMonth(currentMonth.getFullYear(),currentMonth.getMonth()));
+  selectedDate=new Date(currentMonth.getFullYear(),currentMonth.getMonth(),clampDay);
   autoCarryInstallments(); render();
 }
 
 function switchTab(tab){
   currentTab=tab;
-  const tabs=['list','owed','billing','settings'];
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
+  const map={overview:'pswOverview',calendar:'pswCalendar',owed:'pswOwed',billing:'pswBilling',settings:'pswSettings'};
+  Object.keys(map).forEach(k=>{const btn=document.getElementById(map[k]);if(btn)btn.classList.toggle('active',k===tab);});
+  document.getElementById('overviewPage').style.display=(tab==='overview')?'block':'none';
+  document.getElementById('calendarPage').style.display=(tab==='calendar')?'block':'none';
   const fab=document.getElementById('fabBtn');
-  if(fab) fab.style.display=(tab==='list')?'flex':'none';
+  if(fab) fab.style.display=(tab==='overview'||tab==='calendar')?'flex':'none';
   render();
 }
 
 function openAddSheet(){
   document.getElementById('f-card').innerHTML=getCards().map(c=>`<option>${c}</option>`).join('');
   document.getElementById('f-person').innerHTML=getPeople().map(p=>`<option>${p}</option>`).join('');
-  document.getElementById('f-date').value=todayInput();
+  const dDate=(currentTab==='calendar')?selectedDate:new Date();
+  document.getElementById('f-date').value=`${dDate.getFullYear()}-${String(dDate.getMonth()+1).padStart(2,'0')}-${String(dDate.getDate()).padStart(2,'0')}`;
   document.getElementById('addSheet').classList.add('open');
   document.getElementById('overlay').classList.add('open');
 }
