@@ -304,9 +304,31 @@ textarea{resize:none;height:68px;line-height:1.5;}
 .empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:14px;}
 
 @media(max-width:640px){
-  html,body{height:100%;overflow:hidden;}
-  .app{width:100%;height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;}
-  .main{overflow-y:scroll;-webkit-overflow-scrolling:touch;flex:1;min-height:0;}
+  /* 1. 允許手機網頁自然滾動，不鎖死 */
+  html, body {
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+  }
+  
+  /* 2. 將固定定位改為常規流，避免卡在畫面外 */
+  .app {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* 從 fixed 改為 relative */
+    top: auto; left: auto; right: auto; bottom: auto;
+  }
+  
+  /* 3. 讓主內容區隨著內容自然撐開，修復無法滑動 */
+  .main {
+    overflow-y: visible; 
+    flex: 1;
+    min-height: 0;
+    padding-bottom: 120px; /* 留空間給底部的浮動按鈕，避免遮擋 */
+  }
 }
 /* ── 浮動新增按鈕 ── */
 .fab{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);width:calc(100% - 44px);max-width:476px;background:var(--text);color:#fff;border:none;border-radius:50px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 6px 24px rgba(26,26,26,.28);z-index:50;display:flex;align-items:center;justify-content:center;gap:8px;}
